@@ -20,7 +20,6 @@
       --rule:         #e0ddd5;
       --card-bg:      #ffffff;
       --radius:       2px;
-      --card-r:       2px;
       --shadow:       rgba(45,106,79,.07);
     }
 
@@ -37,59 +36,27 @@
     }
 
     html { scroll-behavior: smooth; }
-
     body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      background: var(--bg); color: var(--ink);
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      line-height: 1.7; -webkit-font-smoothing: antialiased;
+      min-height: 100vh; display: flex; flex-direction: column;
     }
 
-    /* ── HEADER / NAV ── */
-    header {
-      position: sticky; top: 0; z-index: 100;
-      background: var(--bg);
-      border-bottom: 1px solid var(--rule);
-    }
-    .nav-inner {
-      max-width: 680px; margin: 0 auto; padding: 0 28px;
-      height: 56px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.15rem;
-      color: var(--ink);
-      text-decoration: none;
-      letter-spacing: .01em;
-    }
+    /* ── HEADER ── */
+    header { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--rule); }
+    .nav-inner { max-width: 680px; margin: 0 auto; padding: 0 28px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
     .logo em { color: var(--accent); font-style: italic; }
-    .hdate {
-      font-size: .72rem; font-weight: 500;
-      color: var(--muted);
-      text-transform: uppercase; letter-spacing: .08em;
-    }
+    .hdate { font-size: .72rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
 
     /* ── TABS ── */
-    .tabs {
-      background: var(--bg);
-      border-bottom: 1px solid var(--rule);
-      display: flex;
-    }
+    .tabs { background: var(--bg); border-bottom: 1px solid var(--rule); display: flex; }
     .tbtn {
-      flex: 1; padding: 10px 6px;
-      background: none; border: none;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .7rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .1em;
-      color: var(--muted); cursor: pointer;
-      border-bottom: 2px solid transparent;
-      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      flex: 1; padding: 10px 6px; background: none; border: none;
+      font-family: 'DM Sans', sans-serif; font-size: .7rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .1em; color: var(--muted); cursor: pointer;
+      border-bottom: 2px solid transparent; display: flex; flex-direction: column; align-items: center; gap: 3px;
       transition: color .18s, border-color .18s;
     }
     .tbtn .ti { font-size: 1rem; }
@@ -101,368 +68,206 @@
     .inner { max-width: 680px; margin: 0 auto; padding: 0 28px; }
 
     /* ── TYPOGRAPHY ── */
-    .page-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.8rem; line-height: 1.2;
-      color: var(--ink); margin-bottom: 6px;
-    }
+    .page-title { font-family: 'DM Serif Display', serif; font-size: 1.8rem; line-height: 1.2; color: var(--ink); margin-bottom: 6px; }
     .page-title em { font-style: italic; color: var(--accent); }
-    .page-sub {
-      font-size: .88rem; color: var(--muted);
-      font-weight: 300; margin-bottom: 28px; line-height: 1.6;
-    }
-    .sec-label {
-      font-size: .65rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .16em;
-      color: var(--muted); margin: 28px 0 12px;
-    }
+    .page-sub { font-size: .88rem; color: var(--muted); font-weight: 300; margin-bottom: 28px; line-height: 1.6; }
+    .sec-label { font-size: .65rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; color: var(--muted); margin: 28px 0 12px; }
 
     /* ── DATE NAV ── */
-    .date-nav {
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--card-bg);
-      border: 1px solid var(--rule);
-      border-radius: var(--radius);
-      padding: 10px 16px; margin-bottom: 24px;
-    }
-    .dnlabel {
-      font-family: 'DM Serif Display', serif;
-      font-size: .95rem; color: var(--ink);
-    }
-    .dnbtn {
-      background: var(--accent-light); border: none;
-      width: 28px; height: 28px; border-radius: 50%;
-      cursor: pointer; font-size: .85rem; color: var(--accent);
-      display: flex; align-items: center; justify-content: center;
-      transition: background .15s;
-    }
+    .date-nav { display: flex; align-items: center; justify-content: space-between; background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 10px 16px; margin-bottom: 24px; }
+    .dnlabel { font-family: 'DM Serif Display', serif; font-size: .95rem; color: var(--ink); }
+    .dnbtn { background: var(--accent-light); border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: .85rem; color: var(--accent); display: flex; align-items: center; justify-content: center; transition: background .15s; }
     .dnbtn:hover { background: var(--accent); color: #fff; }
 
     /* ── UPLOAD CARD ── */
-    .upload-card {
-      background: var(--card-bg);
-      border: 1px solid var(--rule);
-      border-radius: var(--radius);
-      padding: 24px 28px;
-      transition: border-color .2s, box-shadow .2s;
+    .upload-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 24px 28px; }
+
+    /* ── PHOTO SOURCE BUTTONS ── */
+    .photo-source-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .photo-src-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      padding: 20px 10px; border: 1.5px dashed var(--rule); border-radius: var(--radius);
+      background: var(--bg); cursor: pointer; transition: border-color .2s, background .2s;
+      font-family: 'DM Sans', sans-serif; text-align: center;
     }
-    .upload-zone {
-      border: 1.5px dashed var(--rule);
-      border-radius: var(--radius);
-      padding: 32px 20px; text-align: center; cursor: pointer;
-      background: var(--bg);
-      transition: border-color .2s, background .2s;
-    }
-    .upload-zone:hover { border-color: var(--accent); background: var(--accent-light); }
-    .upload-zone input { display: none; }
-    .uz-icon { font-size: 2rem; margin-bottom: 10px; }
-    .uz-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1rem; color: var(--ink); margin-bottom: 4px;
-    }
-    .uz-sub { font-size: .78rem; color: var(--muted); font-weight: 300; }
+    .photo-src-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+    .psb-icon { font-size: 1.7rem; }
+    .psb-label { font-size: .78rem; font-weight: 500; color: var(--ink); }
+    .psb-sub { font-size: .65rem; color: var(--muted); font-weight: 300; }
+    #photoCamera, #photoGallery { display: none; }
 
     /* photo preview */
     .photo-stage { display: none; margin-bottom: 16px; }
-    .photo-stage img {
-      width: 100%; max-height: 220px; object-fit: cover;
-      border-radius: var(--radius); border: 1px solid var(--rule);
-    }
-    .photo-stage-bar {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-top: 8px;
-    }
+    .photo-stage img { width: 100%; max-height: 220px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--rule); }
+    .photo-stage-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
     .photo-stage-bar span { font-size: .72rem; color: var(--muted); font-weight: 400; }
-    .rm-btn {
-      font-size: .7rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .08em;
-      background: none; border: 1px solid var(--rule);
-      border-radius: var(--radius); padding: 4px 10px;
-      color: var(--muted); cursor: pointer;
-      transition: border-color .15s, color .15s;
-    }
+    .rm-btn { font-size: .7rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; background: none; border: 1px solid var(--rule); border-radius: var(--radius); padding: 4px 10px; color: var(--muted); cursor: pointer; transition: border-color .15s, color .15s; }
     .rm-btn:hover { border-color: var(--accent); color: var(--accent); }
 
     /* ── QUICK INPUTS ── */
     .quick-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
     .qi { display: flex; flex-direction: column; gap: 6px; }
     .qi.full { grid-column: span 2; }
-    .qi label {
-      font-size: .62rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .14em; color: var(--muted);
-    }
-    .qi select, .qi input[type=time] {
-      background: var(--bg); border: 1px solid var(--rule);
-      border-radius: var(--radius); padding: 9px 11px;
-      font-family: 'DM Sans', sans-serif; font-size: .82rem;
-      font-weight: 300; color: var(--ink); outline: none; width: 100%;
-      transition: border-color .18s;
-    }
+    .qi label { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+    .qi select, .qi input[type=time] { background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 9px 11px; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 300; color: var(--ink); outline: none; width: 100%; transition: border-color .18s; }
     .qi select:focus, .qi input[type=time]:focus { border-color: var(--accent); }
 
     /* pill group */
     .pill-group { display: flex; gap: 7px; flex-wrap: wrap; }
-    .pill {
-      padding: 5px 12px; border-radius: 20px;
-      border: 1px solid var(--rule);
-      background: var(--card-bg); color: var(--muted);
-      font-size: .72rem; font-weight: 500;
-      cursor: pointer; transition: all .15s;
-      font-family: 'DM Sans', sans-serif;
-      text-transform: uppercase; letter-spacing: .06em;
-    }
-    .pill.active {
-      background: var(--accent); color: #fff;
-      border-color: var(--accent);
-    }
+    .pill { padding: 5px 12px; border-radius: 20px; border: 1px solid var(--rule); background: var(--card-bg); color: var(--muted); font-size: .72rem; font-weight: 500; cursor: pointer; transition: all .15s; font-family: 'DM Sans', sans-serif; text-transform: uppercase; letter-spacing: .06em; }
+    .pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
     /* ── BUTTONS ── */
-    .btn-primary {
-      width: 100%; padding: 12px 22px;
-      background: var(--ink); border: none;
-      border-radius: var(--radius); color: var(--bg);
-      font-family: 'DM Sans', sans-serif;
-      font-size: .8rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .08em;
-      cursor: pointer; transition: background .2s, transform .15s;
-    }
+    .btn-primary { width: 100%; padding: 12px 22px; background: var(--ink); border: none; border-radius: var(--radius); color: var(--bg); font-family: 'DM Sans', sans-serif; font-size: .8rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; cursor: pointer; transition: background .2s, transform .15s; }
     .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
-    .btn-primary:disabled { opacity: .4; cursor: not-allowed; transform: none; }
-    .btn-accent {
-      width: 100%; padding: 12px 22px;
-      background: var(--accent); border: none;
-      border-radius: var(--radius); color: #fff;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .8rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .08em;
-      cursor: pointer; transition: opacity .2s, transform .15s;
-      margin-top: 8px;
-    }
+    .btn-accent { width: 100%; padding: 12px 22px; background: var(--accent); border: none; border-radius: var(--radius); color: #fff; font-family: 'DM Sans', sans-serif; font-size: .8rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; cursor: pointer; transition: opacity .2s, transform .15s; margin-top: 8px; }
     .btn-accent:hover { opacity: .85; transform: translateY(-1px); }
-    .btn-ghost {
-      width: 100%; padding: 10px;
-      background: none; border: 1px solid var(--rule);
-      border-radius: var(--radius); color: var(--muted);
-      font-family: 'DM Sans', sans-serif;
-      font-size: .78rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .08em;
-      cursor: pointer; margin-top: 8px;
-      transition: border-color .15s, color .15s;
-    }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* ── ENTRY CARDS ── */
-    .entry-card {
-      background: var(--card-bg); border: 1px solid var(--rule);
-      border-radius: var(--radius);
-      display: flex; gap: 0;
-      margin-bottom: 10px;
-      transition: border-color .2s, box-shadow .2s, transform .15s;
-      animation: fadeUp .22s ease;
-    }
-    .entry-card:hover {
-      border-color: var(--accent);
-      box-shadow: 0 4px 20px var(--shadow);
-      transform: translateY(-1px);
-    }
+    /* ── LOG ENTRY CARDS ── */
+    .entry-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); display: flex; margin-bottom: 10px; transition: border-color .2s, box-shadow .2s, transform .15s; animation: fadeUp .22s ease; }
+    .entry-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px var(--shadow); transform: translateY(-1px); }
     @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
-    .entry-img {
-      width: 80px; flex-shrink: 0;
-      background: var(--accent-light);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.8rem; overflow: hidden;
-    }
+    .entry-img { width: 80px; flex-shrink: 0; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; overflow: hidden; }
     .entry-img img { width: 80px; height: 100%; min-height: 80px; object-fit: cover; }
-    .entry-body { flex: 1; padding: 12px 14px; }
-    .entry-meal {
-      font-size: .62rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .12em;
-      color: var(--accent); margin-bottom: 3px;
-    }
+    .entry-body { flex: 1; padding: 12px 14px; min-width: 0; }
+    .entry-meal { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); margin-bottom: 3px; }
     .entry-time { font-size: .72rem; color: var(--muted); font-weight: 300; margin-bottom: 6px; }
     .entry-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-    .etag {
-      font-size: .6rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .07em;
-      border-radius: 20px; padding: 2px 8px;
-      background: var(--accent-light); color: var(--accent);
-    }
+    .etag { font-size: .6rem; font-weight: 500; text-transform: uppercase; letter-spacing: .07em; border-radius: 20px; padding: 2px 8px; background: var(--accent-light); color: var(--accent); }
     .etag.mood { background: var(--bg); color: var(--muted); border: 1px solid var(--rule); }
-    .entry-del {
-      padding: 12px 10px; background: none; border: none;
-      color: var(--rule); cursor: pointer; font-size: .85rem;
-      align-self: flex-start; transition: color .15s;
-    }
+    .entry-note { font-size: .74rem; color: var(--muted); font-weight: 300; font-style: italic; line-height: 1.5; margin-top: 6px; }
+    .entry-del { padding: 12px 10px; background: none; border: none; color: var(--rule); cursor: pointer; font-size: .85rem; align-self: flex-start; transition: color .15s; flex-shrink: 0; }
     .entry-del:hover { color: #c0392b; }
 
     /* ── EMPTY STATE ── */
-    .empty {
-      text-align: center; padding: 48px 20px;
-      border: 1px dashed var(--rule); border-radius: var(--radius);
-    }
+    .empty { text-align: center; padding: 48px 20px; border: 1px dashed var(--rule); border-radius: var(--radius); }
     .empty .ei { font-size: 2.2rem; margin-bottom: 12px; }
     .empty p { font-size: .85rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
 
-    /* ── REPORT VIEW ── */
-    .report-info {
-      background: var(--card-bg); border: 1px solid var(--rule);
-      border-radius: var(--radius); padding: 28px;
-      margin-bottom: 16px;
-    }
-    .ri-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-    .ri-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; }
-    .ri-badge {
-      font-size: .6rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .1em;
-      padding: 3px 9px; border-radius: 20px;
-      background: var(--accent-light); color: var(--accent);
-      border: 1px solid var(--accent);
-    }
-    .ri-desc { font-size: .85rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
-
-    /* ── REPORT DOCUMENT ── */
-    .report-doc {
-      background: var(--card-bg); border: 1px solid var(--rule);
-      border-radius: var(--radius); padding: 28px; margin-top: 16px;
-    }
-    .rd-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
-    .rd-header h2 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem; color: var(--ink); margin-bottom: 4px;
-    }
-    .rd-meta { font-size: .72rem; color: var(--muted); font-weight: 300; }
-    .rd-section { margin-bottom: 28px; }
-    .rd-section h3 {
-      font-size: .65rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .16em;
-      color: var(--muted); margin-bottom: 14px;
-      padding-bottom: 8px; border-bottom: 1px solid var(--rule);
-    }
-    .rd-day { margin-bottom: 20px; }
-    .rd-day-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: .95rem; color: var(--ink); margin-bottom: 10px;
-    }
-    .rd-photo-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
-    .rd-photo-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    .rd-photo-item img {
-      width: 76px; height: 76px; object-fit: cover;
-      border-radius: var(--radius); border: 1px solid var(--rule);
-    }
-    .rd-photo-caption {
-      font-size: .58rem; color: var(--muted);
-      text-align: center; font-weight: 400; max-width: 76px;
-      line-height: 1.4;
-    }
-    .rd-context {
-      font-size: .72rem; color: var(--muted);
-      font-weight: 300; line-height: 1.8;
-      margin-top: 2px;
-    }
-
-    /* ── AI ANALYSIS BOX ── */
-    .analysis-box {
-      background: var(--accent-light);
-      border: 1px solid var(--rule);
-      border-radius: var(--radius); padding: 20px; margin-top: 8px;
-    }
-    .ab-label {
-      font-size: .62rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .14em;
-      color: var(--accent); margin-bottom: 12px;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .ab-content {
-      font-size: .82rem; color: var(--ink);
-      line-height: 1.8; font-weight: 300;
-    }
-    .ab-content p { margin-bottom: 12px; }
-    .ab-content p:last-child { margin-bottom: 0; }
-    .ab-ref {
-      font-size: .68rem; color: var(--muted);
-      font-style: italic; margin-top: 14px;
-      padding-top: 12px; border-top: 1px solid var(--rule); line-height: 1.6;
-    }
-
-    /* loading dots */
-    .loading-pulse {
-      display: flex; align-items: center; gap: 10px;
-      font-size: .8rem; color: var(--muted); padding: 8px 0;
-      font-weight: 300;
-    }
-    .dot-pulse { display: flex; gap: 4px; }
-    .dot-pulse span {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: var(--accent);
-      animation: pulse 1.2s ease-in-out infinite;
-    }
-    .dot-pulse span:nth-child(2) { animation-delay: .2s; }
-    .dot-pulse span:nth-child(3) { animation-delay: .4s; }
-    @keyframes pulse { 0%,80%,100%{opacity:.2;} 40%{opacity:1;} }
-
-    .disclaimer {
-      font-size: .7rem; color: var(--muted);
-      line-height: 1.7; padding: 16px; font-weight: 300;
-      background: var(--bg); border: 1px solid var(--rule);
-      border-radius: var(--radius); margin-top: 14px;
-    }
+    /* ── JOURNAL ── */
+    .journal-entry { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; animation: fadeUp .22s ease; }
+    .je-header { display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer; transition: background .15s; border-bottom: 1px solid transparent; }
+    .je-header:hover { background: var(--accent-light); }
+    .je-header.open { border-bottom-color: var(--rule); }
+    .je-thumb { width: 44px; height: 44px; border-radius: var(--radius); flex-shrink: 0; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; overflow: hidden; }
+    .je-thumb img { width: 44px; height: 44px; object-fit: cover; }
+    .je-meta { flex: 1; }
+    .je-meal { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); }
+    .je-time { font-size: .7rem; color: var(--muted); font-weight: 300; }
+    .je-chevron { font-size: .85rem; color: var(--muted); transition: transform .2s; flex-shrink: 0; }
+    .je-chevron.open { transform: rotate(90deg); }
+    .je-body { display: none; padding: 16px 14px; }
+    .je-body.open { display: block; }
+    .je-note-label { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); margin-bottom: 8px; }
+    .je-textarea { width: 100%; background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 300; color: var(--ink); line-height: 1.6; resize: vertical; min-height: 90px; outline: none; transition: border-color .18s; }
+    .je-textarea:focus { border-color: var(--accent); }
+    .je-textarea::placeholder { color: var(--muted); }
+    .je-save { margin-top: 8px; padding: 8px 18px; background: var(--ink); border: none; border-radius: var(--radius); color: var(--bg); font-family: 'DM Sans', sans-serif; font-size: .72rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; cursor: pointer; transition: background .2s; }
+    .je-save:hover { background: var(--accent); }
+    .je-saved-note { font-size: .8rem; color: var(--ink); font-style: italic; font-weight: 300; line-height: 1.65; padding: 10px 12px; background: var(--bg); border-radius: var(--radius); border-left: 2px solid var(--accent); }
+    .je-edit-btn { display: inline-block; margin-top: 8px; font-size: .68rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); cursor: pointer; border-bottom: 1px solid var(--rule); transition: color .15s; background: none; border-top: none; border-left: none; border-right: none; padding: 0; font-family: 'DM Sans', sans-serif; }
+    .je-edit-btn:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
     /* ── WEEK BARS ── */
-    .week-card {
-      background: var(--card-bg); border: 1px solid var(--rule);
-      border-radius: var(--radius); padding: 20px 24px; margin-bottom: 24px;
-    }
-    .week-card-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: .95rem; margin-bottom: 16px;
-    }
+    .week-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 24px; }
+    .week-card-title { font-family: 'DM Serif Display', serif; font-size: .95rem; margin-bottom: 16px; }
     .week-bars { display: flex; gap: 8px; align-items: flex-end; height: 56px; margin-bottom: 8px; }
     .wbar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    .wbar {
-      width: 100%; background: var(--accent-light);
-      border-radius: var(--radius) var(--radius) 0 0;
-      transition: height .4s ease; min-height: 3px;
-    }
+    .wbar { width: 100%; background: var(--accent-light); border-radius: var(--radius) var(--radius) 0 0; transition: height .4s ease; min-height: 3px; }
     .wbar.today { background: var(--accent); }
     .wbar-day { font-size: .58rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
 
+    /* ── REPORT VIEW ── */
+    .report-info { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 28px; margin-bottom: 16px; }
+    .ri-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+    .ri-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; }
+    .ri-badge { font-size: .6rem; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; padding: 3px 9px; border-radius: 20px; background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent); }
+    .ri-desc { font-size: .85rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
+
+    /* ── REPORT DOCUMENT ── */
+    .report-doc { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 28px; margin-top: 16px; }
+    .rd-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--ink); }
+    .rd-header h2 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--ink); margin-bottom: 4px; }
+    .rd-meta { font-size: .72rem; color: var(--muted); font-weight: 300; }
+    .rd-section { margin-bottom: 28px; }
+    .rd-section h3 { font-size: .65rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; color: var(--muted); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+    .rd-day { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); }
+    .rd-day:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+    .rd-day-title { font-family: 'DM Serif Display', serif; font-size: .95rem; color: var(--ink); margin-bottom: 10px; }
+    .rd-photo-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .rd-photo-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .rd-photo-item img { width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--rule); }
+    .rd-photo-caption { font-size: .58rem; color: var(--muted); text-align: center; font-weight: 400; max-width: 80px; line-height: 1.4; }
+    .rd-context { font-size: .72rem; color: var(--muted); font-weight: 300; line-height: 1.8; }
+    .rd-journal-note { font-size: .76rem; color: var(--ink); font-style: italic; font-weight: 300; line-height: 1.6; margin-top: 6px; padding: 8px 12px; background: var(--accent-light); border-left: 2px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; }
+
+    /* AI analysis */
+    .analysis-box { background: var(--accent-light); border: 1px solid var(--rule); border-radius: var(--radius); padding: 20px; margin-top: 8px; }
+    .ab-label { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .ab-content { font-size: .82rem; color: var(--ink); line-height: 1.8; font-weight: 300; }
+    .ab-content p { margin-bottom: 12px; }
+    .ab-content p:last-child { margin-bottom: 0; }
+    .ab-ref { font-size: .68rem; color: var(--muted); font-style: italic; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule); line-height: 1.6; }
+    .loading-pulse { display: flex; align-items: center; gap: 10px; font-size: .8rem; color: var(--muted); padding: 8px 0; font-weight: 300; }
+    .dot-pulse { display: flex; gap: 4px; }
+    .dot-pulse span { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: pulse 1.2s ease-in-out infinite; }
+    .dot-pulse span:nth-child(2) { animation-delay: .2s; }
+    .dot-pulse span:nth-child(3) { animation-delay: .4s; }
+    @keyframes pulse { 0%,80%,100%{opacity:.2;} 40%{opacity:1;} }
+    .disclaimer { font-size: .7rem; color: var(--muted); line-height: 1.7; padding: 16px; font-weight: 300; background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius); margin-top: 14px; }
+
     /* ── TOAST ── */
-    .toast {
-      position: fixed; bottom: 88px; left: 50%;
-      transform: translateX(-50%) translateY(10px);
-      background: var(--ink); color: var(--bg);
-      padding: 10px 22px; border-radius: var(--radius);
-      font-size: .78rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .08em;
-      opacity: 0; transition: all .28s; pointer-events: none; z-index: 999;
-      white-space: nowrap;
-    }
+    .toast { position: fixed; bottom: 88px; left: 50%; transform: translateX(-50%) translateY(10px); background: var(--ink); color: var(--bg); padding: 10px 22px; border-radius: var(--radius); font-size: .78rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; opacity: 0; transition: all .28s; pointer-events: none; z-index: 999; white-space: nowrap; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* ── FAB ── */
-    .fab {
-      position: fixed; bottom: 24px; right: 24px;
-      width: 50px; height: 50px; border-radius: 50%;
-      background: var(--ink); border: none; cursor: pointer; color: var(--bg);
-      font-size: 1.5rem;
-      box-shadow: 0 4px 20px rgba(26,26,24,.2);
-      display: flex; align-items: center; justify-content: center;
-      transition: background .2s, transform .15s; z-index: 99;
-    }
+    .fab { position: fixed; bottom: 24px; right: 24px; width: 50px; height: 50px; border-radius: 50%; background: var(--ink); border: none; cursor: pointer; color: var(--bg); font-size: 1.5rem; box-shadow: 0 4px 20px rgba(26,26,24,.2); display: flex; align-items: center; justify-content: center; transition: background .2s, transform .15s; z-index: 99; }
     .fab:hover { background: var(--accent); transform: translateY(-2px); }
 
-    /* ── PRINT ── */
+    /* ══════════════════════════════════
+       PRINT / PDF STYLES
+    ════════════════════════════════════ */
     @media print {
-      header, .tabs, .fab, .toast, #reportControls { display: none !important; }
-      .view { display: block !important; padding: 0; }
-      body { background: #fff; }
-      .report-doc { box-shadow: none; border: none; padding: 0; }
+      header, .tabs, .fab, .toast,
+      #view-log, #view-diary, #view-report > .inner > #reportControls { display: none !important; }
+
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+      body { background: #fff !important; color: #1a1a18 !important; }
+      #view-report { display: block !important; padding: 0 !important; }
+      .inner { max-width: 100% !important; padding: 0 !important; }
+      .report-doc { border: none !important; box-shadow: none !important; padding: 0 !important; margin: 0 !important; border-radius: 0 !important; }
+
+      .rd-header { padding-bottom: 10pt !important; border-bottom: 1.5pt solid #1a1a18 !important; margin-bottom: 16pt !important; }
+      .rd-header h2 { font-size: 17pt !important; }
+      .rd-meta { font-size: 8.5pt !important; }
+
+      .rd-section { margin-bottom: 20pt !important; }
+      .rd-section h3 { font-size: 7pt !important; padding-bottom: 5pt !important; margin-bottom: 10pt !important; border-bottom: 0.5pt solid #e0ddd5 !important; color: #6b6b62 !important; }
+
+      .rd-day { page-break-inside: avoid; padding-bottom: 12pt !important; margin-bottom: 12pt !important; border-bottom: 0.5pt solid #e0ddd5 !important; }
+      .rd-day:last-child { border-bottom: none !important; }
+      .rd-day-title { font-size: 10.5pt !important; margin-bottom: 8pt !important; }
+
+      .rd-photo-item img { width: 85pt !important; height: 85pt !important; border: 0.5pt solid #e0ddd5 !important; }
+      .rd-photo-caption { font-size: 7pt !important; }
+      .rd-context { font-size: 8pt !important; line-height: 1.55 !important; }
+      .rd-journal-note { font-size: 8.5pt !important; padding: 6pt 10pt !important; margin-top: 5pt !important; background: #e8f5ee !important; border-left: 1.5pt solid #2d6a4f !important; }
+
+      .analysis-box { page-break-inside: avoid; background: #e8f5ee !important; border: 0.5pt solid #e0ddd5 !important; padding: 12pt !important; }
+      .ab-label { font-size: 7pt !important; color: #2d6a4f !important; margin-bottom: 8pt !important; }
+      .ab-content { font-size: 9pt !important; line-height: 1.65 !important; }
+      .ab-content p { margin-bottom: 7pt !important; }
+      .ab-ref { font-size: 7pt !important; color: #6b6b62 !important; padding-top: 7pt !important; }
+
+      .disclaimer { page-break-inside: avoid; font-size: 7.5pt !important; padding: 10pt !important; background: #f7f5f0 !important; border: 0.5pt solid #e0ddd5 !important; margin-top: 10pt !important; }
+
+      @page { margin: 18mm 16mm; size: A4; }
     }
 
     /* ── MOBILE ── */
     @media (max-width: 500px) {
-      .nav-inner { padding: 0 18px; }
-      .inner { padding: 0 18px; }
+      .nav-inner, .inner { padding: 0 18px; }
       .upload-card { padding: 18px; }
       .quick-inputs { grid-template-columns: 1fr; }
       .qi.full { grid-column: span 1; }
@@ -471,7 +276,6 @@
 </head>
 <body>
 
-<!-- ── HEADER ── -->
 <header>
   <div class="nav-inner">
     <a href="https://aufthority.com" class="logo"><em>Makan</em>Lah</a>
@@ -479,36 +283,21 @@
   </div>
 </header>
 
-<!-- ── TABS ── -->
 <div class="tabs">
-  <button class="tbtn active" onclick="goTab('log')" id="tab-log"
-    data-umami-event="Tab - Log">
-    <span class="ti">📸</span>Log
-  </button>
-  <button class="tbtn" onclick="goTab('diary')" id="tab-diary"
-    data-umami-event="Tab - Diary">
-    <span class="ti">📖</span>Diary
-  </button>
-  <button class="tbtn" onclick="goTab('report')" id="tab-report"
-    data-umami-event="Tab - Report">
-    <span class="ti">📋</span>Report
-  </button>
+  <button class="tbtn active" onclick="goTab('log')" id="tab-log" data-umami-event="Tab - Log"><span class="ti">📸</span>Log</button>
+  <button class="tbtn" onclick="goTab('diary')" id="tab-diary" data-umami-event="Tab - Journal"><span class="ti">📖</span>Journal</button>
+  <button class="tbtn" onclick="goTab('report')" id="tab-report" data-umami-event="Tab - Report"><span class="ti">📋</span>Report</button>
 </div>
 
-<!-- ══════════════════════════════════
-     LOG TAB
-════════════════════════════════════ -->
+<!-- ══ LOG TAB ══ -->
 <div class="view active" id="view-log">
 <div class="inner">
-
-  <div style="padding-top: 8px;">
+  <div style="padding-top:8px;">
     <div class="page-title">What did you <em>eat?</em></div>
-    <div class="page-sub">Take a photo of your meal. That's all you need to do.</div>
+    <div class="page-sub">Take a photo now, or choose one from your gallery to log a meal from earlier.</div>
   </div>
 
   <div class="upload-card">
-
-    <!-- Photo preview -->
     <div class="photo-stage" id="photoStage">
       <img id="stagedImg" src="" alt="meal photo"/>
       <div class="photo-stage-bar">
@@ -517,28 +306,30 @@
       </div>
     </div>
 
-    <!-- Drop zone -->
-    <div class="upload-zone" id="uploadZone"
-      onclick="document.getElementById('photoInput').click()"
-      data-umami-event="Upload - Open camera">
-      <input type="file" id="photoInput" accept="image/*" capture="environment" onchange="handlePhoto(event)"/>
-      <div class="uz-icon">📷</div>
-      <div class="uz-title">Take or upload a photo</div>
-      <div class="uz-sub">Tap to open camera or choose from gallery</div>
+    <div class="photo-source-row" id="photoSourceRow">
+      <div class="photo-src-btn" onclick="document.getElementById('photoCamera').click()">
+        <span class="psb-icon">📷</span>
+        <span class="psb-label">Take a photo</span>
+        <span class="psb-sub">Open camera now</span>
+      </div>
+      <div class="photo-src-btn" onclick="document.getElementById('photoGallery').click()">
+        <span class="psb-icon">🖼️</span>
+        <span class="psb-label">From gallery</span>
+        <span class="psb-sub">Log a meal from earlier</span>
+      </div>
+      <input type="file" id="photoCamera" accept="image/*" capture="environment" onchange="handlePhoto(event)"/>
+      <input type="file" id="photoGallery" accept="image/*" onchange="handlePhoto(event)"/>
     </div>
 
-    <!-- Quick context inputs -->
-    <div id="quickInputs" style="display:none; margin-top: 20px;">
-
+    <div id="quickInputs" style="display:none;margin-top:20px;">
       <div class="sec-label">Meal type</div>
-      <div class="pill-group" id="mealPills" style="margin-bottom: 20px;">
+      <div class="pill-group" id="mealPills" style="margin-bottom:20px;">
         <button class="pill active" onclick="pickMeal(this,'Breakfast')">🌅 Breakfast</button>
         <button class="pill" onclick="pickMeal(this,'Lunch')">☀️ Lunch</button>
         <button class="pill" onclick="pickMeal(this,'Dinner')">🌙 Dinner</button>
         <button class="pill" onclick="pickMeal(this,'Snack')">🍎 Snack</button>
         <button class="pill" onclick="pickMeal(this,'Supper')">🌛 Supper</button>
       </div>
-
       <div class="quick-inputs">
         <div class="qi">
           <label>Time eaten</label>
@@ -567,413 +358,295 @@
           </div>
         </div>
       </div>
-
-      <button class="btn-primary" onclick="saveEntry()" data-umami-event="Log - Save meal">
-        Save Meal Photo →
-      </button>
+      <button class="btn-primary" onclick="saveEntry()" data-umami-event="Log - Save meal">Save Meal Photo →</button>
     </div>
   </div>
 
   <div id="todayPreview"></div>
-
 </div>
 </div>
 
-<!-- ══════════════════════════════════
-     DIARY TAB
-════════════════════════════════════ -->
+<!-- ══ JOURNAL TAB ══ -->
 <div class="view" id="view-diary">
 <div class="inner">
-
+  <div style="padding-top:8px;">
+    <div class="page-title">Your <em>journal.</em></div>
+    <div class="page-sub">Tap any meal to write how you felt — during or after eating. Your notes are included in the clinical report.</div>
+  </div>
   <div class="date-nav">
     <button class="dnbtn" onclick="changeDiaryDay(-1)">‹</button>
     <div class="dnlabel" id="diaryDayLabel"></div>
     <button class="dnbtn" onclick="changeDiaryDay(1)">›</button>
   </div>
-
-  <div id="diaryEntries"></div>
-
+  <div id="journalEntries"></div>
 </div>
 </div>
 
-<!-- ══════════════════════════════════
-     REPORT TAB
-════════════════════════════════════ -->
+<!-- ══ REPORT TAB ══ -->
 <div class="view" id="view-report">
 <div class="inner">
-
   <div class="report-info" id="reportControls">
     <div class="ri-top">
       <div class="ri-title">Clinical Report</div>
       <div class="ri-badge">For Dietitian</div>
     </div>
-    <div class="ri-desc" style="margin-top: 8px;">
-      Generates a 7-day photo diary organised by day and meal time, with an AI-assisted behavioural and eating pattern analysis grounded in clinical nutrition literature (2020–2025). Nutrient analysis to be completed by your dietitian or nutritionist.
+    <div class="ri-desc" style="margin-top:8px;">
+      A 7-day photo diary by day and meal time, your personal journal notes, and an AI-assisted behavioural analysis grounded in clinical nutrition literature (2020–2025). Nutrient analysis to be completed by your dietitian.
     </div>
-    <button class="btn-primary" style="margin-top: 16px;"
-      onclick="generateReport()"
-      data-umami-event="Report - Generate">
-      Generate Report →
-    </button>
-    <button class="btn-accent"
-      onclick="printReport()"
-      data-umami-event="Report - Print">
-      🖨️ Print / Save as PDF
-    </button>
+    <button class="btn-primary" style="margin-top:16px;" onclick="generateReport()" data-umami-event="Report - Generate">Generate Report →</button>
+    <button class="btn-accent" onclick="printReport()" data-umami-event="Report - Save PDF">🖨️ Save as PDF</button>
   </div>
-
   <div id="reportOut"></div>
-
 </div>
 </div>
 
-<!-- ── FAB ── -->
-<button class="fab" onclick="goTab('log'); document.getElementById('uploadZone').click();"
-  data-umami-event="FAB - Add meal">+</button>
-
-<!-- ── TOAST ── -->
+<button class="fab" onclick="goTab('log')" data-umami-event="FAB - Go to log">+</button>
 <div class="toast" id="toast"></div>
 
 <script>
-// ════════════════════════════════════
-//  STATE
-// ════════════════════════════════════
 let logs = {};
-let currentMeal = 'Breakfast';
-let currentMood  = '🍽️ Hungry';
-let currentPhoto = null;
-let diaryDate    = new Date(); diaryDate.setHours(0,0,0,0);
-
+let currentMeal = 'Breakfast', currentMood = '🍽️ Hungry', currentPhoto = null;
+let diaryDate = new Date(); diaryDate.setHours(0,0,0,0);
 const MEAL_EMOJI = { Breakfast:'🌅', Lunch:'☀️', Dinner:'🌙', Snack:'🍎', Supper:'🌛' };
 
-// ════════════════════════════════════
-//  INIT
-// ════════════════════════════════════
+// ── INIT ──
 document.getElementById('hdate').textContent =
-  new Date().toLocaleDateString('en-MY',{ weekday:'short', day:'numeric', month:'short', year:'numeric' });
-setDefaultTime();
-setDiaryLabel();
-seedDemoData();
-renderTodayPreview();
-renderDiary();
+  new Date().toLocaleDateString('en-MY',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+setDefaultTime(); setDiaryLabel(); seedDemoData(); renderTodayPreview(); renderJournal();
 
 function dateStr(d){ return d.toISOString().slice(0,10); }
 function today(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
-function isToday(d){ return dateStr(d) === dateStr(today()); }
+function isToday(d){ return dateStr(d)===dateStr(today()); }
 function setDefaultTime(){
-  const n = new Date();
-  document.getElementById('timeInput').value =
-    String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0');
+  const n=new Date();
+  document.getElementById('timeInput').value=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
 }
 
-// ════════════════════════════════════
-//  TABS
-// ════════════════════════════════════
+// ── TABS ──
 function goTab(name){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
   document.getElementById('view-'+name).classList.add('active');
   document.getElementById('tab-'+name).classList.add('active');
-  if(name==='diary') renderDiary();
+  if(name==='diary') renderJournal();
 }
 
-// ════════════════════════════════════
-//  PHOTO HANDLING
-// ════════════════════════════════════
+// ── PHOTO ──
 function handlePhoto(e){
-  const file = e.target.files[0]; if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    currentPhoto = ev.target.result;
-    document.getElementById('stagedImg').src = currentPhoto;
-    document.getElementById('photoFileName').textContent = file.name;
-    document.getElementById('photoStage').style.display = 'block';
-    document.getElementById('uploadZone').style.display = 'none';
-    document.getElementById('quickInputs').style.display = 'block';
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    currentPhoto=ev.target.result;
+    document.getElementById('stagedImg').src=currentPhoto;
+    document.getElementById('photoFileName').textContent=file.name;
+    document.getElementById('photoStage').style.display='block';
+    document.getElementById('photoSourceRow').style.display='none';
+    document.getElementById('quickInputs').style.display='block';
   };
   reader.readAsDataURL(file);
 }
 function clearPhoto(){
-  currentPhoto = null;
-  document.getElementById('photoStage').style.display = 'none';
-  document.getElementById('uploadZone').style.display = 'block';
-  document.getElementById('quickInputs').style.display = 'none';
-  document.getElementById('photoInput').value = '';
+  currentPhoto=null;
+  document.getElementById('photoStage').style.display='none';
+  document.getElementById('photoSourceRow').style.display='grid';
+  document.getElementById('quickInputs').style.display='none';
+  document.getElementById('photoCamera').value='';
+  document.getElementById('photoGallery').value='';
 }
-function pickMeal(el,m){
-  document.querySelectorAll('#mealPills .pill').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active'); currentMeal = m;
-}
-function pickMood(el,m){
-  document.querySelectorAll('#moodPills .pill').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active'); currentMood = m;
-}
+function pickMeal(el,m){ document.querySelectorAll('#mealPills .pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); currentMeal=m; }
+function pickMood(el,m){ document.querySelectorAll('#moodPills .pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); currentMood=m; }
 
-// ════════════════════════════════════
-//  SAVE ENTRY
-// ════════════════════════════════════
+// ── SAVE ──
 function saveEntry(){
   if(!currentPhoto){ toast('Please add a photo first.'); return; }
-  const ds = dateStr(today());
-  if(!logs[ds]) logs[ds] = [];
-  logs[ds].push({
-    photo: currentPhoto,
-    meal:  currentMeal,
-    time:  document.getElementById('timeInput').value,
-    loc:   document.getElementById('locSel').value,
-    mood:  currentMood,
-    ts:    Date.now()
-  });
-  logs[ds].sort((a,b) => a.time.localeCompare(b.time));
-  clearPhoto();
-  setDefaultTime();
-  renderTodayPreview();
+  const ds=dateStr(today());
+  if(!logs[ds]) logs[ds]=[];
+  logs[ds].push({ photo:currentPhoto, meal:currentMeal, time:document.getElementById('timeInput').value, loc:document.getElementById('locSel').value, mood:currentMood, note:'', ts:Date.now() });
+  logs[ds].sort((a,b)=>a.time.localeCompare(b.time));
+  clearPhoto(); setDefaultTime(); renderTodayPreview();
   toast('Meal photo saved.');
 }
 
-// ════════════════════════════════════
-//  TODAY PREVIEW (Log tab)
-// ════════════════════════════════════
+// ── TODAY PREVIEW ──
 function renderTodayPreview(){
-  const ds = dateStr(today());
-  const entries = logs[ds] || [];
-  const el = document.getElementById('todayPreview');
-  if(!entries.length){ el.innerHTML = ''; return; }
-  el.innerHTML = `<div class="sec-label">Today's photos (${entries.length})</div>` +
-    entries.map((e,i) => entryCard(e, ds, i)).join('');
+  const ds=dateStr(today()), entries=logs[ds]||[];
+  const el=document.getElementById('todayPreview');
+  if(!entries.length){ el.innerHTML=''; return; }
+  el.innerHTML=`<div class="sec-label">Today's photos (${entries.length})</div>`+entries.map((e,i)=>logCard(e,ds,i)).join('');
 }
-
-// ════════════════════════════════════
-//  DIARY
-// ════════════════════════════════════
-function setDiaryLabel(){
-  const lbl = isToday(diaryDate) ? 'Today — ' : '';
-  document.getElementById('diaryDayLabel').textContent =
-    lbl + diaryDate.toLocaleDateString('en-MY',{ weekday:'long', day:'numeric', month:'long' });
-}
-function changeDiaryDay(d){
-  diaryDate.setDate(diaryDate.getDate() + d);
-  if(diaryDate > today()){ diaryDate.setDate(diaryDate.getDate() - d); return; }
-  setDiaryLabel(); renderDiary();
-}
-function renderDiary(){
-  const ds = dateStr(diaryDate);
-  const entries = logs[ds] || [];
-  const el = document.getElementById('diaryEntries');
-  if(!entries.length){
-    el.innerHTML = `<div class="empty"><div class="ei">📷</div>
-      <p>No photos logged for this day.<br>Go to <strong>Log</strong> to add a meal.</p></div>`;
-    return;
-  }
-
-  // Week bars
-  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const maxMeals = 5;
-  let weekHtml = `<div class="week-card">
-    <div class="week-card-title">This Week</div>
-    <div class="week-bars">`;
-  for(let i=6; i>=0; i--){
-    const d = new Date(today()); d.setDate(d.getDate()-i);
-    const count = (logs[dateStr(d)]||[]).length;
-    const pct = Math.min(100, count/maxMeals*100);
-    const isTod = isToday(d);
-    weekHtml += `<div class="wbar-wrap">
-      <div class="wbar${isTod?' today':''}" style="height:${pct}%"></div>
-      <div class="wbar-day">${days[d.getDay()]}</div>
-    </div>`;
-  }
-  weekHtml += `</div></div>`;
-
-  el.innerHTML = weekHtml + entries.map((e,i) => entryCard(e, ds, i)).join('');
-}
-
-function entryCard(e, ds, i){
+function logCard(e,ds,i){
   return `<div class="entry-card">
-    <div class="entry-img">${e.photo ? `<img src="${e.photo}" alt="meal">` : '🍽️'}</div>
+    <div class="entry-img">${e.photo?`<img src="${e.photo}" alt="meal">`:'🍽️'}</div>
     <div class="entry-body">
-      <div class="entry-meal">${MEAL_EMOJI[e.meal]||'🍽️'} ${e.meal}</div>
-      <div class="entry-time">${e.time || '—'}</div>
-      <div class="entry-tags">
-        <span class="etag">📍 ${e.loc}</span>
-        <span class="etag mood">${e.mood}</span>
-      </div>
+      <div class="entry-meal">${MEAL_EMOJI[e.meal]||''} ${e.meal}</div>
+      <div class="entry-time">${e.time||'—'}</div>
+      <div class="entry-tags"><span class="etag">📍 ${e.loc}</span><span class="etag mood">${e.mood}</span></div>
+      ${e.note?`<div class="entry-note">${e.note}</div>`:''}
     </div>
     <button class="entry-del" onclick="deleteEntry('${ds}',${i})">✕</button>
   </div>`;
 }
-function deleteEntry(ds,i){
-  logs[ds].splice(i,1);
-  renderTodayPreview(); renderDiary();
+function deleteEntry(ds,i){ logs[ds].splice(i,1); renderTodayPreview(); renderJournal(); }
+
+// ── JOURNAL ──
+function setDiaryLabel(){
+  const lbl=isToday(diaryDate)?'Today — ':'';
+  document.getElementById('diaryDayLabel').textContent=lbl+diaryDate.toLocaleDateString('en-MY',{weekday:'long',day:'numeric',month:'long'});
+}
+function changeDiaryDay(d){
+  diaryDate.setDate(diaryDate.getDate()+d);
+  if(diaryDate>today()){ diaryDate.setDate(diaryDate.getDate()-d); return; }
+  setDiaryLabel(); renderJournal();
+}
+function renderJournal(){
+  const ds=dateStr(diaryDate), entries=logs[ds]||[];
+  const el=document.getElementById('journalEntries');
+  if(!entries.length){
+    el.innerHTML=`<div class="empty"><div class="ei">📖</div><p>No meals logged for this day.<br>Go to <strong>Log</strong> to add a meal photo,<br>then come back to write your notes here.</p></div>`;
+    return;
+  }
+  el.innerHTML=entries.map((e,i)=>{
+    const hasNote=e.note&&e.note.trim();
+    return `<div class="journal-entry">
+      <div class="je-header" id="jeh-${ds}-${i}" onclick="toggleJE('${ds}',${i})">
+        <div class="je-thumb">${e.photo?`<img src="${e.photo}" alt="meal">`:'🍽️'}</div>
+        <div class="je-meta">
+          <div class="je-meal">${MEAL_EMOJI[e.meal]||''} ${e.meal}</div>
+          <div class="je-time">${e.time||'—'} · 📍 ${e.loc} · ${e.mood}</div>
+        </div>
+        <span class="je-chevron" id="chev-${ds}-${i}">›</span>
+      </div>
+      <div class="je-body" id="jebody-${ds}-${i}">
+        <div class="je-note-label">How did this meal make you feel?</div>
+        ${hasNote
+          ? `<div class="je-saved-note" id="jenote-${ds}-${i}">${e.note}</div>
+             <button class="je-edit-btn" onclick="editNote('${ds}',${i})">Edit note</button>`
+          : `<textarea class="je-textarea" id="jeta-${ds}-${i}" placeholder="Write freely — how did you feel before, during, or after this meal? Any cravings, fullness, discomfort, energy changes, or emotions? Your notes help your dietitian understand your relationship with food."></textarea>
+             <button class="je-save" onclick="saveNote('${ds}',${i})">Save note</button>`
+        }
+      </div>
+    </div>`;
+  }).join('');
+}
+function toggleJE(ds,i){
+  const body=document.getElementById(`jebody-${ds}-${i}`);
+  const chev=document.getElementById(`chev-${ds}-${i}`);
+  const hdr=document.getElementById(`jeh-${ds}-${i}`);
+  const open=body.classList.toggle('open');
+  chev.classList.toggle('open',open);
+  hdr.classList.toggle('open',open);
+}
+function saveNote(ds,i){
+  const ta=document.getElementById(`jeta-${ds}-${i}`); if(!ta) return;
+  logs[ds][i].note=ta.value.trim();
+  renderJournal(); renderTodayPreview(); toast('Note saved.');
+}
+function editNote(ds,i){
+  const noteEl=document.getElementById(`jenote-${ds}-${i}`);
+  const existing=logs[ds][i].note||'';
+  const parent=noteEl.parentNode;
+  noteEl.outerHTML=`<textarea class="je-textarea" id="jeta-${ds}-${i}">${existing}</textarea>`;
+  const btn=parent.querySelector('.je-edit-btn');
+  if(btn){ btn.className='je-save'; btn.textContent='Save note'; btn.onclick=()=>saveNote(ds,i); }
 }
 
-// ════════════════════════════════════
-//  DEMO DATA
-// ════════════════════════════════════
+// ── DEMO DATA ──
 function seedDemoData(){
-  const moods = ['😊 Happy','😐 Neutral','😔 Stressed','🍽️ Hungry','😴 Tired','😌 Bored'];
-  const locs  = ['Home','Restaurant','Work / School','Café','On the go'];
-  const meals = ['Breakfast','Lunch','Dinner','Snack'];
-  const times = { Breakfast:'07:30', Snack:'10:15', Lunch:'13:00', Dinner:'19:30' };
-  const px = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
-  for(let day=1; day<=6; day++){
-    const d = new Date(today()); d.setDate(d.getDate()-day);
-    const ds = dateStr(d);
-    logs[ds] = [];
-    const count = 2 + Math.floor(Math.random()*3);
-    meals.slice(0,count).forEach(m => {
-      logs[ds].push({
-        photo: px, meal: m,
-        time: times[m] || '12:00',
-        loc:  locs[Math.floor(Math.random()*locs.length)],
-        mood: moods[Math.floor(Math.random()*moods.length)],
-        ts: Date.now()
-      });
+  const moods=['😊 Happy','😐 Neutral','😔 Stressed','🍽️ Hungry','😴 Tired','😌 Bored'];
+  const locs=['Home','Restaurant','Work / School','Café','On the go'];
+  const meals=['Breakfast','Lunch','Dinner','Snack'];
+  const times={Breakfast:'07:30',Snack:'10:15',Lunch:'13:00',Dinner:'19:30'};
+  const notes=['Felt satisfied and full.','Ate too quickly, felt bloated after.','Craved something sweet after this.','Felt a bit sluggish about 30 min later.','','Good energy throughout the afternoon.'];
+  const px='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+  for(let day=1;day<=6;day++){
+    const d=new Date(today()); d.setDate(d.getDate()-day);
+    const ds=dateStr(d); logs[ds]=[];
+    const count=2+Math.floor(Math.random()*3);
+    meals.slice(0,count).forEach(m=>{
+      logs[ds].push({ photo:px, meal:m, time:times[m]||'12:00', loc:locs[Math.floor(Math.random()*locs.length)], mood:moods[Math.floor(Math.random()*moods.length)], note:notes[Math.floor(Math.random()*notes.length)], ts:Date.now() });
     });
   }
 }
 
-// ════════════════════════════════════
-//  REPORT
-// ════════════════════════════════════
+// ── REPORT ──
 async function generateReport(){
-  const days = Object.keys(logs).sort((a,b)=>b.localeCompare(a)).slice(0,7);
-  const out = document.getElementById('reportOut');
+  const days=Object.keys(logs).sort((a,b)=>b.localeCompare(a)).slice(0,7);
+  const out=document.getElementById('reportOut');
+  if(!days.length){ out.innerHTML=`<div class="report-doc"><p style="color:var(--muted);font-size:.85rem;font-weight:300;">No entries yet. Start logging meals to generate a report.</p></div>`; return; }
 
-  if(!days.length){
-    out.innerHTML = `<div class="report-doc"><p style="color:var(--muted);font-size:.85rem;font-weight:300;">No entries yet. Start logging meals to generate a report.</p></div>`;
-    return;
-  }
-
-  // Build day rows
-  const dayRowsHTML = days.map(ds => {
-    const entries = (logs[ds]||[]).slice().sort((a,b)=>a.time.localeCompare(b.time));
-    const d = new Date(ds+'T00:00:00');
-    const label = d.toLocaleDateString('en-MY',{ weekday:'long', day:'numeric', month:'long', year:'numeric' });
-    const photoGrid = entries.map(e => `
-      <div class="rd-photo-item">
-        <img src="${e.photo}" alt="${e.meal}"/>
-        <div class="rd-photo-caption">${MEAL_EMOJI[e.meal]||''} ${e.meal}<br>${e.time}</div>
-      </div>`).join('');
-    const contextLines = entries.map(e =>
-      `<div class="rd-context">${e.time} · <strong>${e.meal}</strong> · 📍 ${e.loc} · ${e.mood}</div>`
-    ).join('');
-    return `<div class="rd-day">
-      <div class="rd-day-title">${label} <span style="font-size:.72rem;color:var(--muted);font-weight:300;">(${entries.length} meal${entries.length!==1?'s':''})</span></div>
-      <div class="rd-photo-row">${photoGrid}</div>
-      ${contextLines}
-    </div>`;
+  const dayRowsHTML=days.map(ds=>{
+    const entries=(logs[ds]||[]).slice().sort((a,b)=>a.time.localeCompare(b.time));
+    const d=new Date(ds+'T00:00:00');
+    const label=d.toLocaleDateString('en-MY',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    const photoGrid=entries.map(e=>`<div class="rd-photo-item"><img src="${e.photo}" alt="${e.meal}"/><div class="rd-photo-caption">${MEAL_EMOJI[e.meal]||''} ${e.meal}<br>${e.time}</div></div>`).join('');
+    const contextLines=entries.map(e=>`<div class="rd-context">${e.time} · <strong>${e.meal}</strong> · 📍 ${e.loc} · ${e.mood}</div>${e.note?`<div class="rd-journal-note">"${e.note}"</div>`:''}`).join('');
+    return `<div class="rd-day"><div class="rd-day-title">${label} <span style="font-size:.72rem;color:var(--muted);font-weight:300;">(${entries.length} meal${entries.length!==1?'s':''})</span></div><div class="rd-photo-row">${photoGrid}</div>${contextLines}</div>`;
   }).join('');
 
-  // Stats for AI prompt
-  const allEntries = days.flatMap(ds => logs[ds]||[]);
-  const count = (obj,k) => { obj[k]=(obj[k]||0)+1; };
-  const mealC={}, locC={}, moodC=[];
-  const times = [];
-  allEntries.forEach(e => {
-    count(mealC, e.meal); count(locC, e.loc);
-    moodC.push(e.mood);
-    if(e.time) times.push(e.time);
+  const allEntries=days.flatMap(ds=>logs[ds]||[]);
+  const mealC={},locC={},moodList=[],timeList=[],noteList=[];
+  allEntries.forEach(e=>{
+    mealC[e.meal]=(mealC[e.meal]||0)+1; locC[e.loc]=(locC[e.loc]||0)+1;
+    moodList.push(e.mood); if(e.time) timeList.push(e.time);
+    if(e.note&&e.note.trim()) noteList.push(`"${e.note.trim()}"`);
   });
-  const fmt = obj => Object.entries(obj).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${k} (${v}x)`).join(', ');
-  const earlyMeals = times.filter(t=>t<'09:00').length;
-  const lateMeals  = times.filter(t=>t>='20:00').length;
-  const avgPerDay  = (allEntries.length/days.length).toFixed(1);
-  const moodStr    = moodC.join(', ');
+  const fmt=obj=>Object.entries(obj).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${k} (${v}x)`).join(', ');
+  const avgPerDay=(allEntries.length/days.length).toFixed(1);
+  const earlyMeals=timeList.filter(t=>t<'09:00').length;
+  const lateMeals=timeList.filter(t=>t>='20:00').length;
+  const notesSection=noteList.length?`\nPatient journal notes:\n${noteList.join('\n')}`:'';
 
-  // Render skeleton
-  out.innerHTML = `<div class="report-doc">
+  out.innerHTML=`<div class="report-doc">
     <div class="rd-header">
       <h2>MakanLah — Clinical Food Diary Report</h2>
-      <div class="rd-meta">
-        Generated: ${new Date().toLocaleDateString('en-MY',{day:'numeric',month:'long',year:'numeric'})}
-        &nbsp;·&nbsp; ${days.length}-day record
-        &nbsp;·&nbsp; ${allEntries.length} meal photos
-      </div>
+      <div class="rd-meta">Generated: ${new Date().toLocaleDateString('en-MY',{day:'numeric',month:'long',year:'numeric'})} &nbsp;·&nbsp; ${days.length}-day record &nbsp;·&nbsp; ${allEntries.length} meal photos</div>
     </div>
-    <div class="rd-section">
-      <h3>Photo Diary — Meals by Day</h3>
-      ${dayRowsHTML}
-    </div>
+    <div class="rd-section"><h3>Photo Diary — Meals by Day</h3>${dayRowsHTML}</div>
     <div class="rd-section">
       <h3>Behavioural &amp; Eating Pattern Analysis</h3>
       <div class="analysis-box" id="analysisBox">
         <div class="ab-label">AI-Assisted Analysis <span style="opacity:.6;font-weight:300;">(generating…)</span></div>
-        <div class="loading-pulse">
-          <div class="dot-pulse"><span></span><span></span><span></span></div>
-          Analysing eating patterns based on clinical literature…
-        </div>
+        <div class="loading-pulse"><div class="dot-pulse"><span></span><span></span><span></span></div>Analysing patterns based on clinical literature…</div>
       </div>
     </div>
-    <div class="disclaimer">
-      This report is generated from patient self-reported meal photos via MakanLah, an Aufthority app.
-      Nutrient composition analysis has not been completed and must be assessed by the attending dietitian or nutritionist.
-      AI-generated behavioural analysis is a clinical aid only — it does not constitute a diagnosis or dietary prescription.
-    </div>
+    <div class="disclaimer">This report is generated from patient self-reported meal photos and journal entries via MakanLah (Aufthority). Nutrient composition analysis has not been completed and must be assessed by the attending dietitian or nutritionist. AI-generated behavioural analysis is a clinical aid only — it does not constitute a diagnosis or dietary prescription.</div>
   </div>`;
 
-  out.scrollIntoView({ behavior: 'smooth' });
+  out.scrollIntoView({behavior:'smooth'});
 
-  // Claude API call
-  const prompt = `You are a clinical nutrition specialist preparing a behavioural eating pattern analysis for a registered dietitian or nutritionist to review. The data below comes from a patient's 7-day food photo diary collected via a mobile app (MakanLah).
+  const prompt=`You are a clinical nutrition specialist preparing a behavioural eating pattern analysis for a registered dietitian or nutritionist. Data from a patient's 7-day food photo diary via MakanLah:
 
-Patient eating summary:
 - Days recorded: ${days.length}
 - Total meal photos: ${allEntries.length}
 - Average meals per day: ${avgPerDay}
 - Meal type breakdown: ${fmt(mealC)}
 - Eating locations: ${fmt(locC)}
-- Mood / hunger states at mealtimes: ${moodStr}
+- Mood / hunger states: ${moodList.join(', ')}
 - Meals before 9am: ${earlyMeals}
 - Meals after 8pm: ${lateMeals}
-- All recorded meal times: ${times.join(', ')}
+- All meal times: ${timeList.join(', ')}${notesSection}
 
-Write a structured clinical behavioural and eating pattern analysis in flowing prose (no bullet points). Cover all of the following:
+Write a structured clinical behavioural and eating pattern analysis in flowing prose (no bullet points). Cover: (1) Meal timing and eating rhythm — regularity, frequency, circadian alignment, metabolic implications. (2) Eating environment and context — location patterns, food access, social eating triggers. (3) Emotional and appetite-driven eating — interpret mood and hunger data; reference journal notes if provided. (4) Behavioural risk markers — patterns relevant to T2DM, CVD, obesity, metabolic syndrome. (5) Observations for the dietitian — positive patterns to acknowledge, areas to probe in consultation.
 
-1. Meal timing and eating rhythm — assess regularity, meal frequency, circadian alignment, early vs late eating patterns and their metabolic implications.
-2. Eating environment and context — what the location patterns reveal about food access, social eating, and environmental triggers.
-3. Emotional and appetite-driven eating — interpret the mood and hunger state data through the lens of emotional eating research.
-4. Behavioural risk markers — identify patterns relevant to chronic disease risk (T2DM, cardiovascular disease, obesity, metabolic syndrome) based on the data.
-5. Observations for the dietitian — note any positive patterns and flag specific areas for the dietitian to probe further in consultation.
+Ground every observation in published evidence (2020–2025). Cite studies inline. Use clear clinical language. Do not make dietary recommendations.`;
 
-Ground every observation in recent published evidence (2020–2025). Cite specific studies or reviews inline (e.g., "A 2022 randomised trial in Nutrients found…" or "Smith et al., 2023 reported…"). Use clear clinical language accessible to a dietitian. Do not make dietary recommendations — describe patterns and their documented associations only.`;
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    const data = await res.json();
-    const text = data.content?.find(b=>b.type==='text')?.text || 'Analysis could not be generated.';
-    const paragraphs = text.split(/\n\n+/).filter(p=>p.trim()).map(p=>`<p>${p.trim()}</p>`).join('');
-    document.getElementById('analysisBox').innerHTML = `
-      <div class="ab-label">AI-Assisted Behavioural Analysis</div>
-      <div class="ab-content">${paragraphs}</div>
-      <div class="ab-ref">Analysis grounded in clinical nutrition literature (2020–2025). Generated by Claude (Anthropic) via MakanLah. To be reviewed and validated by the attending dietitian or nutritionist before clinical use.</div>`;
-  } catch(err) {
-    document.getElementById('analysisBox').innerHTML = `
-      <div class="ab-label">Analysis Unavailable</div>
-      <div class="ab-content" style="color:var(--muted);">Could not connect to AI service. The photo diary above is complete and can be reviewed manually by your dietitian.</div>`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    const text=data.content?.find(b=>b.type==='text')?.text||'Analysis could not be generated.';
+    const paragraphs=text.split(/\n\n+/).filter(p=>p.trim()).map(p=>`<p>${p.trim()}</p>`).join('');
+    document.getElementById('analysisBox').innerHTML=`<div class="ab-label">AI-Assisted Behavioural Analysis</div><div class="ab-content">${paragraphs}</div><div class="ab-ref">Grounded in clinical nutrition literature (2020–2025). Generated by Claude (Anthropic) via MakanLah. To be reviewed and validated by the attending dietitian before clinical use.</div>`;
+  }catch(err){
+    document.getElementById('analysisBox').innerHTML=`<div class="ab-label">Analysis Unavailable</div><div class="ab-content" style="color:var(--muted);">Could not connect to AI service. The photo diary and journal notes above are complete and can be reviewed manually.</div>`;
   }
 }
 
-function printReport(){
-  generateReport();
-  setTimeout(() => window.print(), 800);
+async function printReport(){
+  await generateReport();
+  setTimeout(()=>window.print(),1500);
 }
 
-// ════════════════════════════════════
-//  TOAST
-// ════════════════════════════════════
-function toast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2400);
-}
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
 </script>
 </body>
 </html>
