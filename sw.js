@@ -1,8 +1,7 @@
 const CACHE = 'makanlah-v1';
 const SHELL = [
   '/',
-  '/index.html',
-  'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap'
+  '/index.html'
 ];
 
 self.addEventListener('install', e => {
@@ -20,9 +19,9 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  // Network first for API calls, cache first for everything else
-  if (e.request.url.includes('api.anthropic.com') || e.request.url.includes('umami')) {
-    return; // Don't intercept — let these go to network directly
+  // Don't intercept analytics calls — let these go to network directly
+  if (e.request.url.includes('umami')) {
+    return;
   }
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request).catch(() => caches.match('/index.html')))

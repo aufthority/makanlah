@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_MAKANLAH_UMAMI_ID"></script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="30307bac-21fd-4735-b076-61b9bdb3b769"></script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)"/>
@@ -64,8 +64,10 @@
       max-width: 680px; margin: 0 auto; padding: 0 28px;
       height: 56px; display: flex; align-items: center; justify-content: space-between;
     }
-    .logo { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
+    .logo { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--ink); text-decoration: none; display: flex; flex-direction: column; gap: 1px; }
     .logo em { color: var(--accent); font-style: italic; }
+    .logo-by { font-family: 'DM Sans', sans-serif; font-size: .55rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; color: var(--muted); text-decoration: none; transition: color .18s; }
+    .logo-by:hover { color: var(--accent); }
     .hdate { font-size: .72rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
 
     /* ── TABS ── */
@@ -78,8 +80,22 @@
       display: flex; flex-direction: column; align-items: center; gap: 3px;
       transition: color .18s, border-color .18s;
     }
-    .tbtn .ti { font-size: 1rem; }
+    .tbtn .ti { font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+    .tbtn .ti svg { width: 20px; height: 20px; }
     .tbtn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      display: flex; background: var(--card-bg); border: 1px solid var(--rule);
+      border-radius: 20px; padding: 3px; gap: 0;
+    }
+    .lang-btn {
+      font-size: .68rem; font-weight: 500; letter-spacing: .06em;
+      padding: 3px 10px; border-radius: 16px; border: none;
+      background: transparent; color: var(--muted); cursor: pointer;
+      transition: all .18s; font-family: 'DM Sans', sans-serif;
+    }
+    .lang-btn.active { background: var(--accent); color: #fff; }
 
     /* ── VIEWS ── */
     .view { display: none; flex: 1; overflow-y: auto; padding: 28px 0 100px; }
@@ -126,7 +142,8 @@
       font-family: 'DM Sans', sans-serif; text-align: center;
     }
     .photo-src-btn:hover { border-color: var(--accent); background: var(--accent-light); }
-    .psb-icon { font-size: 1.7rem; }
+    .psb-icon { display: flex; align-items: center; justify-content: center; color: var(--muted); }
+    .psb-icon svg { width: 32px; height: 32px; }
     .psb-label { font-size: .78rem; font-weight: 500; color: var(--ink); }
     .psb-sub { font-size: .65rem; color: var(--muted); font-weight: 300; }
     #photoCamera, #photoGallery { display: none; }
@@ -162,7 +179,7 @@
     .entry-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); display: flex; margin-bottom: 10px; transition: border-color .2s, box-shadow .2s, transform .15s; animation: fadeUp .22s ease; }
     .entry-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px var(--shadow); transform: translateY(-1px); }
     @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
-    .entry-img { width: 80px; flex-shrink: 0; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; overflow: hidden; }
+    .entry-img { width: 80px; flex-shrink: 0; background: var(--accent-light); display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .entry-img img { width: 80px; height: 100%; min-height: 80px; object-fit: cover; }
     .entry-body { flex: 1; padding: 12px 14px; min-width: 0; }
     .entry-meal { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); margin-bottom: 3px; }
@@ -171,12 +188,12 @@
     .etag { font-size: .6rem; font-weight: 500; text-transform: uppercase; letter-spacing: .07em; border-radius: 20px; padding: 2px 8px; background: var(--accent-light); color: var(--accent); }
     .etag.mood { background: var(--bg); color: var(--muted); border: 1px solid var(--rule); }
     .entry-note { font-size: .74rem; color: var(--muted); font-weight: 300; font-style: italic; line-height: 1.5; margin-top: 6px; }
-    .entry-del { padding: 12px 10px; background: none; border: none; color: var(--rule); cursor: pointer; font-size: .85rem; align-self: flex-start; transition: color .15s; flex-shrink: 0; }
+    .entry-del { padding: 12px 10px; background: none; border: none; color: var(--rule); cursor: pointer; display: flex; align-items: flex-start; align-self: flex-start; transition: color .15s; flex-shrink: 0; }
     .entry-del:hover { color: #c0392b; }
 
     /* ── EMPTY STATE ── */
     .empty { text-align: center; padding: 48px 20px; border: 1px dashed var(--rule); border-radius: var(--radius); }
-    .empty .ei { font-size: 2.2rem; margin-bottom: 12px; }
+    .empty .ei { display: flex; justify-content: center; margin-bottom: 12px; }
     .empty p { font-size: .85rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
 
     /* ── JOURNAL ── */
@@ -184,12 +201,12 @@
     .je-header { display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer; transition: background .15s; }
     .je-header:hover { background: var(--accent-light); }
     .je-header.open { border-bottom: 1px solid var(--rule); }
-    .je-thumb { width: 44px; height: 44px; border-radius: var(--radius); flex-shrink: 0; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; overflow: hidden; }
+    .je-thumb { width: 44px; height: 44px; border-radius: var(--radius); flex-shrink: 0; background: var(--accent-light); display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .je-thumb img { width: 44px; height: 44px; object-fit: cover; }
     .je-meta { flex: 1; }
     .je-meal { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); }
     .je-time { font-size: .7rem; color: var(--muted); font-weight: 300; }
-    .je-chevron { font-size: .85rem; color: var(--muted); transition: transform .2s; flex-shrink: 0; }
+    .je-chevron { display: flex; align-items: center; color: var(--muted); transition: transform .2s; flex-shrink: 0; }
     .je-chevron.open { transform: rotate(90deg); }
     .je-body { display: none; padding: 16px 14px; }
     .je-body.open { display: block; }
@@ -239,18 +256,6 @@
     .rd-photo-caption { font-size: .58rem; color: var(--muted); text-align: center; font-weight: 400; max-width: 80px; line-height: 1.4; }
     .rd-context { font-size: .72rem; color: var(--muted); font-weight: 300; line-height: 1.8; }
     .rd-journal-note { font-size: .76rem; color: var(--ink); font-style: italic; font-weight: 300; line-height: 1.6; margin-top: 6px; padding: 8px 12px; background: var(--accent-light); border-left: 2px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; }
-    .analysis-box { background: var(--accent-light); border: 1px solid var(--rule); border-radius: var(--radius); padding: 20px; margin-top: 8px; }
-    .ab-label { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
-    .ab-content { font-size: .82rem; color: var(--ink); line-height: 1.8; font-weight: 300; }
-    .ab-content p { margin-bottom: 12px; }
-    .ab-content p:last-child { margin-bottom: 0; }
-    .ab-ref { font-size: .68rem; color: var(--muted); font-style: italic; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule); line-height: 1.6; }
-    .loading-pulse { display: flex; align-items: center; gap: 10px; font-size: .8rem; color: var(--muted); padding: 8px 0; font-weight: 300; }
-    .dot-pulse { display: flex; gap: 4px; }
-    .dot-pulse span { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: pulse 1.2s ease-in-out infinite; }
-    .dot-pulse span:nth-child(2) { animation-delay: .2s; }
-    .dot-pulse span:nth-child(3) { animation-delay: .4s; }
-    @keyframes pulse { 0%,80%,100%{opacity:.2;} 40%{opacity:1;} }
     .disclaimer { font-size: .7rem; color: var(--muted); line-height: 1.7; padding: 16px; font-weight: 300; background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius); margin-top: 14px; }
 
     /* ── TOAST ── */
@@ -261,10 +266,35 @@
     .fab { position: fixed; bottom: calc(24px + var(--safe-bottom)); right: 24px; width: 50px; height: 50px; border-radius: 50%; background: var(--ink); border: none; cursor: pointer; color: var(--bg); font-size: 1.5rem; box-shadow: 0 4px 20px rgba(26,26,24,.2); display: flex; align-items: center; justify-content: center; transition: background .2s, transform .15s; z-index: 99; }
     .fab:hover { background: var(--accent); transform: translateY(-2px); }
 
+    /* ── APP FOOTER ── */
+    .app-footer {
+      margin-top: 48px; padding: 24px 0 8px;
+      border-top: 1px solid var(--rule);
+      text-align: center;
+    }
+    .app-footer-apps {
+      font-size: .72rem; color: var(--muted); font-weight: 300;
+      line-height: 1.9; margin-bottom: 14px;
+    }
+    .app-footer-apps strong {
+      display: block; font-size: .62rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .14em;
+      color: var(--muted); margin-bottom: 4px;
+    }
+    .app-footer-apps a {
+      color: var(--accent); text-decoration: none;
+      transition: opacity .15s;
+    }
+    .app-footer-apps a:hover { opacity: .75; }
+    .app-footer-copy {
+      font-size: .65rem; color: var(--muted); font-weight: 300;
+      letter-spacing: .04em;
+    }
+
     /* ── PRINT ── */
     @media print {
       header, .tabs, .fab, .toast, .install-banner,
-      #view-log, #view-diary, #reportControls { display: none !important; }
+      #view-log, #view-diary, #reportControls, .app-footer { display: none !important; }
       * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
       body { background: #fff !important; color: #1a1a18 !important; }
       #view-report { display: block !important; padding: 0 !important; }
@@ -282,11 +312,6 @@
       .rd-photo-caption { font-size: 7pt !important; }
       .rd-context { font-size: 8pt !important; line-height: 1.55 !important; }
       .rd-journal-note { font-size: 8.5pt !important; padding: 6pt 10pt !important; margin-top: 5pt !important; background: #e8f5ee !important; border-left: 1.5pt solid #2d6a4f !important; }
-      .analysis-box { page-break-inside: avoid; background: #e8f5ee !important; border: 0.5pt solid #e0ddd5 !important; padding: 12pt !important; }
-      .ab-label { font-size: 7pt !important; color: #2d6a4f !important; margin-bottom: 8pt !important; }
-      .ab-content { font-size: 9pt !important; line-height: 1.65 !important; }
-      .ab-content p { margin-bottom: 7pt !important; }
-      .ab-ref { font-size: 7pt !important; color: #6b6b62 !important; padding-top: 7pt !important; }
       .disclaimer { page-break-inside: avoid; font-size: 7.5pt !important; padding: 10pt !important; background: #f7f5f0 !important; border: 0.5pt solid #e0ddd5 !important; margin-top: 10pt !important; }
       @page { margin: 18mm 16mm; size: A4; }
     }
@@ -304,94 +329,129 @@
 
 <!-- ── INSTALL BANNER ── -->
 <div class="install-banner" id="installBanner">
-  <span>📲 <strong>Install MakanLah</strong> — add to your home screen for quick meal logging</span>
-  <button class="ib-btn" id="installBtn">Install</button>
-  <button class="ib-dismiss" onclick="dismissInstall()">✕</button>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:18px;height:18px;flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 4.5h3" /></svg>
+  <span><strong data-en="Install MakanLah" data-bm="Pasang MakanLah">Install MakanLah</strong> — <span data-en="add to your home screen for quick access" data-bm="tambah ke skrin utama untuk akses mudah">add to your home screen for quick access</span></span>
+  <button class="ib-btn" id="installBtn" data-en="Install" data-bm="Pasang">Install</button>
+  <button class="ib-dismiss" onclick="dismissInstall()" aria-label="Dismiss">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:14px;height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+  </button>
 </div>
 
 <header>
   <div class="nav-inner">
-    <a href="https://aufthority.com" class="logo"><em>Makan</em>Lah</a>
-    <div class="hdate" id="hdate"></div>
+    <a href="https://aufthority.com" class="logo">
+      <span><em>Makan</em>Lah</span>
+      <span class="logo-by">by Aufthority</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="hdate" id="hdate"></div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btnBM" onclick="setLang('bm')">BM</button>
+      </div>
+    </div>
   </div>
 </header>
 
 <div class="tabs">
-  <button class="tbtn active" onclick="goTab('log')" id="tab-log" data-umami-event="Tab - Log"><span class="ti">📸</span>Log</button>
-  <button class="tbtn" onclick="goTab('diary')" id="tab-diary" data-umami-event="Tab - Journal"><span class="ti">📖</span>Journal</button>
-  <button class="tbtn" onclick="goTab('report')" id="tab-report" data-umami-event="Tab - Report"><span class="ti">📋</span>Report</button>
+  <button class="tbtn active" onclick="goTab('log')" id="tab-log" data-umami-event="Tab - Log">
+    <span class="ti"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" /></svg></span>
+    <span data-en="Log" data-bm="Log">Log</span>
+  </button>
+  <button class="tbtn" onclick="goTab('diary')" id="tab-diary" data-umami-event="Tab - Journal">
+    <span class="ti"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /></svg></span>
+    <span data-en="Journal" data-bm="Jurnal">Journal</span>
+  </button>
+  <button class="tbtn" onclick="goTab('report')" id="tab-report" data-umami-event="Tab - Report">
+    <span class="ti"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg></span>
+    <span data-en="Report" data-bm="Laporan">Report</span>
+  </button>
 </div>
 
 <!-- ══ LOG TAB ══ -->
 <div class="view active" id="view-log">
 <div class="inner">
   <div style="padding-top:8px;">
-    <div class="page-title">What did you <em>eat?</em></div>
-    <div class="page-sub">Take a photo now, or choose one from your gallery to log a meal from earlier.</div>
+    <div class="page-title" data-en="What did you <em>eat?</em>" data-bm="Apa yang anda <em>makan?</em>">What did you <em>eat?</em></div>
+    <div class="page-sub" data-en="Take a photo now, or choose one from your gallery to log a meal from earlier." data-bm="Ambil foto sekarang, atau pilih dari galeri untuk merekod hidangan terdahulu.">Take a photo now, or choose one from your gallery to log a meal from earlier.</div>
   </div>
   <div class="storage-notice">
-    📱 <strong>Your photos and notes are saved on this device.</strong> They persist between sessions — log anytime, generate your report when ready.
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:14px;height:14px;display:inline;vertical-align:middle;margin-right:4px;flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" /></svg>
+    <strong data-en="Your photos and notes are saved on this device." data-bm="Foto dan nota anda disimpan di peranti ini.">Your photos and notes are saved on this device.</strong> <span data-en="They stay between sessions — log anytime, generate your report when ready." data-bm="Ia kekal antara sesi — log bila-bila masa, jana laporan apabila bersedia.">They stay between sessions — log anytime, generate your report when ready.</span>
   </div>
   <div class="upload-card">
     <div class="photo-stage" id="photoStage">
       <img id="stagedImg" src="" alt="meal photo"/>
       <div class="photo-stage-bar">
         <span id="photoFileName">photo.jpg</span>
-        <button class="rm-btn" onclick="clearPhoto()">Remove</button>
+        <button class="rm-btn" onclick="clearPhoto()" data-en="Remove photo" data-bm="Buang foto">Remove photo</button>
       </div>
     </div>
     <div class="photo-source-row" id="photoSourceRow">
       <div class="photo-src-btn" onclick="document.getElementById('photoCamera').click()">
-        <span class="psb-icon">📷</span>
-        <span class="psb-label">Take a photo</span>
-        <span class="psb-sub">Open camera now</span>
+        <span class="psb-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" /></svg>
+        </span>
+        <span class="psb-label" data-en="Take a photo" data-bm="Ambil foto">Take a photo</span>
+        <span class="psb-sub" data-en="Open camera now" data-bm="Buka kamera sekarang">Open camera now</span>
       </div>
       <div class="photo-src-btn" onclick="document.getElementById('photoGallery').click()">
-        <span class="psb-icon">🖼️</span>
-        <span class="psb-label">From gallery</span>
-        <span class="psb-sub">Log a meal from earlier</span>
+        <span class="psb-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>
+        </span>
+        <span class="psb-label" data-en="From gallery" data-bm="Dari galeri">From gallery</span>
+        <span class="psb-sub" data-en="Log a meal from earlier" data-bm="Rekod hidangan terdahulu">Log a meal from earlier</span>
       </div>
       <input type="file" id="photoCamera" accept="image/*" capture="environment" onchange="handlePhoto(event)"/>
       <input type="file" id="photoGallery" accept="image/*" onchange="handlePhoto(event)"/>
     </div>
     <div id="quickInputs" style="display:none;margin-top:20px;">
-      <div class="sec-label">Meal type</div>
+      <div class="sec-label" data-en="Meal type" data-bm="Jenis hidangan">Meal type</div>
       <div class="pill-group" id="mealPills" style="margin-bottom:20px;">
-        <button class="pill active" onclick="pickMeal(this,'Breakfast')">🌅 Breakfast</button>
-        <button class="pill" onclick="pickMeal(this,'Lunch')">☀️ Lunch</button>
-        <button class="pill" onclick="pickMeal(this,'Dinner')">🌙 Dinner</button>
-        <button class="pill" onclick="pickMeal(this,'Snack')">🍎 Snack</button>
-        <button class="pill" onclick="pickMeal(this,'Supper')">🌛 Supper</button>
+        <button class="pill active" onclick="pickMeal(this,'Breakfast')" data-en="Breakfast" data-bm="Sarapan">Breakfast</button>
+        <button class="pill" onclick="pickMeal(this,'Lunch')" data-en="Lunch" data-bm="Makan Tengah Hari">Lunch</button>
+        <button class="pill" onclick="pickMeal(this,'Dinner')" data-en="Dinner" data-bm="Makan Malam">Dinner</button>
+        <button class="pill" onclick="pickMeal(this,'Snack')" data-en="Snack" data-bm="Snek">Snack</button>
+        <button class="pill" onclick="pickMeal(this,'Supper')" data-en="Supper" data-bm="Supper">Supper</button>
       </div>
       <div class="quick-inputs">
-        <div class="qi"><label>Time eaten</label><input type="time" id="timeInput"/></div>
+        <div class="qi"><label data-en="Time eaten" data-bm="Masa makan">Time eaten</label><input type="time" id="timeInput"/></div>
         <div class="qi">
-          <label>Location</label>
+          <label data-en="Where did you eat?" data-bm="Di mana anda makan?">Where did you eat?</label>
           <select id="locSel">
-            <option value="Home">🏠 Home</option>
-            <option value="Restaurant">🍽️ Restaurant</option>
-            <option value="Work / School">💼 Work / School</option>
-            <option value="Café">☕ Café</option>
-            <option value="On the go">🚗 On the go</option>
-            <option value="Other">📍 Other</option>
+            <option value="Home" data-en="Home" data-bm="Rumah">Home</option>
+            <option value="Restaurant" data-en="Restaurant" data-bm="Restoran">Restaurant</option>
+            <option value="Work / School" data-en="Work / School" data-bm="Kerja / Sekolah">Work / School</option>
+            <option value="Café" data-en="Café" data-bm="Kafe">Café</option>
+            <option value="On the go" data-en="On the go" data-bm="Dalam perjalanan">On the go</option>
+            <option value="Other" data-en="Other" data-bm="Lain-lain">Other</option>
           </select>
         </div>
         <div class="qi full">
-          <label>How were you feeling?</label>
+          <label data-en="How were you feeling?" data-bm="Bagaimana perasaan anda?">How were you feeling?</label>
           <div class="pill-group" id="moodPills">
-            <button class="pill" onclick="pickMood(this,'😊 Happy')">😊 Happy</button>
-            <button class="pill" onclick="pickMood(this,'😐 Neutral')">😐 Neutral</button>
-            <button class="pill" onclick="pickMood(this,'😔 Stressed')">😔 Stressed</button>
-            <button class="pill" onclick="pickMood(this,'😴 Tired')">😴 Tired</button>
-            <button class="pill active" onclick="pickMood(this,'🍽️ Hungry')">🍽️ Hungry</button>
-            <button class="pill" onclick="pickMood(this,'😌 Bored')">😌 Bored</button>
+            <button class="pill" onclick="pickMood(this,'Happy')" data-en="Happy" data-bm="Gembira">Happy</button>
+            <button class="pill" onclick="pickMood(this,'Neutral')" data-en="Neutral" data-bm="Biasa">Neutral</button>
+            <button class="pill" onclick="pickMood(this,'Stressed')" data-en="Stressed" data-bm="Tertekan">Stressed</button>
+            <button class="pill" onclick="pickMood(this,'Tired')" data-en="Tired" data-bm="Penat">Tired</button>
+            <button class="pill active" onclick="pickMood(this,'Hungry')" data-en="Hungry" data-bm="Lapar">Hungry</button>
+            <button class="pill" onclick="pickMood(this,'Bored')" data-en="Bored" data-bm="Bosan">Bored</button>
           </div>
         </div>
       </div>
-      <button class="btn-primary" onclick="saveEntry()" data-umami-event="Log - Save meal">Save Meal Photo →</button>
+      <button class="btn-primary" onclick="saveEntry()" data-umami-event="Log - Save meal" data-en="Save Meal Photo →" data-bm="Simpan Foto Hidangan →">Save Meal Photo →</button>
     </div>
   </div>
   <div id="todayPreview"></div>
+  <footer class="app-footer">
+    <div class="app-footer-apps">
+      <strong data-en="More apps by Aufthority" data-bm="Aplikasi lain oleh Aufthority">More apps by Aufthority</strong>
+      <a href="https://cermindiri.aufthority.com/" target="_blank" rel="noopener">CerminDiri</a> &nbsp;·&nbsp;
+      <a href="https://www.aufthority.com/nafaslega/" target="_blank" rel="noopener">NafasLega</a> &nbsp;·&nbsp;
+      <a href="https://aufthority.github.io/neurohabitbeta/" target="_blank" rel="noopener">NeuroHabit</a>
+    </div>
+    <div class="app-footer-copy">© 2026 Aufthority · Built with care in Malaysia</div>
+  </footer>
 </div>
 </div>
 
@@ -399,15 +459,28 @@
 <div class="view" id="view-diary">
 <div class="inner">
   <div style="padding-top:8px;">
-    <div class="page-title">Your <em>journal.</em></div>
-    <div class="page-sub">Tap any meal to write how you felt — during or after eating. Your notes are saved and included in the report.</div>
+    <div class="page-title" data-en="Your <em>journal.</em>" data-bm="<em>Jurnal</em> anda.">Your <em>journal.</em></div>
+    <div class="page-sub" data-en="Tap any meal to write how you felt — before, during, or after eating. Your notes are saved and included in the report." data-bm="Ketuk mana-mana hidangan untuk menulis perasaan anda — sebelum, semasa, atau selepas makan. Nota anda disimpan dan disertakan dalam laporan.">Tap any meal to write how you felt — before, during, or after eating. Your notes are saved and included in the report.</div>
   </div>
   <div class="date-nav">
-    <button class="dnbtn" onclick="changeDiaryDay(-1)">‹</button>
+    <button class="dnbtn" onclick="changeDiaryDay(-1)" aria-label="Previous day">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:14px;height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
+    </button>
     <div class="dnlabel" id="diaryDayLabel"></div>
-    <button class="dnbtn" onclick="changeDiaryDay(1)">›</button>
+    <button class="dnbtn" onclick="changeDiaryDay(1)" aria-label="Next day">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:14px;height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+    </button>
   </div>
   <div id="journalEntries"></div>
+  <footer class="app-footer">
+    <div class="app-footer-apps">
+      <strong data-en="More apps by Aufthority" data-bm="Aplikasi lain oleh Aufthority">More apps by Aufthority</strong>
+      <a href="https://cermindiri.aufthority.com/" target="_blank" rel="noopener">CerminDiri</a> &nbsp;·&nbsp;
+      <a href="https://www.aufthority.com/nafaslega/" target="_blank" rel="noopener">NafasLega</a> &nbsp;·&nbsp;
+      <a href="https://aufthority.github.io/neurohabitbeta/" target="_blank" rel="noopener">NeuroHabit</a>
+    </div>
+    <div class="app-footer-copy">© 2026 Aufthority · Built with care in Malaysia</div>
+  </footer>
 </div>
 </div>
 
@@ -416,20 +489,34 @@
 <div class="inner">
   <div class="report-info" id="reportControls">
     <div class="ri-top">
-      <div class="ri-title">Clinical Report</div>
-      <div class="ri-badge">For Dietitian</div>
+      <div class="ri-title" data-en="Clinical Report" data-bm="Laporan Klinikal">Clinical Report</div>
+      <div class="ri-badge" data-en="For Dietitian" data-bm="Untuk Doktor Diet">For Dietitian</div>
     </div>
-    <div class="ri-desc" style="margin-top:8px;">
-      A 7-day photo diary by day and meal time, your personal journal notes, and an AI-assisted behavioural analysis grounded in clinical nutrition literature (2020–2025). Nutrient analysis to be completed by your dietitian.
+    <div class="ri-desc" style="margin-top:8px;" data-en="A photo diary of your meals organised by day and time, along with your personal journal notes. Share this with your dietitian or nutritionist for review." data-bm="Diari foto hidangan anda yang disusun mengikut hari dan masa, berserta nota jurnal peribadi anda. Kongsikan ini dengan doktor diet atau ahli pemakanan anda untuk semakan.">
+      A photo diary of your meals organised by day and time, along with your personal journal notes. Share this with your dietitian or nutritionist for review.
     </div>
-    <button class="btn-primary" style="margin-top:16px;" onclick="generateReport()" data-umami-event="Report - Generate">Generate Report →</button>
-    <button class="btn-accent" onclick="printReport()" data-umami-event="Report - Save PDF">🖨️ Save as PDF</button>
+    <button class="btn-primary" style="margin-top:16px;" onclick="generateReport()" data-umami-event="Report - Generate" data-en="Generate Report →" data-bm="Jana Laporan →">Generate Report →</button>
+    <button class="btn-accent" onclick="printReport()" data-umami-event="Report - Save PDF" style="display:flex;align-items:center;justify-content:center;gap:8px;">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+      <span data-en="Save as PDF" data-bm="Simpan sebagai PDF">Save as PDF</span>
+    </button>
   </div>
   <div id="reportOut"></div>
+  <footer class="app-footer">
+    <div class="app-footer-apps">
+      <strong data-en="More apps by Aufthority" data-bm="Aplikasi lain oleh Aufthority">More apps by Aufthority</strong>
+      <a href="https://cermindiri.aufthority.com/" target="_blank" rel="noopener">CerminDiri</a> &nbsp;·&nbsp;
+      <a href="https://www.aufthority.com/nafaslega/" target="_blank" rel="noopener">NafasLega</a> &nbsp;·&nbsp;
+      <a href="https://aufthority.github.io/neurohabitbeta/" target="_blank" rel="noopener">NeuroHabit</a>
+    </div>
+    <div class="app-footer-copy">© 2026 Aufthority · Built with care in Malaysia</div>
+  </footer>
 </div>
 </div>
 
-<button class="fab" onclick="goTab('log')" data-umami-event="FAB - Go to log">+</button>
+<button class="fab" onclick="goTab('log')" data-umami-event="FAB - Go to log" aria-label="Log a meal">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width:22px;height:22px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+</button>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -496,9 +583,32 @@ function dbUpdate(entry){
 // logs: { 'YYYY-MM-DD': [ entry, … ] }
 // Each entry: { id(IDB key), dateStr, photo(base64), meal, time, loc, mood, note, ts }
 let logs = {};
-let currentMeal = 'Breakfast', currentMood = '🍽️ Hungry', currentPhoto = null;
+let currentMeal = 'Breakfast', currentMood = 'Hungry', currentPhoto = null;
 let diaryDate = new Date(); diaryDate.setHours(0,0,0,0);
-const MEAL_EMOJI = { Breakfast:'🌅', Lunch:'☀️', Dinner:'🌙', Snack:'🍎', Supper:'🌛' };
+let currentLang = 'en';
+
+// ══════════════════════════════════════════════════════
+//  LANGUAGE TOGGLE
+// ══════════════════════════════════════════════════════
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+  document.getElementById('btnBM').classList.toggle('active', lang === 'bm');
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const val = el.dataset[lang] || el.dataset.en;
+    // Handle elements that contain HTML (page titles with <em>)
+    if (val && val.includes('<')) {
+      el.innerHTML = val;
+    } else if (val) {
+      el.textContent = val;
+    }
+  });
+  // Re-render dynamic content in current language
+  renderTodayPreview();
+  renderJournal();
+}
+
+function t(en, bm) { return currentLang === 'bm' ? bm : en; }
 
 // ══════════════════════════════════════════════════════
 //  BOOT
@@ -507,13 +617,18 @@ async function boot(){
   await openDB();
   await loadAllFromDB();
   document.getElementById('hdate').textContent =
-    new Date().toLocaleDateString('en-MY',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+    new Date().toLocaleDateString('en-MY',{weekday:'short',day:'numeric',month:'short'});
   setDefaultTime(); setDiaryLabel();
   renderTodayPreview(); renderJournal();
   registerSW();
   setupInstallPrompt();
 }
-boot();
+boot().catch(err => {
+  document.body.innerHTML = `<div style="padding:40px 24px;font-family:sans-serif;text-align:center;">
+    <p style="font-size:1.1rem;margin-bottom:12px;">MakanLah could not start.</p>
+    <p style="color:#888;font-size:.9rem;">Please open this app in a normal browser window, not Private or Incognito mode.</p>
+  </div>`;
+});
 
 async function loadAllFromDB(){
   const all = await dbGetAll();
@@ -563,7 +678,12 @@ function dismissInstall(){
 // ══════════════════════════════════════════════════════
 //  HELPERS
 // ══════════════════════════════════════════════════════
-function dateStr(d){ return d.toISOString().slice(0,10); }
+function dateStr(d){
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
 function today(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
 function isToday(d){ return dateStr(d)===dateStr(today()); }
 function setDefaultTime(){
@@ -626,6 +746,8 @@ function pickMood(el,m){ document.querySelectorAll('#moodPills .pill').forEach(p
 // ══════════════════════════════════════════════════════
 async function saveEntry(){
   if(!currentPhoto){ toast('Please add a photo first.'); return; }
+  const timeVal = document.getElementById('timeInput').value;
+  if(!timeVal){ toast(t('Please set the time eaten.', 'Sila tetapkan masa makan.')); return; }
   const ds = dateStr(today());
   const entry = {
     dateStr: ds,
@@ -643,7 +765,7 @@ async function saveEntry(){
   logs[ds].push(entry);
   logs[ds].sort((a,b)=>a.time.localeCompare(b.time));
   clearPhoto(); setDefaultTime(); renderTodayPreview();
-  toast('Meal photo saved.');
+  toast(t('Meal photo saved.', 'Foto hidangan disimpan.'));
 }
 
 // ══════════════════════════════════════════════════════
@@ -662,19 +784,21 @@ function renderTodayPreview(){
   const ds=dateStr(today()), entries=logs[ds]||[];
   const el=document.getElementById('todayPreview');
   if(!entries.length){ el.innerHTML=''; return; }
-  el.innerHTML=`<div class="sec-label">Today's photos (${entries.length})</div>`+
+  el.innerHTML=`<div class="sec-label">${t("Today's photos","Foto hari ini")} (${entries.length})</div>`+
     entries.map(e=>logCard(e)).join('');
 }
 function logCard(e){
   return `<div class="entry-card">
-    <div class="entry-img">${e.photo?`<img src="${e.photo}" alt="meal">`:'🍽️'}</div>
+    <div class="entry-img">${e.photo?`<img src="${e.photo}" alt="meal">`:'<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor" style="width:32px;height:32px;color:var(--accent-mid)"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" /></svg>'}</div>
     <div class="entry-body">
-      <div class="entry-meal">${MEAL_EMOJI[e.meal]||''} ${e.meal}</div>
+      <div class="entry-meal">${e.meal}</div>
       <div class="entry-time">${e.time||'—'}</div>
-      <div class="entry-tags"><span class="etag">📍 ${e.loc}</span><span class="etag mood">${e.mood}</span></div>
+      <div class="entry-tags"><span class="etag">${e.loc}</span><span class="etag mood">${e.mood}</span></div>
       ${e.note?`<div class="entry-note">${e.note}</div>`:''}
     </div>
-    <button class="entry-del" onclick="deleteEntry('${e.dateStr}',${e.id})">✕</button>
+    <button class="entry-del" onclick="deleteEntry('${e.dateStr}',${e.id})" aria-label="Delete meal">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+    </button>
   </div>`;
 }
 
@@ -695,27 +819,36 @@ function renderJournal(){
   const ds=dateStr(diaryDate), entries=logs[ds]||[];
   const el=document.getElementById('journalEntries');
   if(!entries.length){
-    el.innerHTML=`<div class="empty"><div class="ei">📖</div><p>No meals logged for this day.<br>Go to <strong>Log</strong> to add a meal photo,<br>then come back to write your notes here.</p></div>`;
+    el.innerHTML=`<div class="empty">
+      <div class="ei"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" style="width:40px;height:40px;color:var(--rule)"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /></svg></div>
+      <p>${t('No meals logged for this day.<br>Go to <strong>Log</strong> to add a meal photo,<br>then come back to write your notes here.','Tiada hidangan direkod untuk hari ini.<br>Pergi ke tab <strong>Log</strong> untuk tambah foto hidangan,<br>kemudian kembali untuk tulis nota anda di sini.')}</p>
+    </div>`;
     return;
   }
+  const placeholder = t(
+    'How did you feel before, during, or after this meal? Any cravings, fullness, discomfort, energy changes, or emotions? Your notes help your dietitian understand your relationship with food.',
+    'Bagaimana perasaan anda sebelum, semasa, atau selepas makan? Ada keinginan, rasa kenyang, ketidakselesaan, perubahan tenaga, atau emosi? Nota anda membantu doktor diet memahami hubungan anda dengan makanan.'
+  );
   el.innerHTML=entries.map(e=>{
     const hasNote=e.note&&e.note.trim();
     return `<div class="journal-entry">
       <div class="je-header" id="jeh-${e.id}" onclick="toggleJE(${e.id})">
-        <div class="je-thumb">${e.photo?`<img src="${e.photo}" alt="meal">`:'🍽️'}</div>
+        <div class="je-thumb">${e.photo?`<img src="${e.photo}" alt="meal">`:'<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor" style="width:22px;height:22px;color:var(--muted)"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" /></svg>'}</div>
         <div class="je-meta">
-          <div class="je-meal">${MEAL_EMOJI[e.meal]||''} ${e.meal}</div>
-          <div class="je-time">${e.time||'—'} · 📍 ${e.loc} · ${e.mood}</div>
+          <div class="je-meal">${e.meal}</div>
+          <div class="je-time">${e.time||'—'} · ${e.loc} · ${e.mood}</div>
         </div>
-        <span class="je-chevron" id="chev-${e.id}">›</span>
+        <span class="je-chevron" id="chev-${e.id}">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:14px;height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+        </span>
       </div>
       <div class="je-body" id="jebody-${e.id}">
-        <div class="je-note-label">How did this meal make you feel?</div>
+        <div class="je-note-label">${t('How did this meal make you feel?','Bagaimana perasaan anda dengan hidangan ini?')}</div>
         ${hasNote
           ? `<div class="je-saved-note" id="jenote-${e.id}">${e.note}</div>
-             <button class="je-edit-btn" onclick="editNote(${e.id})">Edit note</button>`
-          : `<textarea class="je-textarea" id="jeta-${e.id}" placeholder="Write freely — how did you feel before, during, or after this meal? Any cravings, fullness, discomfort, energy changes, or emotions? Your notes help your dietitian understand your relationship with food."></textarea>
-             <button class="je-save" onclick="saveNote(${e.id})">Save note</button>`
+             <button class="je-edit-btn" onclick="editNote(${e.id})">${t('Edit note','Edit nota')}</button>`
+          : `<textarea class="je-textarea" id="jeta-${e.id}" placeholder="${placeholder}"></textarea>
+             <button class="je-save" onclick="saveNote(${e.id})">${t('Save note','Simpan nota')}</button>`
         }
       </div>
     </div>`;
@@ -737,7 +870,7 @@ async function saveNote(id){
     const e=logs[ds].find(e=>e.id===id);
     if(e){ e.note=txt; await dbUpdate(e); break; }
   }
-  renderJournal(); renderTodayPreview(); toast('Note saved.');
+  renderJournal(); renderTodayPreview(); toast(t('Note saved.','Nota disimpan.'));
 }
 function editNote(id){
   const noteEl=document.getElementById(`jenote-${id}`);
@@ -755,78 +888,36 @@ function editNote(id){
 async function generateReport(){
   const days=Object.keys(logs).sort((a,b)=>b.localeCompare(a)).slice(0,7);
   const out=document.getElementById('reportOut');
-  if(!days.length){ out.innerHTML=`<div class="report-doc"><p style="color:var(--muted);font-size:.85rem;font-weight:300;">No entries yet. Start logging meals to generate a report.</p></div>`; return; }
+  if(!days.length){ out.innerHTML=`<div class="report-doc"><p style="color:var(--muted);font-size:.85rem;font-weight:300;">${t('No entries yet. Start logging meals to generate a report.','Tiada entri lagi. Mula log hidangan untuk menjana laporan.')}</p></div>`; return; }
 
   const dayRowsHTML=days.map(ds=>{
     const entries=(logs[ds]||[]).slice().sort((a,b)=>a.time.localeCompare(b.time));
     const d=new Date(ds+'T00:00:00');
-    const label=d.toLocaleDateString('en-MY',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-    const photoGrid=entries.map(e=>`<div class="rd-photo-item"><img src="${e.photo}" alt="${e.meal}"/><div class="rd-photo-caption">${MEAL_EMOJI[e.meal]||''} ${e.meal}<br>${e.time}</div></div>`).join('');
-    const contextLines=entries.map(e=>`<div class="rd-context">${e.time} · <strong>${e.meal}</strong> · 📍 ${e.loc} · ${e.mood}</div>${e.note?`<div class="rd-journal-note">"${e.note}"</div>`:''}`).join('');
-    return `<div class="rd-day"><div class="rd-day-title">${label} <span style="font-size:.72rem;color:var(--muted);font-weight:300;">(${entries.length} meal${entries.length!==1?'s':''})</span></div><div class="rd-photo-row">${photoGrid}</div>${contextLines}</div>`;
+    const label=d.toLocaleDateString(currentLang==='bm'?'ms-MY':'en-MY',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    const photoGrid=entries.map(e=>`<div class="rd-photo-item"><img src="${e.photo}" alt="${e.meal}"/><div class="rd-photo-caption">${e.meal}<br>${e.time}</div></div>`).join('');
+    const contextLines=entries.map(e=>`<div class="rd-context">${e.time} · <strong>${e.meal}</strong> · ${e.loc} · ${e.mood}</div>${e.note?`<div class="rd-journal-note">"${e.note}"</div>`:''}`).join('');
+    return `<div class="rd-day"><div class="rd-day-title">${label} <span style="font-size:.72rem;color:var(--muted);font-weight:300;">(${entries.length} ${t(entries.length!==1?'meals':'meal', entries.length!==1?'hidangan':'hidangan')})</span></div><div class="rd-photo-row">${photoGrid}</div>${contextLines}</div>`;
   }).join('');
 
   const allEntries=days.flatMap(ds=>logs[ds]||[]);
-  const mealC={},locC={},moodList=[],timeList=[],noteList=[];
-  allEntries.forEach(e=>{
-    mealC[e.meal]=(mealC[e.meal]||0)+1; locC[e.loc]=(locC[e.loc]||0)+1;
-    moodList.push(e.mood); if(e.time) timeList.push(e.time);
-    if(e.note&&e.note.trim()) noteList.push(`"${e.note.trim()}"`);
-  });
-  const fmt=obj=>Object.entries(obj).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${k} (${v}x)`).join(', ');
-  const avgPerDay=(allEntries.length/days.length).toFixed(1);
-  const earlyMeals=timeList.filter(t=>t<'09:00').length;
-  const lateMeals=timeList.filter(t=>t>='20:00').length;
-  const notesSection=noteList.length?`\nPatient journal notes:\n${noteList.join('\n')}`:'';
 
   out.innerHTML=`<div class="report-doc">
     <div class="rd-header">
-      <h2>MakanLah — Clinical Food Diary Report</h2>
-      <div class="rd-meta">Generated: ${new Date().toLocaleDateString('en-MY',{day:'numeric',month:'long',year:'numeric'})} &nbsp;·&nbsp; ${days.length}-day record &nbsp;·&nbsp; ${allEntries.length} meal photos</div>
+      <h2>MakanLah — ${t('Clinical Food Diary Report','Laporan Diari Makanan Klinikal')}</h2>
+      <div class="rd-meta">${t('Generated','Dijana')}: ${new Date().toLocaleDateString('en-MY',{day:'numeric',month:'long',year:'numeric'})} &nbsp;·&nbsp; ${days.length}-${t('day record','hari direkod')} &nbsp;·&nbsp; ${allEntries.length} ${t('meal photos','foto hidangan')}</div>
     </div>
-    <div class="rd-section"><h3>Photo Diary — Meals by Day</h3>${dayRowsHTML}</div>
-    <div class="rd-section">
-      <h3>Behavioural &amp; Eating Pattern Analysis</h3>
-      <div class="analysis-box" id="analysisBox">
-        <div class="ab-label">AI-Assisted Analysis <span style="opacity:.6;font-weight:300;">(generating…)</span></div>
-        <div class="loading-pulse"><div class="dot-pulse"><span></span><span></span><span></span></div>Analysing patterns based on clinical literature…</div>
-      </div>
-    </div>
-    <div class="disclaimer">This report is generated from patient self-reported meal photos and journal entries via MakanLah (Aufthority). Nutrient composition analysis has not been completed and must be assessed by the attending dietitian or nutritionist. AI-generated behavioural analysis is a clinical aid only — it does not constitute a diagnosis or dietary prescription.</div>
+    <div class="rd-section"><h3>${t('Photo Diary — Meals by Day','Diari Foto — Hidangan Mengikut Hari')}</h3>${dayRowsHTML}</div>
+    <div class="disclaimer">${t('This report is generated from patient self-reported meal photos and journal entries via MakanLah (Aufthority). Nutrient composition analysis has not been completed and must be assessed by the attending dietitian or nutritionist. This report does not constitute a diagnosis or dietary prescription.','Laporan ini dijana daripada foto hidangan dan nota jurnal yang dilaporkan sendiri oleh pesakit melalui MakanLah (Aufthority). Analisis komposisi nutrien belum dilengkapkan dan mesti dinilai oleh doktor diet atau ahli pemakanan yang mengendalikan. Laporan ini bukan diagnosis atau preskripsi diet.')}</div>
   </div>`;
 
   out.scrollIntoView({behavior:'smooth'});
-
-  const prompt=`You are a clinical nutrition specialist preparing a behavioural eating pattern analysis for a registered dietitian or nutritionist. Data from a patient's 7-day food photo diary via MakanLah:
-
-- Days recorded: ${days.length}
-- Total meal photos: ${allEntries.length}
-- Average meals per day: ${avgPerDay}
-- Meal type breakdown: ${fmt(mealC)}
-- Eating locations: ${fmt(locC)}
-- Mood / hunger states: ${moodList.join(', ')}
-- Meals before 9am: ${earlyMeals}
-- Meals after 8pm: ${lateMeals}
-- All meal times: ${timeList.join(', ')}${notesSection}
-
-Write a structured clinical behavioural and eating pattern analysis in flowing prose (no bullet points). Cover: (1) Meal timing and eating rhythm. (2) Eating environment and context. (3) Emotional and appetite-driven eating — reference journal notes if provided. (4) Behavioural risk markers relevant to T2DM, CVD, obesity, metabolic syndrome. (5) Observations for the dietitian — positive patterns and areas to probe.
-
-Ground every observation in published evidence (2020–2025). Cite studies inline. Use clear clinical language. Do not make dietary recommendations.`;
-
-  try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
-    const data=await res.json();
-    const text=data.content?.find(b=>b.type==='text')?.text||'Analysis could not be generated.';
-    const paragraphs=text.split(/\n\n+/).filter(p=>p.trim()).map(p=>`<p>${p.trim()}</p>`).join('');
-    document.getElementById('analysisBox').innerHTML=`<div class="ab-label">AI-Assisted Behavioural Analysis</div><div class="ab-content">${paragraphs}</div><div class="ab-ref">Grounded in clinical nutrition literature (2020–2025). Generated by Claude (Anthropic) via MakanLah. To be reviewed and validated by the attending dietitian before clinical use.</div>`;
-  }catch(err){
-    document.getElementById('analysisBox').innerHTML=`<div class="ab-label">Analysis Unavailable</div><div class="ab-content" style="color:var(--muted);">Could not connect to AI service. The photo diary and journal notes above are complete and can be reviewed manually.</div>`;
-  }
 }
+
+
 
 async function printReport(){
   await generateReport();
-  setTimeout(()=>window.print(), 1500);
+  requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
 }
 
 function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
