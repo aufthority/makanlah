@@ -291,6 +291,78 @@
       letter-spacing: .04em;
     }
 
+    /* ── PROFILE OVERLAY ── */
+    .profile-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: var(--bg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 32px 24px;
+      overflow-y: auto;
+    }
+    .profile-overlay.hidden { display: none; }
+    .profile-card {
+      width: 100%; max-width: 440px;
+      background: var(--card-bg); border: 1px solid var(--rule);
+      border-radius: var(--radius); padding: 32px 28px;
+    }
+    .profile-card .pc-logo {
+      font-family: 'DM Serif Display', serif; font-size: 1.3rem;
+      color: var(--ink); margin-bottom: 4px;
+    }
+    .profile-card .pc-logo em { color: var(--accent); font-style: italic; }
+    .profile-card .pc-sub {
+      font-size: .82rem; color: var(--muted); font-weight: 300;
+      line-height: 1.6; margin-bottom: 28px;
+    }
+    .pf-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .pf-field label {
+      font-size: .62rem; font-weight: 500; text-transform: uppercase;
+      letter-spacing: .14em; color: var(--muted);
+    }
+    .pf-field input {
+      background: var(--bg); border: 1px solid var(--rule);
+      border-radius: var(--radius); padding: 10px 12px;
+      font-family: 'DM Sans', sans-serif; font-size: .85rem;
+      font-weight: 300; color: var(--ink); outline: none;
+      width: 100%; transition: border-color .18s;
+    }
+    .pf-field input:focus { border-color: var(--accent); }
+    .pf-field .pf-hint {
+      font-size: .62rem; color: var(--muted); font-weight: 300;
+    }
+    .pf-required { color: var(--accent); }
+
+    /* ── PROFILE PANEL (in Report tab) ── */
+    .profile-panel {
+      background: var(--card-bg); border: 1px solid var(--rule);
+      border-radius: var(--radius); padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .pp-top {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 12px;
+    }
+    .pp-label {
+      font-size: .62rem; font-weight: 500; text-transform: uppercase;
+      letter-spacing: .14em; color: var(--muted);
+    }
+    .pp-edit {
+      font-size: .68rem; font-weight: 500; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); background: none;
+      border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+      padding: 0; transition: opacity .15s;
+    }
+    .pp-edit:hover { opacity: .7; }
+    .pp-name {
+      font-family: 'DM Serif Display', serif; font-size: 1.05rem;
+      color: var(--ink); margin-bottom: 4px;
+    }
+    .pp-details {
+      font-size: .75rem; color: var(--muted); font-weight: 300;
+      line-height: 1.8;
+    }
+
     /* ── PRINT ── */
     @media print {
       header, .tabs, .fab, .toast, .install-banner,
@@ -326,6 +398,37 @@
   </style>
 </head>
 <body>
+
+<!-- ── PROFILE SETUP OVERLAY ── -->
+<div class="profile-overlay hidden" id="profileOverlay">
+  <div class="profile-card">
+    <div class="pc-logo"><em>Makan</em>Lah</div>
+    <div class="pc-sub" id="pcSub">Before you begin, tell us a little about yourself. This appears on your clinical report so your dietitian can file it correctly.</div>
+    <div class="pf-field">
+      <label id="pfLabelName">Full Name <span class="pf-required">*</span></label>
+      <input type="text" id="pfName" placeholder="e.g. Siti Aminah binti Razali" autocomplete="name"/>
+    </div>
+    <div class="pf-field">
+      <label id="pfLabelEmail">Email Address</label>
+      <input type="email" id="pfEmail" placeholder="e.g. siti@email.com" autocomplete="email"/>
+      <span class="pf-hint" id="pfHintEmail">Optional — for your dietitian to follow up with you.</span>
+    </div>
+    <div class="pf-field">
+      <label id="pfLabelDob">Date of Birth</label>
+      <input type="date" id="pfDob" autocomplete="bday"/>
+      <span class="pf-hint" id="pfHintDob">Optional — helps your dietitian cross-reference records.</span>
+    </div>
+    <div class="pf-field">
+      <label id="pfLabelClinic">Clinic / Hospital Name</label>
+      <input type="text" id="pfClinic" placeholder="e.g. Klinik Pemakanan Sejahtera" autocomplete="organization"/>
+    </div>
+    <div class="pf-field">
+      <label id="pfLabelDietitian">Dietitian / Nutritionist Name</label>
+      <input type="text" id="pfDietitian" placeholder="e.g. Puan Norzahra bt. Yusof"/>
+    </div>
+    <button class="btn-primary" style="margin-top:8px;" onclick="saveProfile()" id="pfSaveBtn">Save &amp; Continue →</button>
+  </div>
+</div>
 
 <!-- ── INSTALL BANNER ── -->
 <div class="install-banner" id="installBanner">
@@ -487,6 +590,14 @@
 <!-- ══ REPORT TAB ══ -->
 <div class="view" id="view-report">
 <div class="inner">
+  <div class="profile-panel" id="profilePanel">
+    <div class="pp-top">
+      <span class="pp-label" data-en="Patient Profile" data-bm="Profil Pesakit">Patient Profile</span>
+      <button class="pp-edit" onclick="openProfileEdit()" data-en="Edit" data-bm="Edit">Edit</button>
+    </div>
+    <div class="pp-name" id="ppName">—</div>
+    <div class="pp-details" id="ppDetails"></div>
+  </div>
   <div class="report-info" id="reportControls">
     <div class="ri-top">
       <div class="ri-title" data-en="Clinical Report" data-bm="Laporan Klinikal">Clinical Report</div>
@@ -606,6 +717,8 @@ function setLang(lang) {
   // Re-render dynamic content in current language
   renderTodayPreview();
   renderJournal();
+  renderProfilePanel();
+  profileLangStrings();
 }
 
 function t(en, bm) { return currentLang === 'bm' ? bm : en; }
@@ -622,6 +735,12 @@ async function boot(){
   renderTodayPreview(); renderJournal();
   registerSW();
   setupInstallPrompt();
+  // Profile check — show setup screen if no profile saved yet
+  if(!loadProfile()){
+    document.getElementById('profileOverlay').classList.remove('hidden');
+  } else {
+    renderProfilePanel();
+  }
 }
 boot().catch(err => {
   document.body.innerHTML = `<div style="padding:40px 24px;font-family:sans-serif;text-align:center;">
@@ -900,11 +1019,13 @@ async function generateReport(){
   }).join('');
 
   const allEntries=days.flatMap(ds=>logs[ds]||[]);
+  const profile = loadProfile();
 
   out.innerHTML=`<div class="report-doc">
     <div class="rd-header">
       <h2>MakanLah — ${t('Clinical Food Diary Report','Laporan Diari Makanan Klinikal')}</h2>
-      <div class="rd-meta">${t('Generated','Dijana')}: ${new Date().toLocaleDateString('en-MY',{day:'numeric',month:'long',year:'numeric'})} &nbsp;·&nbsp; ${days.length}-${t('day record','hari direkod')} &nbsp;·&nbsp; ${allEntries.length} ${t('meal photos','foto hidangan')}</div>
+      ${profileHeaderHTML(profile)}
+      <div class="rd-meta" style="margin-top:10px;">${t('Generated','Dijana')}: ${new Date().toLocaleDateString('en-MY',{day:'numeric',month:'long',year:'numeric'})} &nbsp;·&nbsp; ${days.length}-${t('day record','hari direkod')} &nbsp;·&nbsp; ${allEntries.length} ${t('meal photos','foto hidangan')}</div>
     </div>
     <div class="rd-section"><h3>${t('Photo Diary — Meals by Day','Diari Foto — Hidangan Mengikut Hari')}</h3>${dayRowsHTML}</div>
     <div class="disclaimer">${t('This report is generated from patient self-reported meal photos and journal entries via MakanLah (Aufthority). Nutrient composition analysis has not been completed and must be assessed by the attending dietitian or nutritionist. This report does not constitute a diagnosis or dietary prescription.','Laporan ini dijana daripada foto hidangan dan nota jurnal yang dilaporkan sendiri oleh pesakit melalui MakanLah (Aufthority). Analisis komposisi nutrien belum dilengkapkan dan mesti dinilai oleh doktor diet atau ahli pemakanan yang mengendalikan. Laporan ini bukan diagnosis atau preskripsi diet.')}</div>
@@ -918,6 +1039,98 @@ async function generateReport(){
 async function printReport(){
   await generateReport();
   requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
+}
+
+// ══════════════════════════════════════════════════════
+//  PROFILE — localStorage
+// ══════════════════════════════════════════════════════
+const PROFILE_KEY = 'makanlah_profile';
+
+function loadProfile(){
+  try { return JSON.parse(localStorage.getItem(PROFILE_KEY)) || null; }
+  catch(e){ return null; }
+}
+
+function saveProfile(){
+  const name = document.getElementById('pfName').value.trim();
+  if(!name){
+    document.getElementById('pfName').focus();
+    toast(t('Please enter your full name.', 'Sila masukkan nama penuh anda.'));
+    return;
+  }
+  const profile = {
+    name,
+    email:     document.getElementById('pfEmail').value.trim(),
+    dob:       document.getElementById('pfDob').value,
+    clinic:    document.getElementById('pfClinic').value.trim(),
+    dietitian: document.getElementById('pfDietitian').value.trim(),
+  };
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+  document.getElementById('profileOverlay').classList.add('hidden');
+  renderProfilePanel();
+  toast(t('Profile saved.', 'Profil disimpan.'));
+}
+
+function openProfileEdit(){
+  const p = loadProfile() || {};
+  document.getElementById('pfName').value      = p.name      || '';
+  document.getElementById('pfEmail').value     = p.email     || '';
+  document.getElementById('pfDob').value       = p.dob       || '';
+  document.getElementById('pfClinic').value    = p.clinic    || '';
+  document.getElementById('pfDietitian').value = p.dietitian || '';
+  // Change sub-text to edit mode wording
+  document.getElementById('pcSub').textContent =
+    t('Update your details below. Changes will appear on your next report.',
+      'Kemaskini maklumat anda di bawah. Perubahan akan dipaparkan pada laporan seterusnya.');
+  document.getElementById('pfSaveBtn').textContent =
+    t('Save Changes →', 'Simpan Perubahan →');
+  document.getElementById('profileOverlay').classList.remove('hidden');
+}
+
+function renderProfilePanel(){
+  const p = loadProfile();
+  if(!p) return;
+  document.getElementById('ppName').textContent = p.name || '—';
+  const lines = [];
+  if(p.dob){
+    const d = new Date(p.dob + 'T00:00:00');
+    lines.push(t('DOB: ','Tarikh Lahir: ') + d.toLocaleDateString('en-MY',{day:'numeric',month:'long',year:'numeric'}));
+  }
+  if(p.email)     lines.push(t('Email: ','Emel: ') + p.email);
+  if(p.clinic)    lines.push(t('Clinic: ','Klinik: ') + p.clinic);
+  if(p.dietitian) lines.push(t('Dietitian: ','Doktor Diet: ') + p.dietitian);
+  document.getElementById('ppDetails').innerHTML = lines.join('<br>');
+}
+
+function profileHeaderHTML(p){
+  if(!p) return '';
+  const rows = [];
+  rows.push(`<tr><td style="padding:3pt 12pt 3pt 0;font-size:8pt;color:#6b6b62;font-weight:500;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;">${t('Patient','Pesakit')}</td><td style="padding:3pt 0;font-size:9pt;color:#1a1a18;font-weight:400;">${p.name}</td></tr>`);
+  if(p.dob){
+    const d = new Date(p.dob + 'T00:00:00');
+    rows.push(`<tr><td style="padding:3pt 12pt 3pt 0;font-size:8pt;color:#6b6b62;font-weight:500;text-transform:uppercase;letter-spacing:.1em;">${t('Date of Birth','Tarikh Lahir')}</td><td style="padding:3pt 0;font-size:9pt;color:#1a1a18;">${d.toLocaleDateString('en-MY',{day:'numeric',month:'long',year:'numeric'})}</td></tr>`);
+  }
+  if(p.email)     rows.push(`<tr><td style="padding:3pt 12pt 3pt 0;font-size:8pt;color:#6b6b62;font-weight:500;text-transform:uppercase;letter-spacing:.1em;">${t('Email','Emel')}</td><td style="padding:3pt 0;font-size:9pt;color:#1a1a18;">${p.email}</td></tr>`);
+  if(p.clinic)    rows.push(`<tr><td style="padding:3pt 12pt 3pt 0;font-size:8pt;color:#6b6b62;font-weight:500;text-transform:uppercase;letter-spacing:.1em;">${t('Clinic','Klinik')}</td><td style="padding:3pt 0;font-size:9pt;color:#1a1a18;">${p.clinic}</td></tr>`);
+  if(p.dietitian) rows.push(`<tr><td style="padding:3pt 12pt 3pt 0;font-size:8pt;color:#6b6b62;font-weight:500;text-transform:uppercase;letter-spacing:.1em;">${t('Dietitian','Doktor Diet')}</td><td style="padding:3pt 0;font-size:9pt;color:#1a1a18;">${p.dietitian}</td></tr>`);
+  return `<table style="border-collapse:collapse;margin-top:10pt;">${rows.join('')}</table>`;
+}
+
+function profileLangStrings(){
+  // Update static profile overlay strings when language changes
+  const isBM = currentLang === 'bm';
+  const el = id => document.getElementById(id);
+  el('pfLabelName').innerHTML     = (isBM ? 'Nama Penuh' : 'Full Name') + ' <span class="pf-required">*</span>';
+  el('pfLabelEmail').textContent  = isBM ? 'Alamat Emel' : 'Email Address';
+  el('pfHintEmail').textContent   = isBM ? 'Pilihan — untuk doktor diet anda menghubungi anda.' : 'Optional — for your dietitian to follow up with you.';
+  el('pfLabelDob').textContent    = isBM ? 'Tarikh Lahir' : 'Date of Birth';
+  el('pfHintDob').textContent     = isBM ? 'Pilihan — membantu doktor diet merujuk rekod.' : 'Optional — helps your dietitian cross-reference records.';
+  el('pfLabelClinic').textContent    = isBM ? 'Nama Klinik / Hospital' : 'Clinic / Hospital Name';
+  el('pfLabelDietitian').textContent = isBM ? 'Nama Doktor Diet / Ahli Pemakanan' : 'Dietitian / Nutritionist Name';
+  el('pcSub').textContent = isBM
+    ? 'Sebelum bermula, beritahu kami sedikit tentang diri anda. Ini akan dipaparkan pada laporan klinikal anda supaya doktor diet dapat memfailkannya dengan betul.'
+    : 'Before you begin, tell us a little about yourself. This appears on your clinical report so your dietitian can file it correctly.';
+  el('pfSaveBtn').textContent = isBM ? 'Simpan & Teruskan →' : 'Save & Continue →';
 }
 
 function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
