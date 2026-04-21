@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="30307bac-21fd-4735-b076-61b9bdb3b769"></script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_MAKANLAH_UMAMI_ID"></script>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)"/>
+  <meta name="theme-color" content="#141412" media="(prefers-color-scheme: dark)"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="MakanLah"/>
+  <meta name="description" content="A simple food photo diary for clinical nutrition review."/>
+  <link rel="manifest" href="manifest.json"/>
+  <!-- Apple touch icon fallback (inline SVG as data URI) -->
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='114' fill='%232d6a4f'/%3E%3Ctext x='256' y='340' font-size='280' text-anchor='middle'%3E🍽️%3C/text%3E%3C/svg%3E"/>
   <title>MakanLah — My Food Diary</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -21,8 +30,9 @@
       --card-bg:      #ffffff;
       --radius:       2px;
       --shadow:       rgba(45,106,79,.07);
+      --safe-top:     env(safe-area-inset-top, 0px);
+      --safe-bottom:  env(safe-area-inset-bottom, 0px);
     }
-
     @media (prefers-color-scheme: dark) {
       :root {
         --bg:           #141412;
@@ -35,17 +45,25 @@
       }
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; height: 100%; }
     body {
       background: var(--bg); color: var(--ink);
       font-family: 'DM Sans', sans-serif; font-weight: 300;
       line-height: 1.7; -webkit-font-smoothing: antialiased;
-      min-height: 100vh; display: flex; flex-direction: column;
+      min-height: 100%; display: flex; flex-direction: column;
+      padding-top: var(--safe-top);
+      padding-bottom: var(--safe-bottom);
     }
 
     /* ── HEADER ── */
-    header { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--rule); }
-    .nav-inner { max-width: 680px; margin: 0 auto; padding: 0 28px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg); border-bottom: 1px solid var(--rule);
+    }
+    .nav-inner {
+      max-width: 680px; margin: 0 auto; padding: 0 28px;
+      height: 56px; display: flex; align-items: center; justify-content: space-between;
+    }
     .logo { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
     .logo em { color: var(--accent); font-style: italic; }
     .hdate { font-size: .72rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
@@ -56,7 +74,8 @@
       flex: 1; padding: 10px 6px; background: none; border: none;
       font-family: 'DM Sans', sans-serif; font-size: .7rem; font-weight: 500;
       text-transform: uppercase; letter-spacing: .1em; color: var(--muted); cursor: pointer;
-      border-bottom: 2px solid transparent; display: flex; flex-direction: column; align-items: center; gap: 3px;
+      border-bottom: 2px solid transparent;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
       transition: color .18s, border-color .18s;
     }
     .tbtn .ti { font-size: 1rem; }
@@ -72,6 +91,22 @@
     .page-title em { font-style: italic; color: var(--accent); }
     .page-sub { font-size: .88rem; color: var(--muted); font-weight: 300; margin-bottom: 28px; line-height: 1.6; }
     .sec-label { font-size: .65rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; color: var(--muted); margin: 28px 0 12px; }
+
+    /* ── INSTALL BANNER ── */
+    .install-banner {
+      background: var(--accent); color: #fff;
+      padding: 12px 20px; display: none; align-items: center; gap: 12px;
+      font-size: .8rem; font-weight: 400;
+    }
+    .install-banner.show { display: flex; }
+    .install-banner strong { font-weight: 600; }
+    .ib-btn {
+      margin-left: auto; flex-shrink: 0; background: #fff; color: var(--accent);
+      border: none; border-radius: var(--radius); padding: 6px 14px;
+      font-family: 'DM Sans', sans-serif; font-size: .75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .06em; cursor: pointer;
+    }
+    .ib-dismiss { background: none; border: none; color: rgba(255,255,255,.7); cursor: pointer; font-size: 1rem; padding: 0 0 0 8px; flex-shrink: 0; }
 
     /* ── DATE NAV ── */
     .date-nav { display: flex; align-items: center; justify-content: space-between; background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 10px 16px; margin-bottom: 24px; }
@@ -146,9 +181,9 @@
 
     /* ── JOURNAL ── */
     .journal-entry { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; animation: fadeUp .22s ease; }
-    .je-header { display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer; transition: background .15s; border-bottom: 1px solid transparent; }
+    .je-header { display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer; transition: background .15s; }
     .je-header:hover { background: var(--accent-light); }
-    .je-header.open { border-bottom-color: var(--rule); }
+    .je-header.open { border-bottom: 1px solid var(--rule); }
     .je-thumb { width: 44px; height: 44px; border-radius: var(--radius); flex-shrink: 0; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; overflow: hidden; }
     .je-thumb img { width: 44px; height: 44px; object-fit: cover; }
     .je-meta { flex: 1; }
@@ -165,8 +200,8 @@
     .je-save { margin-top: 8px; padding: 8px 18px; background: var(--ink); border: none; border-radius: var(--radius); color: var(--bg); font-family: 'DM Sans', sans-serif; font-size: .72rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; cursor: pointer; transition: background .2s; }
     .je-save:hover { background: var(--accent); }
     .je-saved-note { font-size: .8rem; color: var(--ink); font-style: italic; font-weight: 300; line-height: 1.65; padding: 10px 12px; background: var(--bg); border-radius: var(--radius); border-left: 2px solid var(--accent); }
-    .je-edit-btn { display: inline-block; margin-top: 8px; font-size: .68rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); cursor: pointer; border-bottom: 1px solid var(--rule); transition: color .15s; background: none; border-top: none; border-left: none; border-right: none; padding: 0; font-family: 'DM Sans', sans-serif; }
-    .je-edit-btn:hover { color: var(--accent); border-bottom-color: var(--accent); }
+    .je-edit-btn { display: inline-block; margin-top: 8px; font-size: .68rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); cursor: pointer; border-bottom: 1px solid var(--rule); background: none; border-top: none; border-left: none; border-right: none; padding: 0; font-family: 'DM Sans', sans-serif; transition: color .15s; }
+    .je-edit-btn:hover { color: var(--accent); }
 
     /* ── WEEK BARS ── */
     .week-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 24px; }
@@ -176,6 +211,10 @@
     .wbar { width: 100%; background: var(--accent-light); border-radius: var(--radius) var(--radius) 0 0; transition: height .4s ease; min-height: 3px; }
     .wbar.today { background: var(--accent); }
     .wbar-day { font-size: .58rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
+
+    /* ── STORAGE NOTICE ── */
+    .storage-notice { font-size: .72rem; color: var(--muted); background: var(--accent-light); border: 1px solid var(--rule); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 20px; line-height: 1.6; font-weight: 300; }
+    .storage-notice strong { font-weight: 500; color: var(--accent); }
 
     /* ── REPORT VIEW ── */
     .report-info { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 28px; margin-bottom: 16px; }
@@ -200,8 +239,6 @@
     .rd-photo-caption { font-size: .58rem; color: var(--muted); text-align: center; font-weight: 400; max-width: 80px; line-height: 1.4; }
     .rd-context { font-size: .72rem; color: var(--muted); font-weight: 300; line-height: 1.8; }
     .rd-journal-note { font-size: .76rem; color: var(--ink); font-style: italic; font-weight: 300; line-height: 1.6; margin-top: 6px; padding: 8px 12px; background: var(--accent-light); border-left: 2px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; }
-
-    /* AI analysis */
     .analysis-box { background: var(--accent-light); border: 1px solid var(--rule); border-radius: var(--radius); padding: 20px; margin-top: 8px; }
     .ab-label { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
     .ab-content { font-size: .82rem; color: var(--ink); line-height: 1.8; font-weight: 300; }
@@ -217,51 +254,40 @@
     .disclaimer { font-size: .7rem; color: var(--muted); line-height: 1.7; padding: 16px; font-weight: 300; background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius); margin-top: 14px; }
 
     /* ── TOAST ── */
-    .toast { position: fixed; bottom: 88px; left: 50%; transform: translateX(-50%) translateY(10px); background: var(--ink); color: var(--bg); padding: 10px 22px; border-radius: var(--radius); font-size: .78rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; opacity: 0; transition: all .28s; pointer-events: none; z-index: 999; white-space: nowrap; }
+    .toast { position: fixed; bottom: calc(88px + var(--safe-bottom)); left: 50%; transform: translateX(-50%) translateY(10px); background: var(--ink); color: var(--bg); padding: 10px 22px; border-radius: var(--radius); font-size: .78rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; opacity: 0; transition: all .28s; pointer-events: none; z-index: 999; white-space: nowrap; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* ── FAB ── */
-    .fab { position: fixed; bottom: 24px; right: 24px; width: 50px; height: 50px; border-radius: 50%; background: var(--ink); border: none; cursor: pointer; color: var(--bg); font-size: 1.5rem; box-shadow: 0 4px 20px rgba(26,26,24,.2); display: flex; align-items: center; justify-content: center; transition: background .2s, transform .15s; z-index: 99; }
+    .fab { position: fixed; bottom: calc(24px + var(--safe-bottom)); right: 24px; width: 50px; height: 50px; border-radius: 50%; background: var(--ink); border: none; cursor: pointer; color: var(--bg); font-size: 1.5rem; box-shadow: 0 4px 20px rgba(26,26,24,.2); display: flex; align-items: center; justify-content: center; transition: background .2s, transform .15s; z-index: 99; }
     .fab:hover { background: var(--accent); transform: translateY(-2px); }
 
-    /* ══════════════════════════════════
-       PRINT / PDF STYLES
-    ════════════════════════════════════ */
+    /* ── PRINT ── */
     @media print {
-      header, .tabs, .fab, .toast,
-      #view-log, #view-diary, #view-report > .inner > #reportControls { display: none !important; }
-
+      header, .tabs, .fab, .toast, .install-banner,
+      #view-log, #view-diary, #reportControls { display: none !important; }
       * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-
       body { background: #fff !important; color: #1a1a18 !important; }
       #view-report { display: block !important; padding: 0 !important; }
       .inner { max-width: 100% !important; padding: 0 !important; }
       .report-doc { border: none !important; box-shadow: none !important; padding: 0 !important; margin: 0 !important; border-radius: 0 !important; }
-
       .rd-header { padding-bottom: 10pt !important; border-bottom: 1.5pt solid #1a1a18 !important; margin-bottom: 16pt !important; }
       .rd-header h2 { font-size: 17pt !important; }
       .rd-meta { font-size: 8.5pt !important; }
-
       .rd-section { margin-bottom: 20pt !important; }
       .rd-section h3 { font-size: 7pt !important; padding-bottom: 5pt !important; margin-bottom: 10pt !important; border-bottom: 0.5pt solid #e0ddd5 !important; color: #6b6b62 !important; }
-
       .rd-day { page-break-inside: avoid; padding-bottom: 12pt !important; margin-bottom: 12pt !important; border-bottom: 0.5pt solid #e0ddd5 !important; }
       .rd-day:last-child { border-bottom: none !important; }
       .rd-day-title { font-size: 10.5pt !important; margin-bottom: 8pt !important; }
-
       .rd-photo-item img { width: 85pt !important; height: 85pt !important; border: 0.5pt solid #e0ddd5 !important; }
       .rd-photo-caption { font-size: 7pt !important; }
       .rd-context { font-size: 8pt !important; line-height: 1.55 !important; }
       .rd-journal-note { font-size: 8.5pt !important; padding: 6pt 10pt !important; margin-top: 5pt !important; background: #e8f5ee !important; border-left: 1.5pt solid #2d6a4f !important; }
-
       .analysis-box { page-break-inside: avoid; background: #e8f5ee !important; border: 0.5pt solid #e0ddd5 !important; padding: 12pt !important; }
       .ab-label { font-size: 7pt !important; color: #2d6a4f !important; margin-bottom: 8pt !important; }
       .ab-content { font-size: 9pt !important; line-height: 1.65 !important; }
       .ab-content p { margin-bottom: 7pt !important; }
       .ab-ref { font-size: 7pt !important; color: #6b6b62 !important; padding-top: 7pt !important; }
-
       .disclaimer { page-break-inside: avoid; font-size: 7.5pt !important; padding: 10pt !important; background: #f7f5f0 !important; border: 0.5pt solid #e0ddd5 !important; margin-top: 10pt !important; }
-
       @page { margin: 18mm 16mm; size: A4; }
     }
 
@@ -275,6 +301,13 @@
   </style>
 </head>
 <body>
+
+<!-- ── INSTALL BANNER ── -->
+<div class="install-banner" id="installBanner">
+  <span>📲 <strong>Install MakanLah</strong> — add to your home screen for quick meal logging</span>
+  <button class="ib-btn" id="installBtn">Install</button>
+  <button class="ib-dismiss" onclick="dismissInstall()">✕</button>
+</div>
 
 <header>
   <div class="nav-inner">
@@ -296,7 +329,9 @@
     <div class="page-title">What did you <em>eat?</em></div>
     <div class="page-sub">Take a photo now, or choose one from your gallery to log a meal from earlier.</div>
   </div>
-
+  <div class="storage-notice">
+    📱 <strong>Your photos and notes are saved on this device.</strong> They persist between sessions — log anytime, generate your report when ready.
+  </div>
   <div class="upload-card">
     <div class="photo-stage" id="photoStage">
       <img id="stagedImg" src="" alt="meal photo"/>
@@ -305,7 +340,6 @@
         <button class="rm-btn" onclick="clearPhoto()">Remove</button>
       </div>
     </div>
-
     <div class="photo-source-row" id="photoSourceRow">
       <div class="photo-src-btn" onclick="document.getElementById('photoCamera').click()">
         <span class="psb-icon">📷</span>
@@ -320,7 +354,6 @@
       <input type="file" id="photoCamera" accept="image/*" capture="environment" onchange="handlePhoto(event)"/>
       <input type="file" id="photoGallery" accept="image/*" onchange="handlePhoto(event)"/>
     </div>
-
     <div id="quickInputs" style="display:none;margin-top:20px;">
       <div class="sec-label">Meal type</div>
       <div class="pill-group" id="mealPills" style="margin-bottom:20px;">
@@ -331,10 +364,7 @@
         <button class="pill" onclick="pickMeal(this,'Supper')">🌛 Supper</button>
       </div>
       <div class="quick-inputs">
-        <div class="qi">
-          <label>Time eaten</label>
-          <input type="time" id="timeInput"/>
-        </div>
+        <div class="qi"><label>Time eaten</label><input type="time" id="timeInput"/></div>
         <div class="qi">
           <label>Location</label>
           <select id="locSel">
@@ -361,7 +391,6 @@
       <button class="btn-primary" onclick="saveEntry()" data-umami-event="Log - Save meal">Save Meal Photo →</button>
     </div>
   </div>
-
   <div id="todayPreview"></div>
 </div>
 </div>
@@ -371,7 +400,7 @@
 <div class="inner">
   <div style="padding-top:8px;">
     <div class="page-title">Your <em>journal.</em></div>
-    <div class="page-sub">Tap any meal to write how you felt — during or after eating. Your notes are included in the clinical report.</div>
+    <div class="page-sub">Tap any meal to write how you felt — during or after eating. Your notes are saved and included in the report.</div>
   </div>
   <div class="date-nav">
     <button class="dnbtn" onclick="changeDiaryDay(-1)">‹</button>
@@ -404,25 +433,147 @@
 <div class="toast" id="toast"></div>
 
 <script>
+// ══════════════════════════════════════════════════════
+//  INDEXEDDB — persistent storage for photos & notes
+// ══════════════════════════════════════════════════════
+const DB_NAME = 'makanlah', DB_VER = 1, STORE = 'entries';
+let db = null;
+
+function openDB(){
+  return new Promise((res, rej) => {
+    const req = indexedDB.open(DB_NAME, DB_VER);
+    req.onupgradeneeded = e => {
+      const d = e.target.result;
+      if(!d.objectStoreNames.contains(STORE)){
+        const s = d.createObjectStore(STORE, { keyPath: 'id', autoIncrement: true });
+        s.createIndex('dateStr', 'dateStr', { unique: false });
+      }
+    };
+    req.onsuccess = e => { db = e.target.result; res(db); };
+    req.onerror   = e => rej(e.target.error);
+  });
+}
+
+function dbGetAll(){
+  return new Promise((res, rej) => {
+    const tx = db.transaction(STORE, 'readonly');
+    const req = tx.objectStore(STORE).getAll();
+    req.onsuccess = e => res(e.target.result);
+    req.onerror   = e => rej(e.target.error);
+  });
+}
+
+function dbAdd(entry){
+  return new Promise((res, rej) => {
+    const tx = db.transaction(STORE, 'readwrite');
+    const req = tx.objectStore(STORE).add(entry);
+    req.onsuccess = e => res(e.target.result);
+    req.onerror   = e => rej(e.target.error);
+  });
+}
+
+function dbDelete(id){
+  return new Promise((res, rej) => {
+    const tx = db.transaction(STORE, 'readwrite');
+    const req = tx.objectStore(STORE).delete(id);
+    req.onsuccess = () => res();
+    req.onerror   = e => rej(e.target.error);
+  });
+}
+
+function dbUpdate(entry){
+  return new Promise((res, rej) => {
+    const tx = db.transaction(STORE, 'readwrite');
+    const req = tx.objectStore(STORE).put(entry);
+    req.onsuccess = () => res();
+    req.onerror   = e => rej(e.target.error);
+  });
+}
+
+// ══════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════
+// logs: { 'YYYY-MM-DD': [ entry, … ] }
+// Each entry: { id(IDB key), dateStr, photo(base64), meal, time, loc, mood, note, ts }
 let logs = {};
 let currentMeal = 'Breakfast', currentMood = '🍽️ Hungry', currentPhoto = null;
 let diaryDate = new Date(); diaryDate.setHours(0,0,0,0);
 const MEAL_EMOJI = { Breakfast:'🌅', Lunch:'☀️', Dinner:'🌙', Snack:'🍎', Supper:'🌛' };
 
-// ── INIT ──
-document.getElementById('hdate').textContent =
-  new Date().toLocaleDateString('en-MY',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
-setDefaultTime(); setDiaryLabel(); seedDemoData(); renderTodayPreview(); renderJournal();
+// ══════════════════════════════════════════════════════
+//  BOOT
+// ══════════════════════════════════════════════════════
+async function boot(){
+  await openDB();
+  await loadAllFromDB();
+  document.getElementById('hdate').textContent =
+    new Date().toLocaleDateString('en-MY',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  setDefaultTime(); setDiaryLabel();
+  renderTodayPreview(); renderJournal();
+  registerSW();
+  setupInstallPrompt();
+}
+boot();
 
+async function loadAllFromDB(){
+  const all = await dbGetAll();
+  logs = {};
+  all.forEach(e => {
+    if(!logs[e.dateStr]) logs[e.dateStr] = [];
+    logs[e.dateStr].push(e);
+  });
+  // Sort each day by time
+  Object.keys(logs).forEach(ds => logs[ds].sort((a,b) => a.time.localeCompare(b.time)));
+}
+
+// ══════════════════════════════════════════════════════
+//  SERVICE WORKER
+// ══════════════════════════════════════════════════════
+function registerSW(){
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW:', err));
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  PWA INSTALL PROMPT
+// ══════════════════════════════════════════════════════
+let deferredPrompt = null;
+function setupInstallPrompt(){
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    // Only show if not already installed
+    if(!window.matchMedia('(display-mode: standalone)').matches){
+      document.getElementById('installBanner').classList.add('show');
+    }
+  });
+  document.getElementById('installBtn').addEventListener('click', async () => {
+    if(!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if(outcome === 'accepted') dismissInstall();
+    deferredPrompt = null;
+  });
+}
+function dismissInstall(){
+  document.getElementById('installBanner').classList.remove('show');
+}
+
+// ══════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════
 function dateStr(d){ return d.toISOString().slice(0,10); }
 function today(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
 function isToday(d){ return dateStr(d)===dateStr(today()); }
 function setDefaultTime(){
   const n=new Date();
-  document.getElementById('timeInput').value=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
+  document.getElementById('timeInput').value = String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
 }
 
-// ── TABS ──
+// ══════════════════════════════════════════════════════
+//  TABS
+// ══════════════════════════════════════════════════════
 function goTab(name){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
@@ -431,19 +582,33 @@ function goTab(name){
   if(name==='diary') renderJournal();
 }
 
-// ── PHOTO ──
+// ══════════════════════════════════════════════════════
+//  PHOTO HANDLING
+// ══════════════════════════════════════════════════════
 function handlePhoto(e){
   const file=e.target.files[0]; if(!file) return;
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    currentPhoto=ev.target.result;
-    document.getElementById('stagedImg').src=currentPhoto;
-    document.getElementById('photoFileName').textContent=file.name;
-    document.getElementById('photoStage').style.display='block';
-    document.getElementById('photoSourceRow').style.display='none';
-    document.getElementById('quickInputs').style.display='block';
+  // Compress image before storing to keep IndexedDB lean
+  const img = new Image();
+  const url = URL.createObjectURL(file);
+  img.onload = () => {
+    const MAX = 1024;
+    let w = img.width, h = img.height;
+    if(w > MAX || h > MAX){
+      if(w > h){ h = Math.round(h * MAX / w); w = MAX; }
+      else { w = Math.round(w * MAX / h); h = MAX; }
+    }
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+    currentPhoto = canvas.toDataURL('image/jpeg', 0.75);
+    URL.revokeObjectURL(url);
+    document.getElementById('stagedImg').src = currentPhoto;
+    document.getElementById('photoFileName').textContent = file.name;
+    document.getElementById('photoStage').style.display = 'block';
+    document.getElementById('photoSourceRow').style.display = 'none';
+    document.getElementById('quickInputs').style.display = 'block';
   };
-  reader.readAsDataURL(file);
+  img.src = url;
 }
 function clearPhoto(){
   currentPhoto=null;
@@ -456,25 +621,51 @@ function clearPhoto(){
 function pickMeal(el,m){ document.querySelectorAll('#mealPills .pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); currentMeal=m; }
 function pickMood(el,m){ document.querySelectorAll('#moodPills .pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); currentMood=m; }
 
-// ── SAVE ──
-function saveEntry(){
+// ══════════════════════════════════════════════════════
+//  SAVE ENTRY → IndexedDB
+// ══════════════════════════════════════════════════════
+async function saveEntry(){
   if(!currentPhoto){ toast('Please add a photo first.'); return; }
-  const ds=dateStr(today());
+  const ds = dateStr(today());
+  const entry = {
+    dateStr: ds,
+    photo:   currentPhoto,
+    meal:    currentMeal,
+    time:    document.getElementById('timeInput').value,
+    loc:     document.getElementById('locSel').value,
+    mood:    currentMood,
+    note:    '',
+    ts:      Date.now()
+  };
+  const id = await dbAdd(entry);
+  entry.id = id;
   if(!logs[ds]) logs[ds]=[];
-  logs[ds].push({ photo:currentPhoto, meal:currentMeal, time:document.getElementById('timeInput').value, loc:document.getElementById('locSel').value, mood:currentMood, note:'', ts:Date.now() });
+  logs[ds].push(entry);
   logs[ds].sort((a,b)=>a.time.localeCompare(b.time));
   clearPhoto(); setDefaultTime(); renderTodayPreview();
   toast('Meal photo saved.');
 }
 
-// ── TODAY PREVIEW ──
+// ══════════════════════════════════════════════════════
+//  DELETE ENTRY
+// ══════════════════════════════════════════════════════
+async function deleteEntry(ds, id){
+  await dbDelete(id);
+  logs[ds] = (logs[ds]||[]).filter(e=>e.id!==id);
+  renderTodayPreview(); renderJournal();
+}
+
+// ══════════════════════════════════════════════════════
+//  TODAY PREVIEW
+// ══════════════════════════════════════════════════════
 function renderTodayPreview(){
   const ds=dateStr(today()), entries=logs[ds]||[];
   const el=document.getElementById('todayPreview');
   if(!entries.length){ el.innerHTML=''; return; }
-  el.innerHTML=`<div class="sec-label">Today's photos (${entries.length})</div>`+entries.map((e,i)=>logCard(e,ds,i)).join('');
+  el.innerHTML=`<div class="sec-label">Today's photos (${entries.length})</div>`+
+    entries.map(e=>logCard(e)).join('');
 }
-function logCard(e,ds,i){
+function logCard(e){
   return `<div class="entry-card">
     <div class="entry-img">${e.photo?`<img src="${e.photo}" alt="meal">`:'🍽️'}</div>
     <div class="entry-body">
@@ -483,15 +674,17 @@ function logCard(e,ds,i){
       <div class="entry-tags"><span class="etag">📍 ${e.loc}</span><span class="etag mood">${e.mood}</span></div>
       ${e.note?`<div class="entry-note">${e.note}</div>`:''}
     </div>
-    <button class="entry-del" onclick="deleteEntry('${ds}',${i})">✕</button>
+    <button class="entry-del" onclick="deleteEntry('${e.dateStr}',${e.id})">✕</button>
   </div>`;
 }
-function deleteEntry(ds,i){ logs[ds].splice(i,1); renderTodayPreview(); renderJournal(); }
 
-// ── JOURNAL ──
+// ══════════════════════════════════════════════════════
+//  JOURNAL
+// ══════════════════════════════════════════════════════
 function setDiaryLabel(){
   const lbl=isToday(diaryDate)?'Today — ':'';
-  document.getElementById('diaryDayLabel').textContent=lbl+diaryDate.toLocaleDateString('en-MY',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('diaryDayLabel').textContent=
+    lbl+diaryDate.toLocaleDateString('en-MY',{weekday:'long',day:'numeric',month:'long'});
 }
 function changeDiaryDay(d){
   diaryDate.setDate(diaryDate.getDate()+d);
@@ -505,70 +698,60 @@ function renderJournal(){
     el.innerHTML=`<div class="empty"><div class="ei">📖</div><p>No meals logged for this day.<br>Go to <strong>Log</strong> to add a meal photo,<br>then come back to write your notes here.</p></div>`;
     return;
   }
-  el.innerHTML=entries.map((e,i)=>{
+  el.innerHTML=entries.map(e=>{
     const hasNote=e.note&&e.note.trim();
     return `<div class="journal-entry">
-      <div class="je-header" id="jeh-${ds}-${i}" onclick="toggleJE('${ds}',${i})">
+      <div class="je-header" id="jeh-${e.id}" onclick="toggleJE(${e.id})">
         <div class="je-thumb">${e.photo?`<img src="${e.photo}" alt="meal">`:'🍽️'}</div>
         <div class="je-meta">
           <div class="je-meal">${MEAL_EMOJI[e.meal]||''} ${e.meal}</div>
           <div class="je-time">${e.time||'—'} · 📍 ${e.loc} · ${e.mood}</div>
         </div>
-        <span class="je-chevron" id="chev-${ds}-${i}">›</span>
+        <span class="je-chevron" id="chev-${e.id}">›</span>
       </div>
-      <div class="je-body" id="jebody-${ds}-${i}">
+      <div class="je-body" id="jebody-${e.id}">
         <div class="je-note-label">How did this meal make you feel?</div>
         ${hasNote
-          ? `<div class="je-saved-note" id="jenote-${ds}-${i}">${e.note}</div>
-             <button class="je-edit-btn" onclick="editNote('${ds}',${i})">Edit note</button>`
-          : `<textarea class="je-textarea" id="jeta-${ds}-${i}" placeholder="Write freely — how did you feel before, during, or after this meal? Any cravings, fullness, discomfort, energy changes, or emotions? Your notes help your dietitian understand your relationship with food."></textarea>
-             <button class="je-save" onclick="saveNote('${ds}',${i})">Save note</button>`
+          ? `<div class="je-saved-note" id="jenote-${e.id}">${e.note}</div>
+             <button class="je-edit-btn" onclick="editNote(${e.id})">Edit note</button>`
+          : `<textarea class="je-textarea" id="jeta-${e.id}" placeholder="Write freely — how did you feel before, during, or after this meal? Any cravings, fullness, discomfort, energy changes, or emotions? Your notes help your dietitian understand your relationship with food."></textarea>
+             <button class="je-save" onclick="saveNote(${e.id})">Save note</button>`
         }
       </div>
     </div>`;
   }).join('');
 }
-function toggleJE(ds,i){
-  const body=document.getElementById(`jebody-${ds}-${i}`);
-  const chev=document.getElementById(`chev-${ds}-${i}`);
-  const hdr=document.getElementById(`jeh-${ds}-${i}`);
+function toggleJE(id){
+  const body=document.getElementById(`jebody-${id}`);
+  const chev=document.getElementById(`chev-${id}`);
+  const hdr=document.getElementById(`jeh-${id}`);
   const open=body.classList.toggle('open');
   chev.classList.toggle('open',open);
   hdr.classList.toggle('open',open);
 }
-function saveNote(ds,i){
-  const ta=document.getElementById(`jeta-${ds}-${i}`); if(!ta) return;
-  logs[ds][i].note=ta.value.trim();
+async function saveNote(id){
+  const ta=document.getElementById(`jeta-${id}`); if(!ta) return;
+  const txt=ta.value.trim();
+  // Find and update in memory + DB
+  for(const ds of Object.keys(logs)){
+    const e=logs[ds].find(e=>e.id===id);
+    if(e){ e.note=txt; await dbUpdate(e); break; }
+  }
   renderJournal(); renderTodayPreview(); toast('Note saved.');
 }
-function editNote(ds,i){
-  const noteEl=document.getElementById(`jenote-${ds}-${i}`);
-  const existing=logs[ds][i].note||'';
+function editNote(id){
+  const noteEl=document.getElementById(`jenote-${id}`);
+  let existing='';
+  for(const ds of Object.keys(logs)){ const e=logs[ds].find(e=>e.id===id); if(e){ existing=e.note||''; break; } }
   const parent=noteEl.parentNode;
-  noteEl.outerHTML=`<textarea class="je-textarea" id="jeta-${ds}-${i}">${existing}</textarea>`;
+  noteEl.outerHTML=`<textarea class="je-textarea" id="jeta-${id}">${existing}</textarea>`;
   const btn=parent.querySelector('.je-edit-btn');
-  if(btn){ btn.className='je-save'; btn.textContent='Save note'; btn.onclick=()=>saveNote(ds,i); }
+  if(btn){ btn.className='je-save'; btn.textContent='Save note'; btn.onclick=()=>saveNote(id); }
 }
 
-// ── DEMO DATA ──
-function seedDemoData(){
-  const moods=['😊 Happy','😐 Neutral','😔 Stressed','🍽️ Hungry','😴 Tired','😌 Bored'];
-  const locs=['Home','Restaurant','Work / School','Café','On the go'];
-  const meals=['Breakfast','Lunch','Dinner','Snack'];
-  const times={Breakfast:'07:30',Snack:'10:15',Lunch:'13:00',Dinner:'19:30'};
-  const notes=['Felt satisfied and full.','Ate too quickly, felt bloated after.','Craved something sweet after this.','Felt a bit sluggish about 30 min later.','','Good energy throughout the afternoon.'];
-  const px='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
-  for(let day=1;day<=6;day++){
-    const d=new Date(today()); d.setDate(d.getDate()-day);
-    const ds=dateStr(d); logs[ds]=[];
-    const count=2+Math.floor(Math.random()*3);
-    meals.slice(0,count).forEach(m=>{
-      logs[ds].push({ photo:px, meal:m, time:times[m]||'12:00', loc:locs[Math.floor(Math.random()*locs.length)], mood:moods[Math.floor(Math.random()*moods.length)], note:notes[Math.floor(Math.random()*notes.length)], ts:Date.now() });
-    });
-  }
-}
-
-// ── REPORT ──
+// ══════════════════════════════════════════════════════
+//  REPORT
+// ══════════════════════════════════════════════════════
 async function generateReport(){
   const days=Object.keys(logs).sort((a,b)=>b.localeCompare(a)).slice(0,7);
   const out=document.getElementById('reportOut');
@@ -626,7 +809,7 @@ async function generateReport(){
 - Meals after 8pm: ${lateMeals}
 - All meal times: ${timeList.join(', ')}${notesSection}
 
-Write a structured clinical behavioural and eating pattern analysis in flowing prose (no bullet points). Cover: (1) Meal timing and eating rhythm — regularity, frequency, circadian alignment, metabolic implications. (2) Eating environment and context — location patterns, food access, social eating triggers. (3) Emotional and appetite-driven eating — interpret mood and hunger data; reference journal notes if provided. (4) Behavioural risk markers — patterns relevant to T2DM, CVD, obesity, metabolic syndrome. (5) Observations for the dietitian — positive patterns to acknowledge, areas to probe in consultation.
+Write a structured clinical behavioural and eating pattern analysis in flowing prose (no bullet points). Cover: (1) Meal timing and eating rhythm. (2) Eating environment and context. (3) Emotional and appetite-driven eating — reference journal notes if provided. (4) Behavioural risk markers relevant to T2DM, CVD, obesity, metabolic syndrome. (5) Observations for the dietitian — positive patterns and areas to probe.
 
 Ground every observation in published evidence (2020–2025). Cite studies inline. Use clear clinical language. Do not make dietary recommendations.`;
 
@@ -643,7 +826,7 @@ Ground every observation in published evidence (2020–2025). Cite studies inlin
 
 async function printReport(){
   await generateReport();
-  setTimeout(()=>window.print(),1500);
+  setTimeout(()=>window.print(), 1500);
 }
 
 function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
