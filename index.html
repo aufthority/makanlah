@@ -161,8 +161,8 @@
     .qi { display: flex; flex-direction: column; gap: 6px; }
     .qi.full { grid-column: span 2; }
     .qi label { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
-    .qi select, .qi input[type=time] { background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 9px 11px; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 300; color: var(--ink); outline: none; width: 100%; transition: border-color .18s; }
-    .qi select:focus, .qi input[type=time]:focus { border-color: var(--accent); }
+    .qi select, .qi input[type=time], .qi input[type=date] { background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 9px 11px; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 300; color: var(--ink); outline: none; width: 100%; transition: border-color .18s; }
+    .qi select:focus, .qi input[type=time]:focus, .qi input[type=date]:focus { border-color: var(--accent); }
 
     /* pill group */
     .pill-group { display: flex; gap: 7px; flex-wrap: wrap; }
@@ -415,6 +415,7 @@
         <button class="pill" onclick="pickMeal(this,'Supper')" data-en="Supper" data-bm="Supper">Supper</button>
       </div>
       <div class="quick-inputs">
+        <div class="qi"><label data-en="Date eaten" data-bm="Tarikh makan">Date eaten</label><input type="date" id="dateInput"/></div>
         <div class="qi"><label data-en="Time eaten" data-bm="Masa makan">Time eaten</label><input type="time" id="timeInput"/></div>
         <div class="qi">
           <label data-en="Where did you eat?" data-bm="Di mana anda makan?">Where did you eat?</label>
@@ -687,8 +688,17 @@ function dateStr(d){
 function today(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
 function isToday(d){ return dateStr(d)===dateStr(today()); }
 function setDefaultTime(){
-  const n=new Date();
-  document.getElementById('timeInput').value = String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
+  const n = new Date();
+  document.getElementById('timeInput').value =
+    String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0');
+  // Date field — default today, min = 7 days ago
+  const todayStr = dateStr(n);
+  const minDate = new Date(n); minDate.setDate(minDate.getDate() - 7);
+  const minStr = dateStr(minDate);
+  const dateInput = document.getElementById('dateInput');
+  dateInput.value = todayStr;
+  dateInput.max   = todayStr;
+  dateInput.min   = minStr;
 }
 
 // ══════════════════════════════════════════════════════
@@ -737,6 +747,7 @@ function clearPhoto(){
   document.getElementById('quickInputs').style.display='none';
   document.getElementById('photoCamera').value='';
   document.getElementById('photoGallery').value='';
+  setDefaultTime();
 }
 function pickMeal(el,m){ document.querySelectorAll('#mealPills .pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); currentMeal=m; }
 function pickMood(el,m){ document.querySelectorAll('#moodPills .pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); currentMood=m; }
@@ -745,10 +756,12 @@ function pickMood(el,m){ document.querySelectorAll('#moodPills .pill').forEach(p
 //  SAVE ENTRY → IndexedDB
 // ══════════════════════════════════════════════════════
 async function saveEntry(){
-  if(!currentPhoto){ toast('Please add a photo first.'); return; }
+  if(!currentPhoto){ toast(t('Please add a photo first.','Sila tambah foto dahulu.')); return; }
   const timeVal = document.getElementById('timeInput').value;
   if(!timeVal){ toast(t('Please set the time eaten.', 'Sila tetapkan masa makan.')); return; }
-  const ds = dateStr(today());
+  const dateVal = document.getElementById('dateInput').value;
+  if(!dateVal){ toast(t('Please set the date eaten.', 'Sila tetapkan tarikh makan.')); return; }
+  const ds = dateVal; // already YYYY-MM-DD local
   const entry = {
     dateStr: ds,
     photo:   currentPhoto,
