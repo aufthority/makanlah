@@ -6,6 +6,13 @@
   <meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)"/>
   <meta name="theme-color" content="#141412" media="(prefers-color-scheme: dark)"/>
   <title>Welcome to MakanLah</title>
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="MakanLah"/>
+  <meta name="description" content="A simple food photo diary for clinical nutrition review."/>
+  <!-- Apple touch icon fallback -->
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='114' fill='%232d6a4f'/%3E%3Ctext x='256' y='340' font-size='280' text-anchor='middle'%3E🍽️%3C/text%3E%3C/svg%3E"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -432,6 +439,13 @@
 </head>
 <body>
 
+<!-- ── INSTALL BANNER ── -->
+<div id="installBanner" style="display:none;align-items:center;gap:12px;background:#2d6a4f;color:#fff;padding:12px 20px;font-size:.8rem;font-weight:400;">
+  <span><strong style="font-weight:600;">Add to Home Screen</strong> — use MakanLah like a native app.</span>
+  <button id="installBtn" style="margin-left:auto;flex-shrink:0;background:#fff;color:#2d6a4f;border:none;border-radius:2px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;">Install</button>
+  <button onclick="document.getElementById('installBanner').style.display='none'" style="background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:1rem;padding:0 0 0 8px;flex-shrink:0;">✕</button>
+</div>
+
 <!-- ── HEADER ── -->
 <header>
   <div class="nav-inner">
@@ -456,7 +470,7 @@
     — no calorie counting required.
   </p>
   <div class="hero-cta-row">
-    <a href="index.html" class="btn-primary">
+    <a href="index.html" class="btn-primary" onclick="localStorage.setItem('makanlah_onboarded','1')">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:15px;height:15px;"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" /></svg>
       Open the App
     </a>
@@ -667,11 +681,46 @@
 <!-- ── FOOTER ── -->
 <footer>
   <span class="footer-copy">© 2026 Aufthority · Built with care in Malaysia</span>
-  <a href="index.html" class="footer-link">Open MakanLah →</a>
+  <a href="index.html" class="footer-link" onclick="localStorage.setItem('makanlah_onboarded','1')">Open MakanLah →</a>
 </footer>
 
 <script>
-  // Scroll-triggered step reveal
+  // ── PWA: register service worker & handle install prompt ──
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  }
+
+  // ── Skip onboarding if already seen (e.g. direct link) ──
+  // Uncomment the line below if you want returning users sent straight to the app:
+  // if (localStorage.getItem('makanlah_onboarded')) location.replace('index.html');
+
+  let _deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    _deferredPrompt = e;
+    if (!window.matchMedia('(display-mode: standalone)').matches) {
+      const banner = document.getElementById('installBanner');
+      if (banner) banner.classList.add('show');
+    }
+  });
+
+  // ── Install button handler ──
+  document.getElementById('installBtn').addEventListener('click', async () => {
+    if (!_deferredPrompt) return;
+    _deferredPrompt.prompt();
+    const { outcome } = await _deferredPrompt.userChoice;
+    if (outcome === 'accepted') document.getElementById('installBanner').style.display = 'none';
+    _deferredPrompt = null;
+  });
+
+  // ── Show install banner (flex) when .show is set ──
+  const _origBanner = document.getElementById('installBanner');
+  const _bannerObserver = new MutationObserver(() => {
+    if (_origBanner.classList.contains('show')) _origBanner.style.display = 'flex';
+  });
+  _bannerObserver.observe(_origBanner, { attributes: true, attributeFilter: ['class'] });
+
+  // ── Scroll-triggered step reveal
   const steps = document.querySelectorAll('[data-step]');
   const observer = new IntersectionObserver(entries => {
     entries.forEach((entry, i) => {

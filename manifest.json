@@ -2,7 +2,7 @@
   "name": "MakanLah — My Food Diary",
   "short_name": "MakanLah",
   "description": "A simple food photo diary for clinical nutrition review.",
-  "start_url": "/",
+  "start_url": "/onboarding.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#f7f5f0",
