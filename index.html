@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    if (!localStorage.getItem('makanlah_onboarded')) {
+      location.replace('onboarding.html');
+    }
+  </script>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="30307bac-21fd-4735-b076-61b9bdb3b769"></script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
