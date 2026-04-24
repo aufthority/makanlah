@@ -238,6 +238,51 @@
     .storage-notice { font-size: .72rem; color: var(--muted); background: var(--accent-light); border: 1px solid var(--rule); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 20px; line-height: 1.6; font-weight: 300; }
     .storage-notice strong { font-weight: 500; color: var(--accent); }
 
+    /* ── PROFILE CARD ── */
+    .profile-card {
+      background: var(--card-bg); border: 1px solid var(--rule);
+      border-radius: var(--radius); padding: 20px 24px; margin-bottom: 12px;
+    }
+    .pc-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .pc-title {
+      font-family: 'DM Serif Display', serif; font-size: .95rem; color: var(--ink);
+    }
+    .pc-saved-badge {
+      font-size: .6rem; font-weight: 500; text-transform: uppercase;
+      letter-spacing: .1em; padding: 3px 9px; border-radius: 20px;
+      background: var(--accent-light); color: var(--accent);
+      border: 1px solid var(--accent); display: none;
+    }
+    .pc-saved-badge.show { display: inline-block; }
+    .pc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .pc-field { display: flex; flex-direction: column; gap: 5px; }
+    .pc-field.full { grid-column: span 2; }
+    .pc-field label {
+      font-size: .6rem; font-weight: 500; text-transform: uppercase;
+      letter-spacing: .14em; color: var(--muted);
+    }
+    .pc-field input {
+      background: var(--bg); border: 1px solid var(--rule);
+      border-radius: var(--radius); padding: 8px 10px;
+      font-family: 'DM Sans', sans-serif; font-size: .82rem;
+      font-weight: 300; color: var(--ink); outline: none;
+      transition: border-color .18s; width: 100%;
+    }
+    .pc-field input:focus { border-color: var(--accent); }
+    .pc-field input::placeholder { color: var(--muted); }
+    .pc-save-btn {
+      margin-top: 14px; padding: 9px 20px;
+      background: var(--ink); border: none; border-radius: var(--radius);
+      color: var(--bg); font-family: 'DM Sans', sans-serif;
+      font-size: .75rem; font-weight: 500; text-transform: uppercase;
+      letter-spacing: .08em; cursor: pointer; transition: background .2s;
+    }
+    .pc-save-btn:hover { background: var(--accent); }
+    @media (max-width: 420px) { .pc-fields { grid-template-columns: 1fr; } .pc-field.full { grid-column: span 1; } }
+
     /* ── REPORT VIEW ── */
     .report-info { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 28px; margin-bottom: 16px; }
     .ri-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
@@ -526,6 +571,38 @@
 <!-- ══ REPORT TAB ══ -->
 <div class="view" id="view-report">
 <div class="inner">
+
+  <!-- Patient profile card -->
+  <div class="profile-card">
+    <div class="pc-header">
+      <div class="pc-title">Patient Details</div>
+      <span class="pc-saved-badge" id="pcSavedBadge">Saved</span>
+    </div>
+    <div class="pc-fields">
+      <div class="pc-field full">
+        <label>Full name</label>
+        <input type="text" id="pcName" placeholder="e.g. Siti Aminah binti Razali"/>
+      </div>
+      <div class="pc-field">
+        <label>Date of birth</label>
+        <input type="date" id="pcDob"/>
+      </div>
+      <div class="pc-field">
+        <label>Contact / Email</label>
+        <input type="text" id="pcEmail" placeholder="Optional"/>
+      </div>
+      <div class="pc-field">
+        <label>Clinic / Hospital</label>
+        <input type="text" id="pcClinic" placeholder="e.g. Klinik Kesihatan Seremban"/>
+      </div>
+      <div class="pc-field">
+        <label>Dietitian / Nutritionist</label>
+        <input type="text" id="pcDietitian" placeholder="e.g. Puan Norzahra"/>
+      </div>
+    </div>
+    <button class="pc-save-btn" onclick="saveProfile()">Save Details</button>
+  </div>
+
   <div class="report-info" id="reportControls">
     <div class="ri-top">
       <div class="ri-title" data-en="Clinical Report" data-bm="Laporan Klinikal">Clinical Report</div>
@@ -666,6 +743,7 @@ async function boot(){
     new Date().toLocaleDateString('en-MY',{weekday:'short',day:'numeric',month:'short'});
   setDefaultTime(); setDiaryLabel();
   renderTodayPreview(); renderJournal();
+  populateProfileFields();
   registerSW();
   setupInstallPrompt();
 }
@@ -964,6 +1042,7 @@ async function generateReport(){
       <h2>MakanLah — ${t('Clinical Food Diary Report','Laporan Diari Makanan Klinikal')}</h2>
       <div class="rd-meta">${t('Generated','Dijana')}: ${new Date().toLocaleDateString('en-MY',{day:'numeric',month:'long',year:'numeric'})} &nbsp;·&nbsp; ${days.length}-${t('day record','hari direkod')} &nbsp;·&nbsp; ${allEntries.length} ${t('meal photos','foto hidangan')}</div>
     </div>
+    ${profileHeaderHTML()}
     <div class="rd-section"><h3>${t('Photo Diary — Meals by Day','Diari Foto — Hidangan Mengikut Hari')}</h3>${dayRowsHTML}</div>
     <div class="disclaimer">${t('This report is generated from patient self-reported meal photos and journal entries via MakanLah (Aufthority). Nutrient composition analysis has not been completed and must be assessed by the attending dietitian or nutritionist. This report does not constitute a diagnosis or dietary prescription.','Laporan ini dijana daripada foto hidangan dan nota jurnal yang dilaporkan sendiri oleh pesakit melalui MakanLah (Aufthority). Analisis komposisi nutrien belum dilengkapkan dan mesti dinilai oleh doktor diet atau ahli pemakanan yang mengendalikan. Laporan ini bukan diagnosis atau preskripsi diet.')}</div>
   </div>`;
@@ -989,6 +1068,60 @@ async function printReport(){
     // Restore title after print dialog closes
     setTimeout(() => { document.title = originalTitle; }, 2000);
   }));
+}
+
+// ══════════════════════════════════════════════════════
+//  PATIENT PROFILE — localStorage
+// ══════════════════════════════════════════════════════
+const PROFILE_KEY = 'makanlah_profile';
+
+function loadProfile(){
+  try { return JSON.parse(localStorage.getItem(PROFILE_KEY)) || null; }
+  catch(e){ return null; }
+}
+
+function saveProfile(){
+  const profile = {
+    name:      document.getElementById('pcName').value.trim(),
+    dob:       document.getElementById('pcDob').value,
+    email:     document.getElementById('pcEmail').value.trim(),
+    clinic:    document.getElementById('pcClinic').value.trim(),
+    dietitian: document.getElementById('pcDietitian').value.trim(),
+  };
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+  document.getElementById('pcSavedBadge').classList.add('show');
+  toast(t('Patient details saved.', 'Maklumat pesakit disimpan.'));
+}
+
+function populateProfileFields(){
+  const p = loadProfile();
+  if(!p) return;
+  document.getElementById('pcName').value      = p.name      || '';
+  document.getElementById('pcDob').value       = p.dob       || '';
+  document.getElementById('pcEmail').value     = p.email     || '';
+  document.getElementById('pcClinic').value    = p.clinic    || '';
+  document.getElementById('pcDietitian').value = p.dietitian || '';
+  if(p.name || p.clinic) document.getElementById('pcSavedBadge').classList.add('show');
+}
+
+function profileHeaderHTML(){
+  const p = loadProfile();
+  if(!p || !p.name) return '';
+  const fmt = (label, val) => val
+    ? `<tr><td style="font-weight:500;padding-right:20px;white-space:nowrap;color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;">${label}</td><td style="font-size:.82rem;">${val}</td></tr>`
+    : '';
+  const dobFmt = p.dob
+    ? new Date(p.dob + 'T00:00:00').toLocaleDateString('en-MY', {day:'numeric', month:'long', year:'numeric'})
+    : '';
+  return `<div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--rule);">
+    <table style="border-collapse:collapse;line-height:1.8;">
+      ${fmt('Patient', p.name)}
+      ${fmt('Date of birth', dobFmt)}
+      ${fmt('Contact', p.email)}
+      ${fmt('Clinic', p.clinic)}
+      ${fmt('Dietitian', p.dietitian)}
+    </table>
+  </div>`;
 }
 
 function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
