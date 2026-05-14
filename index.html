@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
   <script>
+    // First-visit only: redirect to onboarding if the flag is not yet set.
+    // Once onboarding.html sets localStorage.makanlah_onboarded = '1',
+    // this block is skipped on every subsequent visit.
     if (!localStorage.getItem('makanlah_onboarded')) {
       location.replace('onboarding.html');
     }
@@ -9,52 +12,59 @@
   <script defer src="https://cloud.umami.is/script.js" data-website-id="30307bac-21fd-4735-b076-61b9bdb3b769"></script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)"/>
-  <meta name="theme-color" content="#141412" media="(prefers-color-scheme: dark)"/>
+  <meta name="theme-color" content="#f4f1e0"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
   <meta name="apple-mobile-web-app-title" content="MakanLah"/>
   <meta name="description" content="A simple food photo diary for clinical nutrition review."/>
   <link rel="manifest" href="manifest.json"/>
-  <!-- Apple touch icon fallback (inline SVG as data URI) -->
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='114' fill='%232d6a4f'/%3E%3Ctext x='256' y='340' font-size='280' text-anchor='middle'%3E🍽️%3C/text%3E%3C/svg%3E"/>
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='114' fill='%23321e1e'/%3E%3Ctext x='256' y='340' font-size='280' text-anchor='middle'%3E🍽️%3C/text%3E%3C/svg%3E"/>
   <title>MakanLah — My Food Diary</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:           #f7f5f0;
-      --ink:          #1a1a18;
-      --muted:        #6b6b62;
-      --accent:       #2d6a4f;
-      --accent-light: #e8f5ee;
-      --rule:         #e0ddd5;
-      --card-bg:      #ffffff;
-      --radius:       2px;
-      --shadow:       rgba(45,106,79,.07);
-      --safe-top:     env(safe-area-inset-top, 0px);
-      --safe-bottom:  env(safe-area-inset-bottom, 0px);
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg:           #141412;
-        --ink:          #f0ede6;
-        --muted:        #9a9a8e;
-        --accent:       #52b788;
-        --accent-light: #1a2e24;
-        --rule:         #2a2a26;
-        --card-bg:      #1e1e1a;
-      }
+      /* ── Houseplant colour system ── */
+      --parchment:   #f4f1e0;
+      --deep-bark:   #321e1e;
+      --carbon:      #464545;
+      --surface-shadow: #bdb498;
+      --btn-shadow:  #463938;
+      --pure-white:  #f4f4f4;
+
+      /* App tokens */
+      --bg:          var(--parchment);
+      --ink:         var(--deep-bark);
+      --muted:       var(--carbon);
+      --rule:        var(--surface-shadow);
+      --card-bg:     var(--parchment);
+      --accent:      var(--deep-bark);
+      --accent-light: rgba(50,30,30,.07);
+
+      /* Shape */
+      --radius:      4px;
+      --radius-lg:   8px;
+      --shadow-sm:   rgba(0,0,0,.10) 0px 2px 8px 0px;
+      --shadow-sm2:  rgba(0,0,0,.15) 0px 2px 8px 0px;
+
+      /* Safe areas */
+      --safe-top:    env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+      /* Typography */
+      --serif:  'Playfair Display', Georgia, 'Times New Roman', serif;
+      --sans:   'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     html { scroll-behavior: smooth; height: 100%; }
     body {
       background: var(--bg); color: var(--ink);
-      font-family: 'DM Sans', sans-serif; font-weight: 300;
-      line-height: 1.7; -webkit-font-smoothing: antialiased;
+      font-family: var(--sans); font-weight: 400;
+      font-size: 15px; line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
       min-height: 100%; display: flex; flex-direction: column;
       padding-top: var(--safe-top);
       padding-bottom: var(--safe-bottom);
@@ -63,332 +73,427 @@
     /* ── HEADER ── */
     header {
       position: sticky; top: 0; z-index: 100;
-      background: var(--bg); border-bottom: 1px solid var(--rule);
+      background: var(--deep-bark);
+      border-bottom: 1px solid rgba(255,255,255,.08);
     }
     .nav-inner {
-      max-width: 680px; margin: 0 auto; padding: 0 28px;
-      height: 56px; display: flex; align-items: center; justify-content: space-between;
+      max-width: 680px; margin: 0 auto; padding: 0 24px;
+      height: 58px; display: flex; align-items: center; justify-content: space-between;
     }
-    .logo { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--ink); text-decoration: none; display: flex; flex-direction: column; gap: 1px; }
-    .logo em { color: var(--accent); font-style: italic; }
-    .logo-by { font-family: 'DM Sans', sans-serif; font-size: .55rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; color: var(--muted); text-decoration: none; transition: color .18s; }
-    .logo-by:hover { color: var(--accent); }
-    .hdate { font-size: .72rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .logo {
+      font-family: var(--serif); font-size: 1.25rem; font-weight: 400;
+      color: var(--pure-white); text-decoration: none;
+      display: flex; flex-direction: column; gap: 1px;
+      letter-spacing: -0.02em;
+    }
+    .logo em { font-style: italic; color: var(--surface-shadow); }
+    .logo-by {
+      font-family: var(--sans); font-size: .52rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .2em;
+      color: rgba(244,241,224,.45); text-decoration: none;
+      transition: color .18s;
+    }
+    .logo-by:hover { color: var(--surface-shadow); }
+    .hdate { font-size: .62rem; font-weight: 500; color: rgba(244,241,224,.5); text-transform: uppercase; letter-spacing: .1em; }
 
     /* ── TABS ── */
-    .tabs { background: var(--bg); border-bottom: 1px solid var(--rule); display: flex; }
+    .tabs {
+      background: var(--deep-bark); border-bottom: 1px solid rgba(255,255,255,.06);
+      display: flex;
+    }
     .tbtn {
-      flex: 1; padding: 10px 6px; background: none; border: none;
-      font-family: 'DM Sans', sans-serif; font-size: .7rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .1em; color: var(--muted); cursor: pointer;
+      flex: 1; padding: 9px 6px; background: none; border: none;
+      font-family: var(--sans); font-size: .6rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .14em; color: rgba(244,241,224,.45); cursor: pointer;
       border-bottom: 2px solid transparent;
       display: flex; flex-direction: column; align-items: center; gap: 3px;
       transition: color .18s, border-color .18s;
     }
     .tbtn .ti { font-size: 1rem; display: flex; align-items: center; justify-content: center; }
-    .tbtn .ti svg { width: 20px; height: 20px; }
-    .tbtn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tbtn .ti svg { width: 18px; height: 18px; }
+    .tbtn.active { color: var(--parchment); border-bottom-color: var(--surface-shadow); }
 
     /* ── LANG TOGGLE ── */
     .lang-toggle {
-      display: flex; background: var(--card-bg); border: 1px solid var(--rule);
+      display: flex; background: rgba(244,241,224,.1); border: 1px solid rgba(244,241,224,.15);
       border-radius: 20px; padding: 3px; gap: 0;
     }
     .lang-btn {
-      font-size: .68rem; font-weight: 500; letter-spacing: .06em;
+      font-size: .6rem; font-weight: 500; letter-spacing: .1em;
       padding: 3px 10px; border-radius: 16px; border: none;
-      background: transparent; color: var(--muted); cursor: pointer;
-      transition: all .18s; font-family: 'DM Sans', sans-serif;
+      background: transparent; color: rgba(244,241,224,.5); cursor: pointer;
+      transition: all .18s; font-family: var(--sans);
     }
-    .lang-btn.active { background: var(--accent); color: #fff; }
+    .lang-btn.active { background: var(--parchment); color: var(--deep-bark); }
 
     /* ── VIEWS ── */
     .view { display: none; flex: 1; overflow-y: auto; padding: 28px 0 100px; }
     .view.active { display: block; }
-    .inner { max-width: 680px; margin: 0 auto; padding: 0 28px; }
+    .inner { max-width: 680px; margin: 0 auto; padding: 0 24px; }
 
     /* ── TYPOGRAPHY ── */
-    .page-title { font-family: 'DM Serif Display', serif; font-size: 1.8rem; line-height: 1.2; color: var(--ink); margin-bottom: 6px; }
-    .page-title em { font-style: italic; color: var(--accent); }
-    .page-sub { font-size: .88rem; color: var(--muted); font-weight: 300; margin-bottom: 28px; line-height: 1.6; }
-    .sec-label { font-size: .65rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; color: var(--muted); margin: 28px 0 12px; }
+    .page-title {
+      font-family: var(--serif); font-size: 2rem; line-height: 1.2;
+      color: var(--ink); margin-bottom: 6px; letter-spacing: -0.03em;
+      font-weight: 400;
+    }
+    .page-title em { font-style: italic; color: var(--btn-shadow); }
+    .page-sub { font-size: .82rem; color: var(--muted); font-weight: 400; margin-bottom: 24px; line-height: 1.65; }
+    .sec-label {
+      font-size: .58rem; font-weight: 500; text-transform: uppercase;
+      letter-spacing: .2em; color: var(--surface-shadow); margin: 24px 0 10px;
+      border-bottom: 1px solid var(--rule); padding-bottom: 6px;
+    }
 
     /* ── INSTALL BANNER ── */
     .install-banner {
-      background: var(--accent); color: #fff;
-      padding: 12px 20px; display: none; align-items: center; gap: 12px;
-      font-size: .8rem; font-weight: 400;
+      background: var(--btn-shadow); color: var(--pure-white);
+      padding: 11px 20px; display: none; align-items: center; gap: 12px;
+      font-size: .75rem; font-weight: 400;
     }
     .install-banner.show { display: flex; }
     .install-banner strong { font-weight: 600; }
     .ib-btn {
-      margin-left: auto; flex-shrink: 0; background: #fff; color: var(--accent);
+      margin-left: auto; flex-shrink: 0; background: var(--parchment); color: var(--deep-bark);
       border: none; border-radius: var(--radius); padding: 6px 14px;
-      font-family: 'DM Sans', sans-serif; font-size: .75rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: .06em; cursor: pointer;
+      font-family: var(--sans); font-size: .68rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .08em; cursor: pointer;
     }
-    .ib-dismiss { background: none; border: none; color: rgba(255,255,255,.7); cursor: pointer; font-size: 1rem; padding: 0 0 0 8px; flex-shrink: 0; }
+    .ib-dismiss { background: none; border: none; color: rgba(244,241,224,.6); cursor: pointer; font-size: 1rem; padding: 0 0 0 8px; flex-shrink: 0; }
 
     /* ── DATE NAV ── */
-    .date-nav { display: flex; align-items: center; justify-content: space-between; background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 10px 16px; margin-bottom: 24px; }
-    .dnlabel { font-family: 'DM Serif Display', serif; font-size: .95rem; color: var(--ink); }
-    .dnbtn { background: var(--accent-light); border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: .85rem; color: var(--accent); display: flex; align-items: center; justify-content: center; transition: background .15s; }
-    .dnbtn:hover { background: var(--accent); color: #fff; }
+    .date-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--card-bg); border: 1px solid var(--rule);
+      border-radius: var(--radius-lg); padding: 10px 16px; margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .dnlabel { font-family: var(--serif); font-size: .95rem; color: var(--ink); letter-spacing: -0.01em; }
+    .dnbtn {
+      background: none; border: 1px solid var(--rule); width: 28px; height: 28px;
+      border-radius: 50%; cursor: pointer; font-size: .85rem; color: var(--muted);
+      display: flex; align-items: center; justify-content: center; transition: all .15s;
+    }
+    .dnbtn:hover { background: var(--deep-bark); color: var(--parchment); border-color: var(--deep-bark); }
 
     /* ── UPLOAD CARD ── */
-    .upload-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 24px 28px; }
+    .upload-card {
+      background: var(--card-bg); border: 1px solid var(--rule);
+      border-radius: var(--radius-lg); padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+    }
 
     /* ── PHOTO SOURCE BUTTONS ── */
     .photo-source-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .photo-src-btn {
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
-      padding: 20px 10px; border: 1.5px dashed var(--rule); border-radius: var(--radius);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 22px 10px; border: 1.5px dashed var(--rule); border-radius: var(--radius-lg);
       background: var(--bg); cursor: pointer; transition: border-color .2s, background .2s;
-      font-family: 'DM Sans', sans-serif; text-align: center;
+      font-family: var(--sans); text-align: center;
     }
-    .photo-src-btn:hover { border-color: var(--accent); background: var(--accent-light); }
-    .psb-icon { display: flex; align-items: center; justify-content: center; color: var(--muted); }
-    .psb-icon svg { width: 32px; height: 32px; }
-    .psb-label { font-size: .78rem; font-weight: 500; color: var(--ink); }
-    .psb-sub { font-size: .65rem; color: var(--muted); font-weight: 300; }
+    .photo-src-btn:hover { border-color: var(--deep-bark); background: rgba(50,30,30,.05); }
+    .psb-icon { display: flex; align-items: center; justify-content: center; color: var(--surface-shadow); }
+    .psb-icon svg { width: 30px; height: 30px; }
+    .psb-label { font-size: .75rem; font-weight: 500; color: var(--ink); letter-spacing: .02em; }
+    .psb-sub { font-size: .62rem; color: var(--muted); font-weight: 400; }
     #photoCamera, #photoGallery { display: none; }
 
     /* photo preview */
     .photo-stage { display: none; margin-bottom: 16px; }
-    .photo-stage img { width: 100%; max-height: 220px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--rule); }
+    .photo-stage img {
+      width: 100%; max-height: 220px; object-fit: cover;
+      border-radius: var(--radius-lg); border: 1px solid var(--rule);
+    }
     .photo-stage-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
-    .photo-stage-bar span { font-size: .72rem; color: var(--muted); font-weight: 400; }
-    .rm-btn { font-size: .7rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; background: none; border: 1px solid var(--rule); border-radius: var(--radius); padding: 4px 10px; color: var(--muted); cursor: pointer; transition: border-color .15s, color .15s; }
-    .rm-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .photo-stage-bar span { font-size: .7rem; color: var(--muted); font-weight: 400; }
+    .rm-btn {
+      font-size: .65rem; font-weight: 500; text-transform: uppercase; letter-spacing: .1em;
+      background: none; border: 1px solid var(--rule); border-radius: var(--radius);
+      padding: 4px 10px; color: var(--muted); cursor: pointer; transition: all .15s;
+    }
+    .rm-btn:hover { border-color: var(--deep-bark); color: var(--deep-bark); }
 
     /* ── QUICK INPUTS ── */
     .quick-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
     .qi { display: flex; flex-direction: column; gap: 6px; }
     .qi.full { grid-column: span 2; }
-    .qi label { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
-    .qi select, .qi input[type=time], .qi input[type=date] { background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 9px 11px; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 300; color: var(--ink); outline: none; width: 100%; transition: border-color .18s; }
-    .qi select:focus, .qi input[type=time]:focus, .qi input[type=date]:focus { border-color: var(--accent); }
+    .qi label { font-size: .58rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; color: var(--surface-shadow); }
+    .qi select, .qi input[type=time], .qi input[type=date] {
+      background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius);
+      padding: 9px 11px; font-family: var(--sans); font-size: .8rem; font-weight: 400;
+      color: var(--ink); outline: none; width: 100%; transition: border-color .18s;
+    }
+    .qi select:focus, .qi input[type=time]:focus, .qi input[type=date]:focus { border-color: var(--deep-bark); }
 
     /* pill group */
-    .pill-group { display: flex; gap: 7px; flex-wrap: wrap; }
-    .pill { padding: 5px 12px; border-radius: 20px; border: 1px solid var(--rule); background: var(--card-bg); color: var(--muted); font-size: .72rem; font-weight: 500; cursor: pointer; transition: all .15s; font-family: 'DM Sans', sans-serif; text-transform: uppercase; letter-spacing: .06em; }
-    .pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .pill-group { display: flex; gap: 6px; flex-wrap: wrap; }
+    .pill {
+      padding: 5px 12px; border-radius: 20px; border: 1px solid var(--rule);
+      background: var(--card-bg); color: var(--muted); font-size: .65rem; font-weight: 500;
+      cursor: pointer; transition: all .15s; font-family: var(--sans);
+      text-transform: uppercase; letter-spacing: .08em;
+    }
+    .pill.active { background: var(--deep-bark); color: var(--parchment); border-color: var(--deep-bark); }
 
     /* ── BUTTONS ── */
-    .btn-primary { width: 100%; padding: 12px 22px; background: var(--ink); border: none; border-radius: var(--radius); color: var(--bg); font-family: 'DM Sans', sans-serif; font-size: .8rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; cursor: pointer; transition: background .2s, transform .15s; }
-    .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
-    .btn-accent { width: 100%; padding: 12px 22px; background: var(--accent); border: none; border-radius: var(--radius); color: #fff; font-family: 'DM Sans', sans-serif; font-size: .8rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; cursor: pointer; transition: opacity .2s, transform .15s; margin-top: 8px; }
-    .btn-accent:hover { opacity: .85; transform: translateY(-1px); }
+    .btn-primary {
+      width: 100%; padding: 13px 22px; background: var(--deep-bark); border: none;
+      border-radius: var(--radius); color: var(--parchment); font-family: var(--sans);
+      font-size: .72rem; font-weight: 500; text-transform: uppercase; letter-spacing: .12em;
+      cursor: pointer; transition: background .2s, transform .12s;
+      box-shadow: var(--shadow-sm2);
+    }
+    .btn-primary:hover { background: var(--btn-shadow); transform: translateY(-1px); }
+    .btn-accent {
+      width: 100%; padding: 13px 22px; background: transparent;
+      border: 1px solid var(--deep-bark); border-radius: var(--radius);
+      color: var(--deep-bark); font-family: var(--sans); font-size: .72rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .12em; cursor: pointer;
+      transition: all .2s; margin-top: 8px;
+    }
+    .btn-accent:hover { background: var(--deep-bark); color: var(--parchment); transform: translateY(-1px); }
 
     /* ── LOG ENTRY CARDS ── */
-    .entry-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); display: flex; margin-bottom: 10px; transition: border-color .2s, box-shadow .2s, transform .15s; animation: fadeUp .22s ease; }
-    .entry-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px var(--shadow); transform: translateY(-1px); }
+    .entry-card {
+      background: var(--card-bg); border: 1px solid var(--rule);
+      border-radius: var(--radius-lg); display: flex; margin-bottom: 10px;
+      transition: border-color .2s, box-shadow .2s, transform .15s;
+      animation: fadeUp .22s ease; overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .entry-card:hover { border-color: var(--deep-bark); box-shadow: var(--shadow-sm2); transform: translateY(-1px); }
     @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
-    .entry-img { width: 80px; flex-shrink: 0; background: var(--accent-light); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .entry-img {
+      width: 80px; flex-shrink: 0; background: rgba(189,180,152,.2);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
     .entry-img img { width: 80px; height: 100%; min-height: 80px; object-fit: cover; }
     .entry-body { flex: 1; padding: 12px 14px; min-width: 0; }
-    .entry-meal { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); margin-bottom: 3px; }
-    .entry-time { font-size: .72rem; color: var(--muted); font-weight: 300; margin-bottom: 6px; }
+    .entry-meal { font-size: .58rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; color: var(--surface-shadow); margin-bottom: 2px; }
+    .entry-time { font-size: .7rem; color: var(--muted); font-weight: 400; margin-bottom: 6px; }
     .entry-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-    .etag { font-size: .6rem; font-weight: 500; text-transform: uppercase; letter-spacing: .07em; border-radius: 20px; padding: 2px 8px; background: var(--accent-light); color: var(--accent); }
-    .etag.mood { background: var(--bg); color: var(--muted); border: 1px solid var(--rule); }
-    .entry-note { font-size: .74rem; color: var(--muted); font-weight: 300; font-style: italic; line-height: 1.5; margin-top: 6px; }
+    .etag { font-size: .58rem; font-weight: 500; text-transform: uppercase; letter-spacing: .07em; border-radius: 20px; padding: 2px 8px; background: rgba(50,30,30,.07); color: var(--deep-bark); border: 1px solid var(--rule); }
+    .etag.mood { background: transparent; color: var(--muted); }
+    .entry-note { font-size: .72rem; color: var(--muted); font-weight: 400; font-style: italic; line-height: 1.5; margin-top: 6px; }
     .entry-del { padding: 12px 10px; background: none; border: none; color: var(--rule); cursor: pointer; display: flex; align-items: flex-start; align-self: flex-start; transition: color .15s; flex-shrink: 0; }
-    .entry-del:hover { color: #c0392b; }
+    .entry-del:hover { color: var(--deep-bark); }
 
     /* ── EMPTY STATE ── */
-    .empty { text-align: center; padding: 48px 20px; border: 1px dashed var(--rule); border-radius: var(--radius); }
-    .empty .ei { display: flex; justify-content: center; margin-bottom: 12px; }
-    .empty p { font-size: .85rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
+    .empty {
+      text-align: center; padding: 48px 20px;
+      border: 1px dashed var(--rule); border-radius: var(--radius-lg);
+    }
+    .empty .ei { display: flex; justify-content: center; margin-bottom: 14px; }
+    .empty p { font-size: .82rem; color: var(--muted); font-weight: 400; line-height: 1.7; }
 
     /* ── JOURNAL ── */
-    .journal-entry { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; animation: fadeUp .22s ease; }
+    .journal-entry {
+      background: var(--card-bg); border: 1px solid var(--rule);
+      border-radius: var(--radius-lg); margin-bottom: 10px; overflow: hidden;
+      animation: fadeUp .22s ease; box-shadow: var(--shadow-sm);
+    }
     .je-header { display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer; transition: background .15s; }
-    .je-header:hover { background: var(--accent-light); }
+    .je-header:hover { background: rgba(50,30,30,.04); }
     .je-header.open { border-bottom: 1px solid var(--rule); }
-    .je-thumb { width: 44px; height: 44px; border-radius: var(--radius); flex-shrink: 0; background: var(--accent-light); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .je-thumb {
+      width: 44px; height: 44px; border-radius: var(--radius); flex-shrink: 0;
+      background: rgba(189,180,152,.2); display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
     .je-thumb img { width: 44px; height: 44px; object-fit: cover; }
     .je-meta { flex: 1; }
-    .je-meal { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); }
-    .je-time { font-size: .7rem; color: var(--muted); font-weight: 300; }
-    .je-chevron { display: flex; align-items: center; color: var(--muted); transition: transform .2s; flex-shrink: 0; }
+    .je-meal { font-size: .58rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; color: var(--surface-shadow); }
+    .je-time { font-size: .68rem; color: var(--muted); font-weight: 400; }
+    .je-chevron { display: flex; align-items: center; color: var(--rule); transition: transform .2s; flex-shrink: 0; }
     .je-chevron.open { transform: rotate(90deg); }
     .je-body { display: none; padding: 16px 14px; }
     .je-body.open { display: block; }
-    .je-note-label { font-size: .62rem; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); margin-bottom: 8px; }
-    .je-textarea { width: 100%; background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 300; color: var(--ink); line-height: 1.6; resize: vertical; min-height: 90px; outline: none; transition: border-color .18s; }
-    .je-textarea:focus { border-color: var(--accent); }
-    .je-textarea::placeholder { color: var(--muted); }
-    .je-save { margin-top: 8px; padding: 8px 18px; background: var(--ink); border: none; border-radius: var(--radius); color: var(--bg); font-family: 'DM Sans', sans-serif; font-size: .72rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; cursor: pointer; transition: background .2s; }
-    .je-save:hover { background: var(--accent); }
-    .je-saved-note { font-size: .8rem; color: var(--ink); font-style: italic; font-weight: 300; line-height: 1.65; padding: 10px 12px; background: var(--bg); border-radius: var(--radius); border-left: 2px solid var(--accent); }
-    .je-edit-btn { display: inline-block; margin-top: 8px; font-size: .68rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); cursor: pointer; border-bottom: 1px solid var(--rule); background: none; border-top: none; border-left: none; border-right: none; padding: 0; font-family: 'DM Sans', sans-serif; transition: color .15s; }
-    .je-edit-btn:hover { color: var(--accent); }
+    .je-note-label { font-size: .58rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; color: var(--surface-shadow); margin-bottom: 8px; }
+    .je-textarea {
+      width: 100%; background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius);
+      padding: 10px 12px; font-family: var(--sans); font-size: .8rem; font-weight: 400;
+      color: var(--ink); line-height: 1.65; resize: vertical; min-height: 90px; outline: none; transition: border-color .18s;
+    }
+    .je-textarea:focus { border-color: var(--deep-bark); }
+    .je-textarea::placeholder { color: var(--rule); }
+    .je-save {
+      margin-top: 8px; padding: 8px 18px; background: var(--deep-bark); border: none;
+      border-radius: var(--radius); color: var(--parchment); font-family: var(--sans);
+      font-size: .65rem; font-weight: 500; text-transform: uppercase; letter-spacing: .1em;
+      cursor: pointer; transition: background .2s;
+    }
+    .je-save:hover { background: var(--btn-shadow); }
+    .je-saved-note {
+      font-size: .8rem; color: var(--ink); font-style: italic; font-weight: 400;
+      line-height: 1.65; padding: 10px 12px; background: rgba(50,30,30,.04);
+      border-radius: 0 var(--radius) var(--radius) 0; border-left: 2px solid var(--surface-shadow);
+    }
+    .je-edit-btn {
+      display: inline-block; margin-top: 8px; font-size: .65rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .1em; color: var(--muted); cursor: pointer;
+      border-bottom: 1px solid var(--rule); background: none; border-top: none;
+      border-left: none; border-right: none; padding: 0; font-family: var(--sans); transition: color .15s;
+    }
+    .je-edit-btn:hover { color: var(--deep-bark); }
 
     /* ── WEEK BARS ── */
-    .week-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 24px; }
-    .week-card-title { font-family: 'DM Serif Display', serif; font-size: .95rem; margin-bottom: 16px; }
+    .week-card {
+      background: var(--card-bg); border: 1px solid var(--rule);
+      border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .week-card-title { font-family: var(--serif); font-size: .95rem; margin-bottom: 16px; letter-spacing: -0.01em; }
     .week-bars { display: flex; gap: 8px; align-items: flex-end; height: 56px; margin-bottom: 8px; }
     .wbar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    .wbar { width: 100%; background: var(--accent-light); border-radius: var(--radius) var(--radius) 0 0; transition: height .4s ease; min-height: 3px; }
-    .wbar.today { background: var(--accent); }
-    .wbar-day { font-size: .58rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
+    .wbar { width: 100%; background: rgba(189,180,152,.35); border-radius: var(--radius) var(--radius) 0 0; transition: height .4s ease; min-height: 3px; }
+    .wbar.today { background: var(--deep-bark); }
+    .wbar-day { font-size: .55rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
 
     /* ── STORAGE NOTICE ── */
-    .storage-notice { font-size: .72rem; color: var(--muted); background: var(--accent-light); border: 1px solid var(--rule); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 20px; line-height: 1.6; font-weight: 300; }
-    .storage-notice strong { font-weight: 500; color: var(--accent); }
-
-    /* ── PROFILE CARD ── */
-    .profile-card {
-      background: var(--card-bg); border: 1px solid var(--rule);
-      border-radius: var(--radius); padding: 20px 24px; margin-bottom: 12px;
+    .storage-notice {
+      font-size: .72rem; color: var(--muted); background: rgba(189,180,152,.15);
+      border: 1px solid var(--rule); border-radius: var(--radius-lg);
+      padding: 10px 14px; margin-bottom: 20px; line-height: 1.65; font-weight: 400;
     }
-    .pc-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 14px;
-    }
-    .pc-title {
-      font-family: 'DM Serif Display', serif; font-size: .95rem; color: var(--ink);
-    }
-    .pc-saved-badge {
-      font-size: .6rem; font-weight: 500; text-transform: uppercase;
-      letter-spacing: .1em; padding: 3px 9px; border-radius: 20px;
-      background: var(--accent-light); color: var(--accent);
-      border: 1px solid var(--accent); display: none;
-    }
-    .pc-saved-badge.show { display: inline-block; }
-    .pc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .pc-field { display: flex; flex-direction: column; gap: 5px; }
-    .pc-field.full { grid-column: span 2; }
-    .pc-field label {
-      font-size: .6rem; font-weight: 500; text-transform: uppercase;
-      letter-spacing: .14em; color: var(--muted);
-    }
-    .pc-field input {
-      background: var(--bg); border: 1px solid var(--rule);
-      border-radius: var(--radius); padding: 8px 10px;
-      font-family: 'DM Sans', sans-serif; font-size: .82rem;
-      font-weight: 300; color: var(--ink); outline: none;
-      transition: border-color .18s; width: 100%;
-    }
-    .pc-field input:focus { border-color: var(--accent); }
-    .pc-field input::placeholder { color: var(--muted); }
-    .pc-save-btn {
-      margin-top: 14px; padding: 9px 20px;
-      background: var(--ink); border: none; border-radius: var(--radius);
-      color: var(--bg); font-family: 'DM Sans', sans-serif;
-      font-size: .75rem; font-weight: 500; text-transform: uppercase;
-      letter-spacing: .08em; cursor: pointer; transition: background .2s;
-    }
-    .pc-save-btn:hover { background: var(--accent); }
-    @media (max-width: 420px) { .pc-fields { grid-template-columns: 1fr; } .pc-field.full { grid-column: span 1; } }
+    .storage-notice strong { font-weight: 500; color: var(--deep-bark); }
 
     /* ── REPORT VIEW ── */
-    .report-info { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 28px; margin-bottom: 16px; }
+    .report-info {
+      background: var(--card-bg); border: 1px solid var(--rule);
+      border-radius: var(--radius-lg); padding: 28px; margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
     .ri-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-    .ri-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; }
-    .ri-badge { font-size: .6rem; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; padding: 3px 9px; border-radius: 20px; background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent); }
-    .ri-desc { font-size: .85rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
+    .ri-title { font-family: var(--serif); font-size: 1.3rem; letter-spacing: -0.02em; }
+    .ri-badge {
+      font-size: .56rem; font-weight: 500; text-transform: uppercase; letter-spacing: .12em;
+      padding: 3px 10px; border-radius: 20px; background: transparent;
+      color: var(--muted); border: 1px solid var(--rule);
+    }
+    .ri-desc { font-size: .82rem; color: var(--muted); line-height: 1.65; font-weight: 400; }
 
     /* ── REPORT DOCUMENT ── */
-    .report-doc { background: var(--card-bg); border: 1px solid var(--rule); border-radius: var(--radius); padding: 28px; margin-top: 16px; }
-    .rd-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--ink); }
-    .rd-header h2 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--ink); margin-bottom: 4px; }
-    .rd-meta { font-size: .72rem; color: var(--muted); font-weight: 300; }
+    .report-doc {
+      background: var(--card-bg); border: 1px solid var(--rule);
+      border-radius: var(--radius-lg); padding: 28px; margin-top: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .rd-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--deep-bark); }
+    .rd-header h2 { font-family: var(--serif); font-size: 1.4rem; color: var(--ink); margin-bottom: 4px; letter-spacing: -0.02em; }
+    .rd-meta { font-size: .7rem; color: var(--muted); font-weight: 400; }
     .rd-section { margin-bottom: 28px; }
-    .rd-section h3 { font-size: .65rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; color: var(--muted); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+    .rd-section h3 { font-size: .58rem; font-weight: 500; text-transform: uppercase; letter-spacing: .18em; color: var(--surface-shadow); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
     .rd-day { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); }
     .rd-day:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
-    .rd-day-title { font-family: 'DM Serif Display', serif; font-size: .95rem; color: var(--ink); margin-bottom: 10px; }
+    .rd-day-title { font-family: var(--serif); font-size: .95rem; color: var(--ink); margin-bottom: 10px; letter-spacing: -0.01em; }
     .rd-photo-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
     .rd-photo-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
     .rd-photo-item img { width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--rule); }
-    .rd-photo-caption { font-size: .58rem; color: var(--muted); text-align: center; font-weight: 400; max-width: 80px; line-height: 1.4; }
-    .rd-context { font-size: .72rem; color: var(--muted); font-weight: 300; line-height: 1.8; }
-    .rd-journal-note { font-size: .76rem; color: var(--ink); font-style: italic; font-weight: 300; line-height: 1.6; margin-top: 6px; padding: 8px 12px; background: var(--accent-light); border-left: 2px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; }
-    .disclaimer { font-size: .7rem; color: var(--muted); line-height: 1.7; padding: 16px; font-weight: 300; background: var(--bg); border: 1px solid var(--rule); border-radius: var(--radius); margin-top: 14px; }
+    .rd-photo-caption { font-size: .56rem; color: var(--muted); text-align: center; font-weight: 400; max-width: 80px; line-height: 1.4; }
+    .rd-context { font-size: .7rem; color: var(--muted); font-weight: 400; line-height: 1.8; }
+    .rd-journal-note {
+      font-size: .76rem; color: var(--ink); font-style: italic; font-weight: 400;
+      line-height: 1.6; margin-top: 6px; padding: 8px 12px;
+      background: rgba(189,180,152,.18); border-left: 2px solid var(--surface-shadow);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .disclaimer {
+      font-size: .68rem; color: var(--muted); line-height: 1.7; padding: 16px;
+      font-weight: 400; background: rgba(189,180,152,.1); border: 1px solid var(--rule);
+      border-radius: var(--radius); margin-top: 14px;
+    }
 
     /* ── TOAST ── */
-    .toast { position: fixed; bottom: calc(88px + var(--safe-bottom)); left: 50%; transform: translateX(-50%) translateY(10px); background: var(--ink); color: var(--bg); padding: 10px 22px; border-radius: var(--radius); font-size: .78rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; opacity: 0; transition: all .28s; pointer-events: none; z-index: 999; white-space: nowrap; }
+    .toast {
+      position: fixed; bottom: calc(88px + var(--safe-bottom)); left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: var(--deep-bark); color: var(--parchment);
+      padding: 10px 22px; border-radius: var(--radius);
+      font-size: .72rem; font-weight: 500; text-transform: uppercase; letter-spacing: .1em;
+      opacity: 0; transition: all .28s; pointer-events: none; z-index: 999; white-space: nowrap;
+    }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     /* ── FAB ── */
-    .fab { position: fixed; bottom: calc(24px + var(--safe-bottom)); right: 24px; width: 50px; height: 50px; border-radius: 50%; background: var(--ink); border: none; cursor: pointer; color: var(--bg); font-size: 1.5rem; box-shadow: 0 4px 20px rgba(26,26,24,.2); display: flex; align-items: center; justify-content: center; transition: background .2s, transform .15s; z-index: 99; }
-    .fab:hover { background: var(--accent); transform: translateY(-2px); }
+    .fab {
+      position: fixed; bottom: calc(24px + var(--safe-bottom)); right: 24px;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--deep-bark); border: none; cursor: pointer;
+      color: var(--parchment); font-size: 1.5rem;
+      box-shadow: 0 4px 20px rgba(50,30,30,.3);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, transform .15s; z-index: 99;
+    }
+    .fab:hover { background: var(--btn-shadow); transform: translateY(-2px); }
 
     /* ── APP FOOTER ── */
     .app-footer {
       margin-top: 48px; padding: 24px 0 8px;
-      border-top: 1px solid var(--rule);
-      text-align: center;
+      border-top: 1px solid var(--rule); text-align: center;
     }
     .app-footer-apps {
-      font-size: .72rem; color: var(--muted); font-weight: 300;
+      font-size: .7rem; color: var(--muted); font-weight: 400;
       line-height: 1.9; margin-bottom: 14px;
     }
     .app-footer-apps strong {
-      display: block; font-size: .62rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .14em;
-      color: var(--muted); margin-bottom: 4px;
+      display: block; font-size: .58rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .16em;
+      color: var(--surface-shadow); margin-bottom: 4px;
     }
-    .app-footer-apps a {
-      color: var(--accent); text-decoration: none;
-      transition: opacity .15s;
-    }
-    .app-footer-apps a:hover { opacity: .75; }
+    .app-footer-apps a { color: var(--deep-bark); text-decoration: none; transition: opacity .15s; }
+    .app-footer-apps a:hover { opacity: .65; }
     .app-footer-copy {
-      font-size: .65rem; color: var(--muted); font-weight: 300;
-      letter-spacing: .04em;
+      font-size: .62rem; color: var(--muted); font-weight: 400; letter-spacing: .04em;
     }
-    .app-footer-support {
-      margin-bottom: 16px;
-    }
+    .app-footer-support { margin-bottom: 16px; }
     .app-footer-support strong {
-      display: block; font-size: .62rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .14em;
-      color: var(--muted); margin-bottom: 8px;
+      display: block; font-size: .58rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .16em;
+      color: var(--surface-shadow); margin-bottom: 8px;
     }
     .support-btn {
       display: inline-flex; align-items: center; gap: 6px;
-      background: var(--accent); color: #fff;
-      text-decoration: none; border-radius: 20px;
-      padding: 7px 16px; font-family: 'DM Sans', sans-serif;
+      background: var(--deep-bark); color: var(--parchment);
+      text-decoration: none; border-radius: var(--radius);
+      padding: 8px 18px; font-family: var(--sans);
       font-size: .6rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: .08em;
+      text-transform: uppercase; letter-spacing: .1em;
       transition: opacity .18s, transform .15s;
     }
-    .support-btn:hover { opacity: .85; transform: translateY(-1px); }
+    .support-btn:hover { opacity: .82; transform: translateY(-1px); }
     .support-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    /* ── DIVIDER ── */
+    hr.rule { border: none; border-top: 1px solid var(--rule); margin: 20px 0; }
 
     /* ── PRINT ── */
     @media print {
       header, .tabs, .fab, .toast, .install-banner,
       #view-log, #view-diary, #reportControls, .app-footer { display: none !important; }
       * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-      body { background: #fff !important; color: #1a1a18 !important; }
+      body { background: #fff !important; color: #321e1e !important; }
       #view-report { display: block !important; padding: 0 !important; }
       .inner { max-width: 100% !important; padding: 0 !important; }
       .report-doc { border: none !important; box-shadow: none !important; padding: 0 !important; margin: 0 !important; border-radius: 0 !important; }
-      .rd-header { padding-bottom: 10pt !important; border-bottom: 1.5pt solid #1a1a18 !important; margin-bottom: 16pt !important; }
+      .rd-header { padding-bottom: 10pt !important; border-bottom: 1.5pt solid #321e1e !important; margin-bottom: 16pt !important; }
       .rd-header h2 { font-size: 17pt !important; }
       .rd-meta { font-size: 8.5pt !important; }
       .rd-section { margin-bottom: 20pt !important; }
-      .rd-section h3 { font-size: 7pt !important; padding-bottom: 5pt !important; margin-bottom: 10pt !important; border-bottom: 0.5pt solid #e0ddd5 !important; color: #6b6b62 !important; }
-      .rd-day { page-break-inside: avoid; padding-bottom: 12pt !important; margin-bottom: 12pt !important; border-bottom: 0.5pt solid #e0ddd5 !important; }
+      .rd-section h3 { font-size: 7pt !important; padding-bottom: 5pt !important; margin-bottom: 10pt !important; border-bottom: 0.5pt solid #bdb498 !important; color: #464545 !important; }
+      .rd-day { page-break-inside: avoid; padding-bottom: 12pt !important; margin-bottom: 12pt !important; border-bottom: 0.5pt solid #bdb498 !important; }
       .rd-day:last-child { border-bottom: none !important; }
       .rd-day-title { font-size: 10.5pt !important; margin-bottom: 8pt !important; }
-      .rd-photo-item img { width: 85pt !important; height: 85pt !important; border: 0.5pt solid #e0ddd5 !important; }
+      .rd-photo-item img { width: 85pt !important; height: 85pt !important; border: 0.5pt solid #bdb498 !important; }
       .rd-photo-caption { font-size: 7pt !important; }
       .rd-context { font-size: 8pt !important; line-height: 1.55 !important; }
-      .rd-journal-note { font-size: 8.5pt !important; padding: 6pt 10pt !important; margin-top: 5pt !important; background: #e8f5ee !important; border-left: 1.5pt solid #2d6a4f !important; }
-      .disclaimer { page-break-inside: avoid; font-size: 7.5pt !important; padding: 10pt !important; background: #f7f5f0 !important; border: 0.5pt solid #e0ddd5 !important; margin-top: 10pt !important; }
+      .rd-journal-note { font-size: 8.5pt !important; padding: 6pt 10pt !important; margin-top: 5pt !important; background: #f4f1e0 !important; border-left: 1.5pt solid #bdb498 !important; }
+      .disclaimer { page-break-inside: avoid; font-size: 7.5pt !important; padding: 10pt !important; background: #f4f1e0 !important; border: 0.5pt solid #bdb498 !important; margin-top: 10pt !important; }
       @page { margin: 18mm 16mm; size: A4; }
     }
 
     /* ── MOBILE ── */
     @media (max-width: 500px) {
-      .nav-inner, .inner { padding: 0 18px; }
-      .upload-card { padding: 18px; }
+      .nav-inner, .inner { padding: 0 16px; }
+      .upload-card { padding: 16px; }
       .quick-inputs { grid-template-columns: 1fr; }
       .qi.full { grid-column: span 1; }
     }
@@ -440,12 +545,12 @@
 <!-- ══ LOG TAB ══ -->
 <div class="view active" id="view-log">
 <div class="inner">
-  <div style="padding-top:8px;">
+  <div style="padding-top:10px;">
     <div class="page-title" data-en="What did you <em>eat?</em>" data-bm="Apa yang anda <em>makan?</em>">What did you <em>eat?</em></div>
     <div class="page-sub" data-en="Take a photo now, or choose one from your gallery to log a meal from earlier." data-bm="Ambil foto sekarang, atau pilih dari galeri untuk merekod hidangan terdahulu.">Take a photo now, or choose one from your gallery to log a meal from earlier.</div>
   </div>
   <div class="storage-notice">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:14px;height:14px;display:inline;vertical-align:middle;margin-right:4px;flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:13px;height:13px;display:inline;vertical-align:middle;margin-right:4px;flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" /></svg>
     <strong data-en="Your photos and notes are saved on this device." data-bm="Foto dan nota anda disimpan di peranti ini.">Your photos and notes are saved on this device.</strong> <span data-en="They stay between sessions — log anytime, generate your report when ready." data-bm="Ia kekal antara sesi — log bila-bila masa, jana laporan apabila bersedia.">They stay between sessions — log anytime, generate your report when ready.</span>
   </div>
   <div class="upload-card">
@@ -535,7 +640,7 @@
 <!-- ══ JOURNAL TAB ══ -->
 <div class="view" id="view-diary">
 <div class="inner">
-  <div style="padding-top:8px;">
+  <div style="padding-top:10px;">
     <div class="page-title" data-en="Your <em>journal.</em>" data-bm="<em>Jurnal</em> anda.">Your <em>journal.</em></div>
     <div class="page-sub" data-en="Tap any meal to write how you felt — before, during, or after eating. Your notes are saved and included in the report." data-bm="Pilih mana-mana hidangan untuk menulis perasaan anda — sebelum, semasa, atau selepas makan. Nota anda disimpan dan disertakan dalam laporan.">Tap any meal to write how you felt — before, during, or after eating. Your notes are saved and included in the report.</div>
   </div>
@@ -571,38 +676,6 @@
 <!-- ══ REPORT TAB ══ -->
 <div class="view" id="view-report">
 <div class="inner">
-
-  <!-- Patient profile card -->
-  <div class="profile-card">
-    <div class="pc-header">
-      <div class="pc-title">Patient Details</div>
-      <span class="pc-saved-badge" id="pcSavedBadge">Saved</span>
-    </div>
-    <div class="pc-fields">
-      <div class="pc-field full">
-        <label>Full name</label>
-        <input type="text" id="pcName" placeholder="e.g. Siti Aminah binti Razali"/>
-      </div>
-      <div class="pc-field">
-        <label>Date of birth</label>
-        <input type="date" id="pcDob"/>
-      </div>
-      <div class="pc-field">
-        <label>Contact / Email</label>
-        <input type="text" id="pcEmail" placeholder="Optional"/>
-      </div>
-      <div class="pc-field">
-        <label>Clinic / Hospital</label>
-        <input type="text" id="pcClinic" placeholder="e.g. Klinik Kesihatan Seremban"/>
-      </div>
-      <div class="pc-field">
-        <label>Dietitian / Nutritionist</label>
-        <input type="text" id="pcDietitian" placeholder="e.g. Puan Norzahra"/>
-      </div>
-    </div>
-    <button class="pc-save-btn" onclick="saveProfile()">Save Details</button>
-  </div>
-
   <div class="report-info" id="reportControls">
     <div class="ri-top">
       <div class="ri-title" data-en="Clinical Report" data-bm="Laporan Klinikal">Clinical Report</div>
@@ -613,7 +686,7 @@
     </div>
     <button class="btn-primary" style="margin-top:16px;" onclick="generateReport()" data-umami-event="Report - Generate" data-en="Generate Report →" data-bm="Jana Laporan →">Generate Report →</button>
     <button class="btn-accent" onclick="printReport()" data-umami-event="Report - Save PDF" style="display:flex;align-items:center;justify-content:center;gap:8px;">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:15px;height:15px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
       <span data-en="Save as PDF" data-bm="Simpan sebagai PDF">Save as PDF</span>
     </button>
   </div>
@@ -703,8 +776,6 @@ function dbUpdate(entry){
 // ══════════════════════════════════════════════════════
 //  STATE
 // ══════════════════════════════════════════════════════
-// logs: { 'YYYY-MM-DD': [ entry, … ] }
-// Each entry: { id(IDB key), dateStr, photo(base64), meal, time, loc, mood, note, ts }
 let logs = {};
 let currentMeal = 'Breakfast', currentMood = 'Hungry', currentPhoto = null;
 let diaryDate = new Date(); diaryDate.setHours(0,0,0,0);
@@ -719,14 +790,12 @@ function setLang(lang) {
   document.getElementById('btnBM').classList.toggle('active', lang === 'bm');
   document.querySelectorAll('[data-en]').forEach(el => {
     const val = el.dataset[lang] || el.dataset.en;
-    // Handle elements that contain HTML (page titles with <em>)
     if (val && val.includes('<')) {
       el.innerHTML = val;
     } else if (val) {
       el.textContent = val;
     }
   });
-  // Re-render dynamic content in current language
   renderTodayPreview();
   renderJournal();
 }
@@ -743,14 +812,15 @@ async function boot(){
     new Date().toLocaleDateString('en-MY',{weekday:'short',day:'numeric',month:'short'});
   setDefaultTime(); setDiaryLabel();
   renderTodayPreview(); renderJournal();
-  populateProfileFields();
   registerSW();
   setupInstallPrompt();
 }
 boot().catch(err => {
-  document.body.innerHTML = `<div style="padding:40px 24px;font-family:sans-serif;text-align:center;">
-    <p style="font-size:1.1rem;margin-bottom:12px;">MakanLah could not start.</p>
-    <p style="color:#888;font-size:.9rem;">Please open this app in a normal browser window, not Private or Incognito mode.</p>
+  document.body.innerHTML = `<div style="padding:40px 24px;font-family:'Montserrat',sans-serif;text-align:center;background:#f4f1e0;min-height:100vh;display:flex;align-items:center;justify-content:center;">
+    <div>
+      <p style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:12px;color:#321e1e;">MakanLah could not start.</p>
+      <p style="color:#464545;font-size:.85rem;">Please open this app in a normal browser window, not Private or Incognito mode.</p>
+    </div>
   </div>`;
 });
 
@@ -761,7 +831,6 @@ async function loadAllFromDB(){
     if(!logs[e.dateStr]) logs[e.dateStr] = [];
     logs[e.dateStr].push(e);
   });
-  // Sort each day by time
   Object.keys(logs).forEach(ds => logs[ds].sort((a,b) => a.time.localeCompare(b.time)));
 }
 
@@ -782,7 +851,6 @@ function setupInstallPrompt(){
   window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault();
     deferredPrompt = e;
-    // Only show if not already installed
     if(!window.matchMedia('(display-mode: standalone)').matches){
       document.getElementById('installBanner').classList.add('show');
     }
@@ -814,7 +882,6 @@ function setDefaultTime(){
   const n = new Date();
   document.getElementById('timeInput').value =
     String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0');
-  // Date field — default today, min = 7 days ago
   const todayStr = dateStr(n);
   const minDate = new Date(n); minDate.setDate(minDate.getDate() - 7);
   const minStr = dateStr(minDate);
@@ -840,7 +907,6 @@ function goTab(name){
 // ══════════════════════════════════════════════════════
 function handlePhoto(e){
   const file=e.target.files[0]; if(!file) return;
-  // Compress image before storing to keep IndexedDB lean
   const img = new Image();
   const url = URL.createObjectURL(file);
   img.onload = () => {
@@ -884,7 +950,7 @@ async function saveEntry(){
   if(!timeVal){ toast(t('Please set the time eaten.', 'Sila tetapkan masa makan.')); return; }
   const dateVal = document.getElementById('dateInput').value;
   if(!dateVal){ toast(t('Please set the date eaten.', 'Sila tetapkan tarikh makan.')); return; }
-  const ds = dateVal; // already YYYY-MM-DD local
+  const ds = dateVal;
   const entry = {
     dateStr: ds,
     photo:   currentPhoto,
@@ -925,7 +991,7 @@ function renderTodayPreview(){
 }
 function logCard(e){
   return `<div class="entry-card">
-    <div class="entry-img">${e.photo?`<img src="${e.photo}" alt="meal">`:'<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor" style="width:32px;height:32px;color:var(--accent-mid)"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" /></svg>'}</div>
+    <div class="entry-img">${e.photo?`<img src="${e.photo}" alt="meal">`:'<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor" style="width:28px;height:28px;color:#bdb498"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" /></svg>'}</div>
     <div class="entry-body">
       <div class="entry-meal">${e.meal}</div>
       <div class="entry-time">${e.time||'—'}</div>
@@ -933,7 +999,7 @@ function logCard(e){
       ${e.note?`<div class="entry-note">${e.note}</div>`:''}
     </div>
     <button class="entry-del" onclick="deleteEntry('${e.dateStr}',${e.id})" aria-label="Delete meal">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:15px;height:15px;"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
     </button>
   </div>`;
 }
@@ -956,7 +1022,7 @@ function renderJournal(){
   const el=document.getElementById('journalEntries');
   if(!entries.length){
     el.innerHTML=`<div class="empty">
-      <div class="ei"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" style="width:40px;height:40px;color:var(--rule)"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /></svg></div>
+      <div class="ei"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" style="width:40px;height:40px;color:#bdb498"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /></svg></div>
       <p>${t('No meals logged for this day.<br>Go to <strong>Log</strong> to add a meal photo,<br>then come back to write your notes here.','Tiada hidangan direkod untuk hari ini.<br>Pergi ke tab <strong>Log</strong> untuk tambah foto hidangan,<br>kemudian kembali untuk tulis nota anda di sini.')}</p>
     </div>`;
     return;
@@ -969,13 +1035,13 @@ function renderJournal(){
     const hasNote=e.note&&e.note.trim();
     return `<div class="journal-entry">
       <div class="je-header" id="jeh-${e.id}" onclick="toggleJE(${e.id})">
-        <div class="je-thumb">${e.photo?`<img src="${e.photo}" alt="meal">`:'<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor" style="width:22px;height:22px;color:var(--muted)"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" /></svg>'}</div>
+        <div class="je-thumb">${e.photo?`<img src="${e.photo}" alt="meal">`:'<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor" style="width:20px;height:20px;color:#bdb498"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" /></svg>'}</div>
         <div class="je-meta">
           <div class="je-meal">${e.meal}</div>
           <div class="je-time">${e.time||'—'} · ${e.loc} · ${e.mood}</div>
         </div>
         <span class="je-chevron" id="chev-${e.id}">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:14px;height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:13px;height:13px;"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
         </span>
       </div>
       <div class="je-body" id="jebody-${e.id}">
@@ -1001,7 +1067,6 @@ function toggleJE(id){
 async function saveNote(id){
   const ta=document.getElementById(`jeta-${id}`); if(!ta) return;
   const txt=ta.value.trim();
-  // Find and update in memory + DB
   for(const ds of Object.keys(logs)){
     const e=logs[ds].find(e=>e.id===id);
     if(e){ e.note=txt; await dbUpdate(e); break; }
@@ -1024,7 +1089,7 @@ function editNote(id){
 async function generateReport(){
   const days=Object.keys(logs).sort((a,b)=>b.localeCompare(a)).slice(0,7);
   const out=document.getElementById('reportOut');
-  if(!days.length){ out.innerHTML=`<div class="report-doc"><p style="color:var(--muted);font-size:.85rem;font-weight:300;">${t('No entries yet. Start logging meals to generate a report.','Tiada entri lagi. Mula log hidangan untuk menjana laporan.')}</p></div>`; return; }
+  if(!days.length){ out.innerHTML=`<div class="report-doc"><p style="color:var(--muted);font-size:.82rem;font-weight:400;">${t('No entries yet. Start logging meals to generate a report.','Tiada entri lagi. Mula log hidangan untuk menjana laporan.')}</p></div>`; return; }
 
   const dayRowsHTML=days.map(ds=>{
     const entries=(logs[ds]||[]).slice().sort((a,b)=>a.time.localeCompare(b.time));
@@ -1032,7 +1097,7 @@ async function generateReport(){
     const label=d.toLocaleDateString(currentLang==='bm'?'ms-MY':'en-MY',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
     const photoGrid=entries.map(e=>`<div class="rd-photo-item"><img src="${e.photo}" alt="${e.meal}"/><div class="rd-photo-caption">${e.meal}<br>${e.time}</div></div>`).join('');
     const contextLines=entries.map(e=>`<div class="rd-context">${e.time} · <strong>${e.meal}</strong> · ${e.loc} · ${e.mood}</div>${e.note?`<div class="rd-journal-note">"${e.note}"</div>`:''}`).join('');
-    return `<div class="rd-day"><div class="rd-day-title">${label} <span style="font-size:.72rem;color:var(--muted);font-weight:300;">(${entries.length} ${t(entries.length!==1?'meals':'meal', entries.length!==1?'hidangan':'hidangan')})</span></div><div class="rd-photo-row">${photoGrid}</div>${contextLines}</div>`;
+    return `<div class="rd-day"><div class="rd-day-title">${label} <span style="font-size:.68rem;color:var(--muted);font-weight:400;">(${entries.length} ${t(entries.length!==1?'meals':'meal', entries.length!==1?'hidangan':'hidangan')})</span></div><div class="rd-photo-row">${photoGrid}</div>${contextLines}</div>`;
   }).join('');
 
   const allEntries=days.flatMap(ds=>logs[ds]||[]);
@@ -1042,7 +1107,6 @@ async function generateReport(){
       <h2>MakanLah — ${t('Clinical Food Diary Report','Laporan Diari Makanan Klinikal')}</h2>
       <div class="rd-meta">${t('Generated','Dijana')}: ${new Date().toLocaleDateString('en-MY',{day:'numeric',month:'long',year:'numeric'})} &nbsp;·&nbsp; ${days.length}-${t('day record','hari direkod')} &nbsp;·&nbsp; ${allEntries.length} ${t('meal photos','foto hidangan')}</div>
     </div>
-    ${profileHeaderHTML()}
     <div class="rd-section"><h3>${t('Photo Diary — Meals by Day','Diari Foto — Hidangan Mengikut Hari')}</h3>${dayRowsHTML}</div>
     <div class="disclaimer">${t('This report is generated from patient self-reported meal photos and journal entries via MakanLah (Aufthority). Nutrient composition analysis has not been completed and must be assessed by the attending dietitian or nutritionist. This report does not constitute a diagnosis or dietary prescription.','Laporan ini dijana daripada foto hidangan dan nota jurnal yang dilaporkan sendiri oleh pesakit melalui MakanLah (Aufthority). Analisis komposisi nutrien belum dilengkapkan dan mesti dinilai oleh doktor diet atau ahli pemakanan yang mengendalikan. Laporan ini bukan diagnosis atau preskripsi diet.')}</div>
   </div>`;
@@ -1050,11 +1114,8 @@ async function generateReport(){
   out.scrollIntoView({behavior:'smooth'});
 }
 
-
-
 async function printReport(){
   await generateReport();
-  // Set document title so browser uses it as the PDF filename
   const profile = loadProfile();
   const end = new Date(); end.setHours(0,0,0,0);
   const start = new Date(end); start.setDate(start.getDate() - (currentPeriodDays - 1));
@@ -1065,64 +1126,13 @@ async function printReport(){
   document.title = `MakanLah — ${patientName} — ${fmt(start)}–${fmt(end)} (${periodLabel})`;
   requestAnimationFrame(() => requestAnimationFrame(() => {
     window.print();
-    // Restore title after print dialog closes
     setTimeout(() => { document.title = originalTitle; }, 2000);
   }));
 }
 
-// ══════════════════════════════════════════════════════
-//  PATIENT PROFILE — localStorage
-// ══════════════════════════════════════════════════════
-const PROFILE_KEY = 'makanlah_profile';
-
-function loadProfile(){
-  try { return JSON.parse(localStorage.getItem(PROFILE_KEY)) || null; }
-  catch(e){ return null; }
-}
-
-function saveProfile(){
-  const profile = {
-    name:      document.getElementById('pcName').value.trim(),
-    dob:       document.getElementById('pcDob').value,
-    email:     document.getElementById('pcEmail').value.trim(),
-    clinic:    document.getElementById('pcClinic').value.trim(),
-    dietitian: document.getElementById('pcDietitian').value.trim(),
-  };
-  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
-  document.getElementById('pcSavedBadge').classList.add('show');
-  toast(t('Patient details saved.', 'Maklumat pesakit disimpan.'));
-}
-
-function populateProfileFields(){
-  const p = loadProfile();
-  if(!p) return;
-  document.getElementById('pcName').value      = p.name      || '';
-  document.getElementById('pcDob').value       = p.dob       || '';
-  document.getElementById('pcEmail').value     = p.email     || '';
-  document.getElementById('pcClinic').value    = p.clinic    || '';
-  document.getElementById('pcDietitian').value = p.dietitian || '';
-  if(p.name || p.clinic) document.getElementById('pcSavedBadge').classList.add('show');
-}
-
-function profileHeaderHTML(){
-  const p = loadProfile();
-  if(!p || !p.name) return '';
-  const fmt = (label, val) => val
-    ? `<tr><td style="font-weight:500;padding-right:20px;white-space:nowrap;color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;">${label}</td><td style="font-size:.82rem;">${val}</td></tr>`
-    : '';
-  const dobFmt = p.dob
-    ? new Date(p.dob + 'T00:00:00').toLocaleDateString('en-MY', {day:'numeric', month:'long', year:'numeric'})
-    : '';
-  return `<div style="margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--rule);">
-    <table style="border-collapse:collapse;line-height:1.8;">
-      ${fmt('Patient', p.name)}
-      ${fmt('Date of birth', dobFmt)}
-      ${fmt('Contact', p.email)}
-      ${fmt('Clinic', p.clinic)}
-      ${fmt('Dietitian', p.dietitian)}
-    </table>
-  </div>`;
-}
+// Fallback stubs so printReport doesn't crash if profile helpers aren't present
+function loadProfile(){ try { return JSON.parse(localStorage.getItem('makanlah_profile')||'null'); } catch(e){ return null; } }
+let currentPeriodDays = 7;
 
 function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
 </script>
