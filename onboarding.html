@@ -690,9 +690,8 @@
     navigator.serviceWorker.register('/sw.js').catch(() => {});
   }
 
-  // ── Skip onboarding if already seen (e.g. direct link) ──
-  // Uncomment the line below if you want returning users sent straight to the app:
-  // if (localStorage.getItem('makanlah_onboarded')) location.replace('index.html');
+  // ── Skip onboarding if already seen — send returning users straight to the app ──
+  if (localStorage.getItem('makanlah_onboarded')) location.replace('index.html');
 
   let _deferredPrompt = null;
   window.addEventListener('beforeinstallprompt', e => {
